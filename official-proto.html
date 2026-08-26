@@ -1,0 +1,165 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>HANDYMAN レンタカー予約（リニューアル試作）</title>
+<style>
+:root{--navy:#15294f;--navy2:#1f3a6e;--y:#FABE00;--line:#dfe5ee;--gray:#6b7686;--bg:#eef1f6}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,"Hiragino Kaku Gothic ProN","Hiragino Sans",sans-serif;background:var(--bg);color:#1c2533;line-height:1.6}
+.head{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.head .in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:11px 16px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:900;color:var(--navy);font-size:18px}
+.logo .bars{display:flex;flex-direction:column;gap:2px;transform:skewX(-12deg)}
+.logo .bars i{display:block;height:3px;background:var(--y);border-radius:2px}
+.logo .bars i:nth-child(1){width:20px}.logo .bars i:nth-child(2){width:15px}.logo .bars i:nth-child(3){width:10px}
+.nav{margin-left:auto;display:flex;gap:18px;align-items:center}
+.nav a{color:var(--navy);text-decoration:none;font-size:13px;font-weight:700}
+.nav .mypage{background:var(--navy);color:#fff;padding:7px 14px;border-radius:8px}
+.ham{display:none;background:none;border:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px}
+.ham span{width:24px;height:2.5px;background:var(--navy);border-radius:2px}
+@media(max-width:760px){.nav a:not(.mypage){display:none}.ham{display:flex}}
+.hero{background:linear-gradient(120deg,var(--navy),var(--navy2));color:#fff;text-align:center;padding:30px 16px 22px}
+.hero h1{font-size:22px;font-weight:900;letter-spacing:.02em}
+.hero p{font-size:12px;color:#c8d3e8;margin-top:4px}
+.wrap{max-width:780px;margin:-14px auto 40px;padding:0 16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 6px 20px rgba(20,40,80,.07);overflow:hidden}
+.card>h2{background:var(--navy);color:#fff;font-size:15px;font-weight:800;padding:12px 18px;display:flex;align-items:center;gap:8px}
+.card .bd{padding:16px 18px}
+.sec{margin-bottom:18px}
+.sec>h3{font-size:13px;font-weight:900;color:var(--navy);margin-bottom:9px;padding-left:9px;border-left:4px solid var(--y)}
+.fg{margin-bottom:11px}
+.fg label{display:block;font-size:11.5px;font-weight:800;color:var(--gray);margin-bottom:4px}
+.fg input,.fg select{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:11px;font-size:15px;font-family:inherit;background:#fff}
+.fg input:focus,.fg select:focus{outline:none;border-color:var(--navy)}
+.row2{display:flex;gap:10px}.row2>*{flex:1}
+.methods{display:flex;gap:8px;flex-wrap:wrap}
+.method{flex:1;min-width:120px;border:2px solid var(--line);border-radius:12px;padding:11px;text-align:center;cursor:pointer;font-weight:800;font-size:13px;background:#fff}
+.method.sel{border-color:var(--navy);background:#f3f6fd}
+.method .mi{font-size:20px;display:block;margin-bottom:2px}.method small{display:block;font-size:10px;color:var(--gray);font-weight:600;margin-top:2px}
+.types{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+@media(max-width:520px){.types{grid-template-columns:1fr 1fr}}
+.type{border:2px solid var(--line);border-radius:12px;padding:12px 6px;text-align:center;cursor:pointer;background:#fff}
+.type.sel{border-color:var(--navy);background:#f3f6fd}
+.type .ti{font-size:24px}.type .tn{font-size:12px;font-weight:800;color:var(--navy);margin-top:3px}.type .tp{font-size:10px;color:var(--gray)}
+.search{width:100%;background:var(--y);color:#1a2333;border:none;border-radius:12px;padding:15px;font-size:16px;font-weight:900;cursor:pointer;margin-top:6px;box-shadow:0 6px 16px rgba(250,190,0,.4)}
+.search:disabled{background:#e3e8f0;color:#aab4c2;box-shadow:none}
+.hint{font-size:11px;color:var(--gray);margin-top:6px}
+.news{background:#fff;border:1px solid var(--line);border-radius:16px;margin-top:18px;overflow:hidden}
+.news h2{background:#f3f6fd;color:var(--navy);font-size:14px;font-weight:800;padding:11px 18px;border-bottom:1px solid var(--line)}
+.news .item{padding:11px 18px;border-bottom:1px solid var(--line);font-size:13px;display:flex;gap:12px}
+.news .d{color:var(--gray);font-size:11px;flex:none}
+.foot{background:var(--navy);color:#c8d3e8;font-size:12px;padding:22px 16px;text-align:center}
+.foot a{color:#c8d3e8;text-decoration:none;margin:0 8px;white-space:nowrap}
+/* 結果モーダル */
+.ov{position:fixed;inset:0;background:rgba(10,20,40,.55);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.ov.on{display:flex}
+.sheet{background:#fff;width:100%;max-width:560px;border-radius:18px 18px 0 0;max-height:90vh;overflow:auto;padding:18px}
+.sheet h3{font-size:17px;font-weight:900;color:var(--navy);margin-bottom:8px}
+.sumrow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13px}.sumrow b{color:var(--navy)}
+.devtag{font-size:10.5px;color:#b45309;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:8px 10px;margin-top:12px;font-weight:700;line-height:1.6}
+.vt{font-family:monospace;font-size:11px;color:#7c3aed;background:#f5f3ff;padding:1px 5px;border-radius:5px}
+.cl{background:none;border:none;color:var(--gray);font-weight:800;float:right;font-size:18px;cursor:pointer}
+</style></head>
+<body>
+<header class="head"><div class="in">
+  <div class="logo"><span class="bars"><i></i><i></i><i></i></span>HANDYMAN</div>
+  <nav class="nav"><a href="#">車両と料金</a><a href="#">保険プラン</a><a href="#">ご利用方法</a><a href="#">お問い合わせ</a><a class="mypage" href="#">マイページ</a></nav>
+  <button class="ham"><span></span><span></span><span></span></button>
+</div></header>
+
+<div class="hero"><h1>レンタカーを予約する</h1><p>沖縄（那覇空港店）・北海道（札幌店）／デリバリー・空港送迎・来店</p></div>
+
+<div class="wrap">
+  <div class="card">
+    <h2>📅 日時・店舗選択</h2>
+    <div class="bd">
+      <!-- 出発 -->
+      <div class="sec"><h3>出発する店舗と日時</h3>
+        <div class="fg"><label>都道府県</label>
+          <select id="pref" onchange="onPref()"><option value="">選択してください</option><option value="naha">沖縄県</option><option value="sapporo">北海道</option></select></div>
+        <div class="fg"><label>店舗</label>
+          <select id="shop" disabled><option>都道府県を選択</option></select></div>
+        <!-- 受取方法（那覇のみ表示） -->
+        <div class="fg" id="methodWrap" style="display:none"><label>受取方法</label>
+          <div class="methods" id="methods">
+            <div class="method" data-m="delivery" onclick="pickM('delivery')"><span class="mi">📍</span>デリバリー<small>指定場所へお届け</small></div>
+            <div class="method" data-m="airport" onclick="pickM('airport')"><span class="mi">✈️</span>空港送迎<small>那覇空港で受渡し</small></div>
+            <div class="method" data-m="store" onclick="pickM('store')"><span class="mi">🏢</span>来店<small>店舗で受取</small></div>
+          </div></div>
+        <div class="row2"><div class="fg"><label>出発日</label><input type="date" id="sd"></div><div class="fg"><label>時刻</label><select id="st">__T__</select></div></div>
+        <div class="fg" id="detailWrap"></div>
+      </div>
+      <!-- 返却 -->
+      <div class="sec"><h3>返却する店舗と日時</h3>
+        <div class="fg"><label>店舗</label><input id="rshop" value="出発と同じ" disabled><div class="hint">※プロトでは出発店舗と同じ（乗り捨ては今後）</div></div>
+        <div class="row2"><div class="fg"><label>返却日</label><input type="date" id="ed"></div><div class="fg"><label>時刻</label><select id="et">__T__</select></div></div>
+      </div>
+      <!-- 車タイプ -->
+      <div class="sec"><h3>車のタイプを選ぶ</h3>
+        <div class="types" id="types"></div></div>
+      <button class="search" id="searchBtn" onclick="doSearch()">この条件で検索する</button>
+      <div class="hint">※リニューアル試作。現行サイトの構成に合わせています（決済・空車検索・地図は本接続で実装）。</div>
+    </div>
+  </div>
+
+  <div class="news"><h2>お知らせ</h2>
+    <div class="item"><span class="d">2026.06</span><span>夏季ハイシーズン料金のご案内</span></div>
+    <div class="item"><span class="d">2026.05</span><span>札幌デリバリー対応エリア拡大</span></div>
+  </div>
+</div>
+
+<footer class="foot"><div><a href="#">お知らせ</a>・<a href="#">会社概要</a>・<a href="#">貸渡約款</a>・<a href="#">プライバシー</a>・<a href="#">特定商取引法</a></div><div style="margin-top:8px;font-size:11px">© HANDYMAN レンタカー</div></footer>
+
+<div class="ov" id="ov"><div class="sheet"><button class="cl" onclick="document.getElementById('ov').classList.remove('on')">×</button><div id="result"></div></div></div>
+
+<script>
+const TYPES=[{c:'A',n:'アルファード/ヴェルファイア',i:'🚐',p:15000},{c:'B',n:'ミニバン',i:'🚐',p:12000},{c:'S',n:'SUV',i:'🚙',p:9000},{c:'F',n:'コンパクト',i:'🚗',p:6000},{c:'H',n:'セダン',i:'🚗',p:8000},{c:'C',n:'コンパクトSUV',i:'🚙',p:8000}];
+const VT={delivery:{v:'DEL',r:'COL'},airport:{v:'PUB',r:'BDB'},store:{v:'来店',r:'返却'}};
+const SHOPS={naha:['那覇空港店'],sapporo:['札幌店']};
+let M='', T='';
+function timeOpts(){let h='';for(let i=8;i<=20;i++){h+=`<option>${(i<10?'0'+i:i)}:00</option><option>${(i<10?'0'+i:i)}:30</option>`;}return h;}
+document.body.innerHTML=document.body.innerHTML.replace(/__T__/g,timeOpts());
+function rtypes(){document.getElementById('types').innerHTML=TYPES.map(t=>`<div class="type ${T===t.c?'sel':''}" onclick="pickT('${t.c}')"><div class="ti">${t.i}</div><div class="tn">${t.n}</div><div class="tp">¥${t.p.toLocaleString()}〜/日</div></div>`).join('');}
+function onPref(){
+ const p=document.getElementById('pref').value;
+ const sh=document.getElementById('shop');
+ if(!p){sh.disabled=true;sh.innerHTML='<option>都道府県を選択</option>';document.getElementById('methodWrap').style.display='none';return;}
+ sh.disabled=false;sh.innerHTML=SHOPS[p].map(s=>`<option>${s}</option>`).join('');
+ if(p==='naha'){document.getElementById('methodWrap').style.display='block';M='';}
+ else{document.getElementById('methodWrap').style.display='none';M='delivery';} // 札幌=デリバリー固定
+ renderDetail();update();
+}
+function pickM(m){M=m;document.querySelectorAll('#methods .method').forEach(x=>x.classList.toggle('sel',x.dataset.m===m));renderDetail();update();}
+function pickT(c){T=c;rtypes();update();}
+function renderDetail(){
+ const d=document.getElementById('detailWrap');const m=document.getElementById('pref').value==='sapporo'?'delivery':M;
+ if(m==='delivery')d.innerHTML='<label>お届け／回収場所</label><input id="place" placeholder="ホテル名・住所など"><div class="hint">本接続では地図で指定（KEYDROPと同じ）</div>';
+ else if(m==='airport')d.innerHTML='<label>到着便名</label><input id="flight" placeholder="例: NH123"><div class="hint">那覇空港で受渡し・返却も空港</div>';
+ else if(m==='store')d.innerHTML='<label>受取店舗</label><input value="那覇空港店" disabled>';
+ else d.innerHTML='';
+}
+function update(){
+ const p=document.getElementById('pref').value;
+ const ok=p&&(p==='sapporo'||M)&&T;
+ document.getElementById('searchBtn').disabled=!ok;
+}
+function doSearch(){
+ const p=document.getElementById('pref').value;const m=p==='sapporo'?'delivery':M;const t=TYPES.find(x=>x.c===T);
+ const sd=document.getElementById('sd').value,ed=document.getElementById('ed').value,st=document.getElementById('st').value,et=document.getElementById('et').value;
+ if(!sd||!ed){alert('出発日・返却日を選んでください');return;}
+ const vt=VT[m];const days=Math.max(1,Math.round((new Date(ed)-new Date(sd))/86400000)+1);
+ document.getElementById('result').innerHTML=`<h3>検索結果（プロト）</h3>
+ <div class="sumrow"><span>エリア/店舗</span><b>${p==='naha'?'沖縄・那覇空港店':'北海道・札幌店'}</b></div>
+ <div class="sumrow"><span>受取方法</span><b>${{delivery:'デリバリー',airport:'空港送迎',store:'来店'}[m]}</b></div>
+ <div class="sumrow"><span>期間</span><b>${sd} ${st} 〜 ${ed} ${et}（${days}日）</b></div>
+ <div class="sumrow"><span>車タイプ</span><b>${t.n}（${t.c}）</b></div>
+ <div class="sumrow"><span>概算</span><b>¥${(t.p*days).toLocaleString()}〜</b></div>
+ <div class="devtag">🛠 開発メモ：この条件で空車検索→予約。Supabase書込時の社内コード →
+  visit_type=<span class="vt">${vt.v}</span> / return_type=<span class="vt">${vt.r}</span> /
+  ota=<span class="vt">${p==='sapporo'?'HP→reservations':'HP→nha_reservations'}</span> →
+  そのまま${p==='sapporo'?'札幌':'那覇'}APP(admin)で管理。</div>
+ <div class="hint" style="margin-top:10px">※プロト：空車検索・決済・DB保存は未接続。</div>`;
+ document.getElementById('ov').classList.add('on');
+}
+rtypes();update();
+</script></body></html>
