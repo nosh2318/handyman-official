@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a1f44">
+<title>予約確認・マイページ｜HANDYMAN RENTCAR</title>
+<meta name="description" content="レンタカー HANDYMAN のご予約確認。予約番号とご登録のメールアドレス（または電話番号）でマイページを開けます。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN',sans-serif;background:#eef2f8;color:#0a1f44;line-height:1.8;min-height:100vh}
+  a{color:#0369a1}
+  .hd{background:#0a1f44;color:#fff;padding:13px 18px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
+  .hd a.logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+  .hd .mark{width:20px;height:15px;display:flex;flex-direction:column;justify-content:space-between}
+  .hd .mark i{height:3px;background:#f2b600;border-radius:2px;display:block}
+  .hd b{font-size:18px;font-weight:900;letter-spacing:.04em;color:#fff}.hd .y{color:#f2b600}
+  .hd .back{font-size:12px;color:#f2b600;text-decoration:none;font-weight:700;margin-left:10px;flex:none}
+  .langsw{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+  .langsw button{font-size:11px;font-weight:800;color:#ccc;background:transparent;border:1px solid #555;border-radius:999px;padding:4px 9px;cursor:pointer}
+  .langsw button.active{color:#0a1f44;background:#f2b600;border-color:#f2b600}
+  .hero{background:linear-gradient(135deg,#0a1f44,#0a2e80);color:#fff;padding:30px 20px 26px;text-align:center}
+  .hero h1{font-size:22px;font-weight:900}.hero h1 .y{color:#f2b600}
+  .hero p{font-size:13px;color:#c9d6f0;margin-top:8px}
+  .wrap{max-width:520px;margin:0 auto;padding:24px 16px}
+  .card{background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:24px 20px}
+  label{display:block;font-size:13px;font-weight:800;color:#33456b;margin:14px 0 6px}
+  label:first-child{margin-top:0}
+  input{width:100%;font-size:16px;padding:13px 14px;border:1.5px solid #cdd6e5;border-radius:11px;background:#fff;color:#0a1f44}
+  input:focus{outline:none;border-color:#0a2e80}
+  .hint{font-size:11.5px;color:#5b6b8a;margin-top:5px}
+  .btn{width:100%;margin-top:20px;background:#f2b600;color:#0a1f44;font-weight:900;font-size:16px;padding:15px;border:0;border-radius:12px;cursor:pointer;box-shadow:0 3px 12px rgba(250,190,0,.4)}
+  .btn:disabled{opacity:.55;cursor:default}
+  .msg{margin-top:14px;font-size:13px;font-weight:700;padding:11px 13px;border-radius:10px;display:none}
+  .msg.err{display:block;background:#fdecec;color:#b42318;border:1px solid #f6c9c4}
+  .msg.ok{display:block;background:#e6f6ec;color:#0a7d3c;border:1px solid #b6e4c6}
+  .note{font-size:11.5px;color:#5b6b8a;margin-top:16px;text-align:center;line-height:1.9}
+  footer{text-align:center;padding:22px 18px;color:#5b6c8a;font-size:11px}
+</style>
+</head>
+<body>
+<div class="hd">
+  <a class="logo" href="index.html"><span class="mark"><i></i><i></i><i></i></span><b>HANDYMAN<span class="y"> RENTCAR</span></b></a>
+  <div class="langsw" id="langsw">
+    <button data-l="ja">日本語</button><button data-l="en">EN</button><button data-l="zh">繁中</button><button data-l="ko">한국어</button>
+  </div>
+  <a class="back" href="index.html" data-i="back">← TOP</a>
+</div>
+
+<div class="hero">
+  <h1 data-i="h1">ご予約の<span class="y">確認</span></h1>
+  <p data-i="lead">予約番号とご登録の連絡先でマイページを開きます</p>
+</div>
+
+<div class="wrap">
+  <div class="card">
+    <label data-i="l_resv">予約番号</label>
+    <input id="resv" type="text" autocomplete="off" spellcheck="false" data-ph="ph_resv" placeholder="例：R0XXXXXX / HDMT2609…">
+    <label data-i="l_contact">ご登録のメールアドレス または 電話番号</label>
+    <input id="contact" type="text" autocomplete="off" spellcheck="false" data-ph="ph_contact" placeholder="example@mail.com / 09012345678">
+    <div class="hint" data-i="hint">ご予約時にご登録いただいたメールアドレス、または電話番号をご入力ください。</div>
+    <button class="btn" id="go" data-i="btn">マイページを開く</button>
+    <div class="msg" id="msg"></div>
+    <div class="note" data-i="note">※ ご本人確認のため、予約番号と連絡先の両方が一致した場合のみ表示されます。<br>ご不明な場合はカスタマーダイヤル 050-1724-6197（9:00〜19:00）まで。</div>
+  </div>
+</div>
+
+<footer>© HANDYMAN RENTCAR</footer>
+
+<script>
+var EF="https://ckrxttbnawkclshczsia.supabase.co/functions/v1/mypage-find";
+var ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8";
+var I={
+ ja:{back:"← TOP",h1:'ご予約の<span class="y">確認</span>',lead:"予約番号とご登録の連絡先でマイページを開きます",l_resv:"予約番号",l_contact:"ご登録のメールアドレス または 電話番号",ph_resv:"例：R0XXXXXX / HDMT2609…",ph_contact:"example@mail.com / 09012345678",hint:"ご予約時にご登録いただいたメールアドレス、または電話番号をご入力ください。",btn:"マイページを開く",note:"※ ご本人確認のため、予約番号と連絡先の両方が一致した場合のみ表示されます。<br>ご不明な場合はカスタマーダイヤル 050-1724-6197（9:00〜19:00）まで。",busy:"確認中…",errfind:"ご予約が見つかりませんでした。予約番号とメールアドレス／電話番号をご確認ください。",errinput:"予約番号と、メールアドレスまたは電話番号をご入力ください。",errnet:"通信エラーが発生しました。時間をおいて再度お試しください。",okgo:"ご予約が確認できました。マイページを開きます…"},
+ en:{back:"← TOP",h1:'Find your <span class="y">Booking</span>',lead:"Open your page with your booking number and registered contact",l_resv:"Booking number",l_contact:"Registered email or phone number",ph_resv:"e.g. R0XXXXXX / HDMT2609…",ph_contact:"example@mail.com / 09012345678",hint:"Enter the email address or phone number you registered when booking.",btn:"Open My Page",note:"* For your security, the page opens only when both the booking number and contact match.<br>Questions: Customer Dial 050-1724-6197 (9:00–19:00).",busy:"Checking…",errfind:"Booking not found. Please check your booking number and email/phone.",errinput:"Please enter your booking number and email or phone.",errnet:"A network error occurred. Please try again later.",okgo:"Booking confirmed. Opening your page…"},
+ zh:{back:"← TOP",h1:'查詢您的<span class="y">預約</span>',lead:"以預約編號與登記的聯絡方式開啟會員頁",l_resv:"預約編號",l_contact:"登記的電子郵件 或 電話號碼",ph_resv:"例：R0XXXXXX / HDMT2609…",ph_contact:"example@mail.com / 09012345678",hint:"請輸入預約時登記的電子郵件或電話號碼。",btn:"開啟會員頁",note:"※ 為保護您的資料，僅在預約編號與聯絡方式皆相符時顯示。<br>如有疑問請洽客服專線 050-1724-6197（9:00〜19:00）。",busy:"確認中…",errfind:"查無預約。請確認預約編號與電子郵件／電話。",errinput:"請輸入預約編號與電子郵件或電話。",errnet:"發生連線錯誤，請稍後再試。",okgo:"已確認預約，正在開啟…"},
+ ko:{back:"← TOP",h1:'예약 <span class="y">확인</span>',lead:"예약번호와 등록된 연락처로 마이페이지를 엽니다",l_resv:"예약번호",l_contact:"등록된 이메일 또는 전화번호",ph_resv:"예：R0XXXXXX / HDMT2609…",ph_contact:"example@mail.com / 09012345678",hint:"예약 시 등록하신 이메일 또는 전화번호를 입력해 주세요.",btn:"마이페이지 열기",note:"※ 본인 확인을 위해 예약번호와 연락처가 모두 일치할 때만 표시됩니다.<br>문의: 고객센터 050-1724-6197 (9:00~19:00).",busy:"확인 중…",errfind:"예약을 찾을 수 없습니다. 예약번호와 이메일/전화번호를 확인해 주세요.",errinput:"예약번호와 이메일 또는 전화번호를 입력해 주세요.",errnet:"통신 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",okgo:"예약이 확인되었습니다. 페이지를 엽니다…"}
+};
+var LANG="ja";
+function t(k){return (I[LANG]||I.ja)[k];}
+function render(lang){
+  LANG=lang; document.documentElement.lang=lang; var d=I[lang]||I.ja;
+  document.querySelectorAll("[data-i]").forEach(function(el){var k=el.getAttribute("data-i");if(d[k]!=null)el.innerHTML=d[k];});
+  document.querySelectorAll("[data-ph]").forEach(function(el){var k=el.getAttribute("data-ph");if(d[k]!=null)el.placeholder=d[k];});
+  document.querySelectorAll("#langsw button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-l")===lang);});
+  try{localStorage.setItem("hdm_lang",lang);}catch(e){}
+}
+document.getElementById("langsw").addEventListener("click",function(e){var b=e.target.closest("button");if(b)render(b.getAttribute("data-l"));});
+var init="ja";try{var s=localStorage.getItem("hdm_lang");if(s&&I[s])init=s;else{var n=(navigator.language||"ja").slice(0,2);if(I[n])init=n;}}catch(e){}
+render(init);
+
+var msg=document.getElementById("msg"), go=document.getElementById("go");
+function showMsg(cls,txt){msg.className="msg "+cls;msg.innerHTML=txt;}
+var BUSY=false;
+async function submit(){
+  if(BUSY)return;
+  var resv=document.getElementById("resv").value.trim();
+  var contact=document.getElementById("contact").value.trim();
+  if(resv.length<4||contact.length<3){showMsg("err",t("errinput"));return;}
+  BUSY=true; go.disabled=true; var org=go.textContent; go.textContent=t("busy"); msg.className="msg";
+  try{
+    var r=await fetch(EF,{method:"POST",headers:{"Content-Type":"application/json",apikey:ANON,Authorization:"Bearer "+ANON},body:JSON.stringify({resv_no:resv,contact:contact})});
+    var j=await r.json();
+    if(j&&j.ok&&j.url){showMsg("ok",t("okgo"));location.href=j.url;return;}
+    showMsg("err",t("errfind"));
+  }catch(e){showMsg("err",t("errnet"));}
+  BUSY=false; go.disabled=false; go.textContent=org;
+}
+go.addEventListener("click",submit);
+document.getElementById("contact").addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.isComposing)submit();});
+</script>
+</body>
+</html>
