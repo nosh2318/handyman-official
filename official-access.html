@@ -83,16 +83,16 @@
 
 <script>
 var STORES=[
-  {key:"naha", q:"沖縄県豊見城市名嘉地180-1", lat:26.177095, lon:127.666824,
+  {key:"naha", q:"沖縄県豊見城市名嘉地180-1", lat:26.177095, lon:127.666824, gmap:"https://share.google/kV7IKxnzFCiixbZo2",
    spot:{ja:"HANDYMAN 第2駐車場",en:"HANDYMAN 2nd Parking",zh:"HANDYMAN 第2停車場",ko:"HANDYMAN 제2주차장"},
    name:{ja:"那覇空港店",en:"Naha Airport Branch",zh:"那霸機場店",ko:"나하공항점"},
    region:{ja:"沖縄",en:"Okinawa",zh:"沖繩",ko:"오키나와"},
    zip:"〒901-0235", addr:{ja:"沖縄県豊見城市名嘉地180-1",en:"180-1 Nakachi, Tomigusuku, Okinawa",zh:"沖繩縣豐見城市名嘉地180-1",ko:"오키나와현 도미구스쿠시 나카치 180-1"}},
-  {key:"sapporo", q:"北海道札幌市中央区北5条西11丁目15-4", lat:43.065453, lon:141.338760,
+  {key:"sapporo", q:"北海道札幌市中央区北5条西11丁目15-4", lat:43.065453, lon:141.338760, gmap:"https://maps.app.goo.gl/9G9jbG6ZH2N68pcNA",
    name:{ja:"札幌店",en:"Sapporo Branch",zh:"札幌店",ko:"삿포로점"},
    region:{ja:"北海道",en:"Hokkaido",zh:"北海道",ko:"홋카이도"},
    zip:"〒060-0005", addr:{ja:"北海道札幌市中央区北5条西11丁目15-4 BYYARD札幌",en:"BYYARD Sapporo, Kita5-jo Nishi11-15-4, Chuo-ku, Sapporo, Hokkaido",zh:"北海道札幌市中央區北5條西11丁目15-4 BYYARD札幌",ko:"홋카이도 삿포로시 주오구 기타5조 니시11초메 15-4 BYYARD 삿포로"}},
-  {key:"takamatsu", q:"香川県高松市香川町川東上1373-4", lat:34.227940, lon:134.036575,
+  {key:"takamatsu", q:"香川県高松市香川町川東上1373-4", lat:34.227940, lon:134.036575, gmap:"https://maps.app.goo.gl/Luwt3aURXfwqef6r7",
    name:{ja:"高松空港店",en:"Takamatsu Airport Branch",zh:"高松機場店",ko:"다카마쓰공항점"},
    region:{ja:"香川",en:"Kagawa",zh:"香川",ko:"가가와"},
    zip:"〒761-1706", addr:{ja:"香川県高松市香川町川東上1373-4",en:"1373-4 Kagawacho Kawahigashikami, Takamatsu, Kagawa",zh:"香川縣高松市香川町川東上1373-4",ko:"가가와현 다카마쓰시 가가와초 가와히가시카미 1373-4"}}
@@ -130,7 +130,7 @@ function render(lang){
         '</div>'+
       '</div>'+
       '<div class="mapbox"><iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="'+embed+'"></iframe></div>'+
-      '<div class="acts"><a class="m" target="_blank" rel="noopener" href="'+link+'">'+t.mapbtn+'</a><a class="r" target="_blank" rel="noopener" href="'+route+'">'+t.routebtn+'</a></div>'+
+      '<div class="acts"><a class="m" target="_blank" rel="noopener" href="'+(s.gmap||link)+'">'+t.mapbtn+'</a><a class="r" target="_blank" rel="noopener" href="'+route+'">'+t.routebtn+'</a></div>'+
      '</div>';
   });
   document.getElementById("stores").innerHTML=html;
