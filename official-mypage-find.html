@@ -57,7 +57,13 @@
 
 <div class="wrap">
   <div class="card">
-    <label data-i="l_q">予約番号・電話番号・メールアドレス（いずれか1つ）</label>
+    <label data-i="l_area">ご予約のエリア（店舗）を選択</label>
+    <div id="areas" style="display:flex;gap:8px;flex-wrap:wrap">
+      <button type="button" class="area" data-s="nha" data-i="a_nha" style="flex:1;min-width:96px;font-size:13.5px;font-weight:800;padding:12px 6px;border:1.5px solid #cdd6e5;border-radius:11px;background:#fff;color:#33456b;cursor:pointer">🌺 那覇空港店</button>
+      <button type="button" class="area" data-s="spk" data-i="a_spk" style="flex:1;min-width:96px;font-size:13.5px;font-weight:800;padding:12px 6px;border:1.5px solid #cdd6e5;border-radius:11px;background:#fff;color:#33456b;cursor:pointer">❄️ 札幌店</button>
+      <button type="button" class="area" data-s="tkm" data-i="a_tkm" style="flex:1;min-width:96px;font-size:13.5px;font-weight:800;padding:12px 6px;border:1.5px solid #cdd6e5;border-radius:11px;background:#fff;color:#33456b;cursor:pointer">🍜 高松空港店</button>
+    </div>
+    <label data-i="l_q" style="margin-top:16px">予約番号・電話番号・メールアドレス（いずれか1つ）</label>
     <input id="q" type="text" autocomplete="off" spellcheck="false" data-ph="ph_q" placeholder="例：R0XXXXXX / 09012345678 / example@mail.com">
     <div class="hint" data-i="hint">予約番号・お電話番号・メールアドレスのいずれか1つをご入力ください。</div>
     <button class="btn" id="go" data-i="btn">マイページを開く</button>
@@ -72,10 +78,10 @@
 var EF="https://ckrxttbnawkclshczsia.supabase.co/functions/v1/mypage-find";
 var ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8";
 var I={
- ja:{back:"← TOP",h1:'ご予約の<span class="y">確認</span>',lead:"予約番号とご登録の連絡先でマイページを開きます",l_q:"予約番号・電話番号・メールアドレス（いずれか1つ）",ph_q:"例：R0XXXXXX / 09012345678 / example@mail.com",hint:"予約番号・お電話番号・メールアドレスのいずれか1つをご入力ください。",btn:"マイページを開く",note:"※ ご不明な場合はカスタマーダイヤル 050-1724-6197（9:00〜19:00）まで。",busy:"確認中…",errfind:"ご予約が見つかりませんでした。入力内容をご確認ください。",errinput:"予約番号・電話番号・メールアドレスのいずれかをご入力ください。",errnet:"通信エラーが発生しました。時間をおいて再度お試しください。",okgo:"ご予約が確認できました。マイページを開きます…"},
- en:{back:"← TOP",h1:'Find your <span class="y">Booking</span>',lead:"Open your page with your booking number and registered contact",l_q:"Booking number, phone, or email (any one)",ph_q:"e.g. R0XXXXXX / 09012345678 / example@mail.com",hint:"Enter your booking number, phone number, or email address (any one).",btn:"Open My Page",note:"* Questions: Customer Dial 050-1724-6197 (9:00–19:00).",busy:"Checking…",errfind:"Booking not found. Please check your input.",errinput:"Please enter your booking number, phone, or email.",errnet:"A network error occurred. Please try again later.",okgo:"Booking confirmed. Opening your page…"},
- zh:{back:"← TOP",h1:'查詢您的<span class="y">預約</span>',lead:"以預約編號與登記的聯絡方式開啟會員頁",l_q:"預約編號・電話號碼・電子郵件（任一）",ph_q:"例：R0XXXXXX / 09012345678 / example@mail.com",hint:"請輸入預約編號、電話號碼或電子郵件其中一項。",btn:"開啟會員頁",note:"※ 如有疑問請洽客服專線 050-1724-6197（9:00〜19:00）。",busy:"確認中…",errfind:"查無預約，請確認輸入內容。",errinput:"請輸入預約編號、電話號碼或電子郵件。",errnet:"發生連線錯誤，請稍後再試。",okgo:"已確認預約，正在開啟…"},
- ko:{back:"← TOP",h1:'예약 <span class="y">확인</span>',lead:"예약번호와 등록된 연락처로 마이페이지를 엽니다",l_q:"예약번호・전화번호・이메일 (하나만)",ph_q:"예：R0XXXXXX / 09012345678 / example@mail.com",hint:"예약번호, 전화번호, 이메일 중 하나를 입력해 주세요.",btn:"마이페이지 열기",note:"※ 문의: 고객센터 050-1724-6197 (9:00~19:00).",busy:"확인 중…",errfind:"예약을 찾을 수 없습니다. 입력 내용을 확인해 주세요.",errinput:"예약번호, 전화번호 또는 이메일을 입력해 주세요.",errnet:"통신 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",okgo:"예약이 확인되었습니다. 페이지를 엽니다…"}
+ ja:{back:"← TOP",h1:'ご予約の<span class="y">確認</span>',lead:"予約番号とご登録の連絡先でマイページを開きます",l_area:"ご予約のエリア（店舗）を選択",a_nha:"🌺 那覇空港店",a_spk:"❄️ 札幌店",a_tkm:"🍜 高松空港店",errstore:"ご予約のエリア（店舗）を選択してください。",l_q:"予約番号・電話番号・メールアドレス（いずれか1つ）",ph_q:"例：R0XXXXXX / 09012345678 / example@mail.com",hint:"予約番号・お電話番号・メールアドレスのいずれか1つをご入力ください。",btn:"マイページを開く",note:"※ ご不明な場合はカスタマーダイヤル 050-1724-6197（9:00〜19:00）まで。",busy:"確認中…",errfind:"ご予約が見つかりませんでした。入力内容をご確認ください。",errinput:"予約番号・電話番号・メールアドレスのいずれかをご入力ください。",errnet:"通信エラーが発生しました。時間をおいて再度お試しください。",okgo:"ご予約が確認できました。マイページを開きます…"},
+ en:{back:"← TOP",h1:'Find your <span class="y">Booking</span>',lead:"Open your page with your booking number and registered contact",l_area:"Select your area (branch)",a_nha:"🌺 Naha Airport",a_spk:"❄️ Sapporo",a_tkm:"🍜 Takamatsu Airport",errstore:"Please select your area (branch).",l_q:"Booking number, phone, or email (any one)",ph_q:"e.g. R0XXXXXX / 09012345678 / example@mail.com",hint:"Enter your booking number, phone number, or email address (any one).",btn:"Open My Page",note:"* Questions: Customer Dial 050-1724-6197 (9:00–19:00).",busy:"Checking…",errfind:"Booking not found. Please check your input.",errinput:"Please enter your booking number, phone, or email.",errnet:"A network error occurred. Please try again later.",okgo:"Booking confirmed. Opening your page…"},
+ zh:{back:"← TOP",h1:'查詢您的<span class="y">預約</span>',lead:"以預約編號與登記的聯絡方式開啟會員頁",l_area:"請選擇您的門市（地區）",a_nha:"🌺 那霸機場店",a_spk:"❄️ 札幌店",a_tkm:"🍜 高松機場店",errstore:"請先選擇門市（地區）。",l_q:"預約編號・電話號碼・電子郵件（任一）",ph_q:"例：R0XXXXXX / 09012345678 / example@mail.com",hint:"請輸入預約編號、電話號碼或電子郵件其中一項。",btn:"開啟會員頁",note:"※ 如有疑問請洽客服專線 050-1724-6197（9:00〜19:00）。",busy:"確認中…",errfind:"查無預約，請確認輸入內容。",errinput:"請輸入預約編號、電話號碼或電子郵件。",errnet:"發生連線錯誤，請稍後再試。",okgo:"已確認預約，正在開啟…"},
+ ko:{back:"← TOP",h1:'예약 <span class="y">확인</span>',lead:"예약번호와 등록된 연락처로 마이페이지를 엽니다",l_area:"예약 지점(지역)을 선택",a_nha:"🌺 나하공항점",a_spk:"❄️ 삿포로점",a_tkm:"🍜 다카마쓰공항점",errstore:"예약 지점(지역)을 선택해 주세요.",l_q:"예약번호・전화번호・이메일 (하나만)",ph_q:"예：R0XXXXXX / 09012345678 / example@mail.com",hint:"예약번호, 전화번호, 이메일 중 하나를 입력해 주세요.",btn:"마이페이지 열기",note:"※ 문의: 고객센터 050-1724-6197 (9:00~19:00).",busy:"확인 중…",errfind:"예약을 찾을 수 없습니다. 입력 내용을 확인해 주세요.",errinput:"예약번호, 전화번호 또는 이메일을 입력해 주세요.",errnet:"통신 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",okgo:"예약이 확인되었습니다. 페이지를 엽니다…"}
 };
 var LANG="ja";
 function t(k){return (I[LANG]||I.ja)[k];}
@@ -93,13 +99,24 @@ render(init);
 var msg=document.getElementById("msg"), go=document.getElementById("go");
 function showMsg(cls,txt){msg.className="msg "+cls;msg.innerHTML=txt;}
 var BUSY=false;
+var STORE="";
+document.getElementById("areas").addEventListener("click",function(e){
+  var b=e.target.closest(".area"); if(!b)return;
+  STORE=b.getAttribute("data-s");
+  document.querySelectorAll("#areas .area").forEach(function(x){
+    var on=x===b;
+    x.style.background=on?"#0a1f44":"#fff"; x.style.color=on?"#fff":"#33456b"; x.style.borderColor=on?"#0a1f44":"#cdd6e5";
+  });
+  msg.className="msg";
+});
 async function submit(){
   if(BUSY)return;
+  if(!STORE){showMsg("err",t("errstore"));return;}
   var q=document.getElementById("q").value.trim();
   if(q.length<4){showMsg("err",t("errinput"));return;}
   BUSY=true; go.disabled=true; var org=go.textContent; go.textContent=t("busy"); msg.className="msg";
   try{
-    var r=await fetch(EF,{method:"POST",headers:{"Content-Type":"application/json",apikey:ANON,Authorization:"Bearer "+ANON},body:JSON.stringify({q:q})});
+    var r=await fetch(EF,{method:"POST",headers:{"Content-Type":"application/json",apikey:ANON,Authorization:"Bearer "+ANON},body:JSON.stringify({store:STORE,q:q})});
     var j=await r.json();
     if(j&&j.ok&&j.url){showMsg("ok",t("okgo"));location.href=j.url;return;}
     showMsg("err",t("errfind"));
