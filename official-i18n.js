@@ -18,7 +18,7 @@
       tab_naha:'那覇空港店', tab_sapporo:'札幌店',
       car_more:'全車種・料金を見る →',
       news_en:'NEWS', news_jp:'運営からのお知らせ',
-      f_news:'お知らせ', f_company:'会社概要', f_terms:'貸渡約款', f_privacy:'プライバシー', f_law:'特定商取引法',
+      f_news:'お知らせ', f_company:'会社概要', f_access:'アクセス', f_terms:'貸渡約款', f_privacy:'プライバシー', f_law:'特定商取引法',
       note_naha:'🌺 那覇店：デリバリー・無料送迎（空港/駅）・来店に対応。',
       note_sapporo:'❄️ 札幌店：デリバリー専門。札幌市・北広島市へお届け／回収します。',
       seats:'名', perday:'〜 / 1日',ca_book:'この車で予約', azukari:'預かり'
@@ -36,7 +36,7 @@
       tab_naha:'Naha Airport', tab_sapporo:'Sapporo',
       car_more:'See all cars & rates →',
       news_en:'NEWS', news_jp:'Announcements',
-      f_news:'News', f_company:'Company', f_terms:'Rental Terms', f_privacy:'Privacy', f_law:'Legal Notice',
+      f_news:'News', f_company:'Company', f_access:'Access', f_terms:'Rental Terms', f_privacy:'Privacy', f_law:'Legal Notice',
       note_naha:'🌺 Naha: delivery, free shuttle (airport/station) & in-store pickup.',
       note_sapporo:'❄️ Sapporo: delivery-only. We deliver/collect in Sapporo & Kitahiroshima.',
       seats:'pax', perday:'~ / day',ca_book:'Book this car', azukari:'Consignment'
@@ -54,7 +54,7 @@
       tab_naha:'那覇機場店', tab_sapporo:'札幌店',
       car_more:'查看所有車型與費用 →',
       news_en:'NEWS', news_jp:'營運公告',
-      f_news:'公告', f_company:'公司簡介', f_terms:'租賃條款', f_privacy:'隱私權', f_law:'特定商業交易法',
+      f_news:'公告', f_company:'公司簡介', f_access:'交通資訊', f_terms:'租賃條款', f_privacy:'隱私權', f_law:'特定商業交易法',
       note_naha:'🌺 那覇店：提供送車・免費接送（機場/車站）・到店取車。',
       note_sapporo:'❄️ 札幌店：僅送車。於札幌市・北廣島市送車／收車。',
       seats:'人', perday:'～ / 每日', ca_book:'預約此車', azukari:'寄放車'
@@ -72,7 +72,7 @@
       tab_naha:'나하공항점', tab_sapporo:'삿포로점',
       car_more:'전체 차종·요금 보기 →',
       news_en:'NEWS', news_jp:'운영 공지',
-      f_news:'공지', f_company:'회사 소개', f_terms:'대여 약관', f_privacy:'개인정보', f_law:'특정상거래법',
+      f_news:'공지', f_company:'회사 소개', f_access:'오시는 길', f_terms:'대여 약관', f_privacy:'개인정보', f_law:'특정상거래법',
       note_naha:'🌺 나하점: 배달·무료 셔틀(공항/역)·방문 수령 가능.',
       note_sapporo:'❄️ 삿포로점: 배달 전용. 삿포로시·기타히로시마시로 배달/회수.',
       seats:'명', perday:'~ / 1일', ca_book:'이 차량 예약', azukari:'위탁'

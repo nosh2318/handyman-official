@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a1f44">
+<title>アクセス（店舗一覧）｜HANDYMAN RENTCAR 那覇・札幌・高松</title>
+<meta name="description" content="レンタカー HANDYMAN の那覇空港店・札幌店・高松空港店のアクセス情報（住所・地図・営業時間・カスタマーダイヤル）。営業時間は全店 9:00〜19:00・年中無休。">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN',sans-serif;background:#eef2f8;color:#0a1f44;line-height:1.85;padding-bottom:40px}
+  a{color:#0369a1}
+  .hd{background:#0a1f44;color:#fff;padding:13px 18px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
+  .hd a.logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+  .hd .mark{width:20px;height:15px;display:flex;flex-direction:column;justify-content:space-between}
+  .hd .mark i{height:3px;background:#f2b600;border-radius:2px;display:block}
+  .hd b{font-size:18px;font-weight:900;letter-spacing:.04em;color:#fff}.hd .y{color:#f2b600}
+  .hd .back{font-size:12px;color:#f2b600;text-decoration:none;font-weight:700;margin-left:10px;flex:none}
+  .langsw{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+  .langsw button{font-size:11px;font-weight:800;color:#ccc;background:transparent;border:1px solid #555;border-radius:999px;padding:4px 9px;cursor:pointer}
+  .langsw button.active{color:#0a1f44;background:#f2b600;border-color:#f2b600}
+  .hero{background:linear-gradient(135deg,#0a1f44,#0a2e80);color:#fff;padding:30px 20px 26px;text-align:center}
+  .hero h1{font-size:22px;font-weight:900}.hero h1 .y{color:#f2b600}
+  .hero p{font-size:13px;color:#c9d6f0;margin-top:8px}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 16px}
+  .card{background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;margin-bottom:22px}
+  .card .top{padding:18px 20px 14px}
+  .region{display:inline-block;font-size:11px;font-weight:800;color:#0a1f44;background:#f2b600;border-radius:999px;padding:3px 11px;margin-bottom:8px}
+  .card h2{font-size:19px;font-weight:900;color:#0a1f44}
+  .rows{margin-top:12px}
+  .row{display:flex;gap:10px;font-size:13.5px;padding:7px 0;border-top:1px solid #eef1f6}
+  .row:first-child{border-top:0}
+  .row .lb{flex:none;width:104px;font-weight:800;color:#5b6b8a}
+  .row .vv{color:#1a2b4a;font-weight:600}
+  .row .vv a{color:#0369a1;font-weight:700;text-decoration:none}
+  .badge{display:inline-block;font-size:11px;font-weight:800;color:#0a7d3c;background:#e6f6ec;border-radius:6px;padding:2px 8px;margin-left:4px}
+  .mapbox{border-top:1px solid #eef1f6}
+  .mapbox iframe{width:100%;height:260px;border:0;display:block;filter:saturate(1.02)}
+  .acts{display:flex;gap:10px;padding:12px 20px 16px;flex-wrap:wrap}
+  .acts a{flex:1;min-width:140px;text-align:center;text-decoration:none;font-weight:800;font-size:13px;padding:11px;border-radius:10px}
+  .acts .m{background:#0a1f44;color:#fff}
+  .acts .r{background:#f2b600;color:#0a1f44}
+  .note{max-width:900px;margin:0 auto;padding:0 16px;font-size:11.5px;color:#5b6b8a;text-align:center}
+  footer{background:#00163f;text-align:center;padding:26px 18px;margin-top:24px}
+  footer .brand{font-weight:900;font-style:italic;color:#f2b600;font-size:18px}
+  footer .lk{margin-top:12px;font-size:12px;line-height:2.1}
+  footer a{color:#a8bae0;text-decoration:none;margin:0 8px;white-space:nowrap;display:inline-block}
+  footer .cp{color:#5b6c8a;font-size:11px;margin-top:10px}
+  @media(max-width:520px){.row .lb{width:90px}.mapbox iframe{height:220px}}
+</style>
+</head>
+<body>
+<div class="hd">
+  <a class="logo" href="index.html"><span class="mark"><i></i><i></i><i></i></span><b>HANDYMAN<span class="y"> RENTCAR</span></b></a>
+  <div class="langsw" id="langsw">
+    <button data-l="ja">日本語</button><button data-l="en">EN</button><button data-l="zh">繁中</button><button data-l="ko">한국어</button>
+  </div>
+  <a class="back" href="index.html" data-i="back">← TOP</a>
+</div>
+
+<div class="hero">
+  <h1 data-i="h1">アクセス<span class="y">・店舗一覧</span></h1>
+  <p data-i="lead">全店 営業時間 9:00〜19:00／年中無休</p>
+</div>
+
+<div class="wrap" id="stores"></div>
+
+<p class="note" data-i="note">※ ご出発・ご返却場所の詳細は、ご予約時のご案内をご確認ください。</p>
+
+<footer>
+  <div class="brand">HANDYMAN RENTCAR</div>
+  <div class="lk">
+    <a href="index.html" data-i="f_top">トップ</a>・
+    <a href="company/" data-i="f_company">会社概要</a>・
+    <a href="official-clause.html" data-i="f_terms">貸渡約款</a>・
+    <a href="official-privacy.html" data-i="f_privacy">プライバシーポリシー</a>・
+    <a href="official-transaction.html" data-i="f_law">特定商取引法</a>
+  </div>
+  <div class="cp">© HANDYMAN RENTCAR</div>
+</footer>
+
+<script>
+var STORES=[
+  {key:"naha", q:"沖縄県豊見城市名嘉地180-1",
+   name:{ja:"那覇空港店",en:"Naha Airport Branch",zh:"那霸機場店",ko:"나하공항점"},
+   region:{ja:"沖縄",en:"Okinawa",zh:"沖繩",ko:"오키나와"},
+   zip:"〒901-0235", addr:{ja:"沖縄県豊見城市名嘉地180-1",en:"180-1 Nakachi, Tomigusuku, Okinawa",zh:"沖繩縣豐見城市名嘉地180-1",ko:"오키나와현 도미구스쿠시 나카치 180-1"}},
+  {key:"sapporo", q:"北海道札幌市中央区北5条西11丁目15-4",
+   name:{ja:"札幌店",en:"Sapporo Branch",zh:"札幌店",ko:"삿포로점"},
+   region:{ja:"北海道",en:"Hokkaido",zh:"北海道",ko:"홋카이도"},
+   zip:"〒060-0005", addr:{ja:"北海道札幌市中央区北5条西11丁目15-4 BYYARD札幌",en:"BYYARD Sapporo, Kita5-jo Nishi11-15-4, Chuo-ku, Sapporo, Hokkaido",zh:"北海道札幌市中央區北5條西11丁目15-4 BYYARD札幌",ko:"홋카이도 삿포로시 주오구 기타5조 니시11초메 15-4 BYYARD 삿포로"}},
+  {key:"takamatsu", q:"香川県高松市香川町川東上1373-4",
+   name:{ja:"高松空港店",en:"Takamatsu Airport Branch",zh:"高松機場店",ko:"다카마쓰공항점"},
+   region:{ja:"香川",en:"Kagawa",zh:"香川",ko:"가가와"},
+   zip:"〒761-1706", addr:{ja:"香川県高松市香川町川東上1373-4",en:"1373-4 Kagawacho Kawahigashikami, Takamatsu, Kagawa",zh:"香川縣高松市香川町川東上1373-4",ko:"가가와현 다카마쓰시 가가와초 가와히가시카미 1373-4"}}
+];
+var I={
+  ja:{back:"← TOP",h1:'アクセス<span class="y">・店舗一覧</span>',lead:"全店 営業時間 9:00〜19:00／年中無休",note:"※ ご出発・ご返却場所の詳細は、ご予約時のご案内をご確認ください。",office:"営業所",addr:"住所",tel:"カスタマーダイヤル",hours:"営業時間",hours_v:"9:00〜19:00",nostop:"年中無休",mapbtn:"Googleマップで見る",routebtn:"ルート案内",f_top:"トップ",f_company:"会社概要",f_terms:"貸渡約款",f_privacy:"プライバシーポリシー",f_law:"特定商取引法"},
+  en:{back:"← TOP",h1:'Access<span class="y"> & Branches</span>',lead:"All branches open 9:00–19:00 / Open year-round",note:"* Pickup / return locations will be advised at the time of booking.",office:"Branch",addr:"Address",tel:"Customer Dial",hours:"Hours",hours_v:"9:00–19:00",nostop:"Open year-round",mapbtn:"View on Google Maps",routebtn:"Directions",f_top:"Top",f_company:"Company",f_terms:"Rental Terms",f_privacy:"Privacy",f_law:"Legal Notice"},
+  zh:{back:"← TOP",h1:'交通資訊<span class="y">・門市一覽</span>',lead:"全門市營業時間 9:00〜19:00／全年無休",note:"※ 取還車地點詳情將於預約時通知。",office:"營業所",addr:"地址",tel:"客服專線",hours:"營業時間",hours_v:"9:00〜19:00",nostop:"全年無休",mapbtn:"在 Google 地圖查看",routebtn:"路線導航",f_top:"首頁",f_company:"公司簡介",f_terms:"租賃條款",f_privacy:"隱私權",f_law:"特定商業交易法"},
+  ko:{back:"← TOP",h1:'오시는 길<span class="y">・지점 안내</span>',lead:"전 지점 영업시간 9:00〜19:00 / 연중무휴",note:"※ 출발·반납 장소의 자세한 내용은 예약 시 안내를 확인해 주세요.",office:"영업소",addr:"주소",tel:"고객센터",hours:"영업시간",hours_v:"9:00〜19:00",nostop:"연중무휴",mapbtn:"Google 지도에서 보기",routebtn:"길찾기",f_top:"홈",f_company:"회사 소개",f_terms:"대여 약관",f_privacy:"개인정보",f_law:"특정상거래법"}
+};
+var TEL="050-1724-6197";
+function render(lang){
+  var t=I[lang]||I.ja;
+  document.documentElement.lang=lang;
+  document.querySelectorAll("[data-i]").forEach(function(el){var k=el.getAttribute("data-i");if(t[k]!=null)el.innerHTML=t[k];});
+  var html="";
+  STORES.forEach(function(s){
+    var enc=encodeURIComponent(s.q);
+    var embed="https://maps.google.com/maps?q="+enc+"&z=16&hl="+lang+"&output=embed";
+    var link="https://www.google.com/maps/search/?api=1&query="+enc;
+    var route="https://www.google.com/maps/dir/?api=1&destination="+enc;
+    html+=
+     '<div class="card">'+
+      '<div class="top">'+
+        '<span class="region">'+s.region[lang]+'</span>'+
+        '<h2>'+s.name[lang]+'</h2>'+
+        '<div class="rows">'+
+          '<div class="row"><span class="lb">'+t.office+'</span><span class="vv">'+s.name[lang]+' <span class="badge">'+t.office+'</span></span></div>'+
+          '<div class="row"><span class="lb">'+t.addr+'</span><span class="vv">'+s.zip+' '+s.addr[lang]+'</span></div>'+
+          '<div class="row"><span class="lb">'+t.tel+'</span><span class="vv"><a href="tel:'+TEL+'">'+TEL+'</a></span></div>'+
+          '<div class="row"><span class="lb">'+t.hours+'</span><span class="vv">'+t.hours_v+' <span class="badge">'+t.nostop+'</span></span></div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="mapbox"><iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="'+embed+'"></iframe></div>'+
+      '<div class="acts"><a class="m" target="_blank" rel="noopener" href="'+link+'">'+t.mapbtn+'</a><a class="r" target="_blank" rel="noopener" href="'+route+'">'+t.routebtn+'</a></div>'+
+     '</div>';
+  });
+  document.getElementById("stores").innerHTML=html;
+  document.querySelectorAll("#langsw button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-l")===lang);});
+  try{localStorage.setItem("hdm_lang",lang);}catch(e){}
+}
+document.getElementById("langsw").addEventListener("click",function(e){var b=e.target.closest("button");if(b)render(b.getAttribute("data-l"));});
+var init="ja";try{var s=localStorage.getItem("hdm_lang");if(s&&I[s])init=s;else{var n=(navigator.language||"ja").slice(0,2);if(I[n])init=n;}}catch(e){}
+render(init);
+</script>
+
+<!-- LocalBusiness 構造化データ（SEO：各営業所をGoogleに店舗として認識させる） -->
+<script type="application/ld+json">
+[
+ {"@context":"https://schema.org","@type":"AutoRental","name":"レンタカー HANDYMAN 那覇空港店","telephone":"050-1724-6197","url":"https://rent-handyman.com/","address":{"@type":"PostalAddress","postalCode":"901-0235","addressRegion":"沖縄県","addressLocality":"豊見城市","streetAddress":"名嘉地180-1","addressCountry":"JP"},"openingHours":"Mo-Su 09:00-19:00"},
+ {"@context":"https://schema.org","@type":"AutoRental","name":"レンタカー HANDYMAN 札幌店","telephone":"050-1724-6197","url":"https://rent-handyman.com/","address":{"@type":"PostalAddress","postalCode":"060-0005","addressRegion":"北海道","addressLocality":"札幌市中央区","streetAddress":"北5条西11丁目15-4 BYYARD札幌","addressCountry":"JP"},"openingHours":"Mo-Su 09:00-19:00"},
+ {"@context":"https://schema.org","@type":"AutoRental","name":"レンタカー HANDYMAN 高松空港店","telephone":"050-1724-6197","url":"https://rent-handyman.com/","address":{"@type":"PostalAddress","postalCode":"761-1706","addressRegion":"香川県","addressLocality":"高松市","streetAddress":"香川町川東上1373-4","addressCountry":"JP"},"openingHours":"Mo-Su 09:00-19:00"}
+]
+</script>
+</body>
+</html>
