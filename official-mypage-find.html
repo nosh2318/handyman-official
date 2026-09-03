@@ -63,11 +63,13 @@
       <button type="button" class="area" data-s="spk" data-i="a_spk" style="flex:1;min-width:96px;font-size:13.5px;font-weight:800;padding:12px 6px;border:1.5px solid #cdd6e5;border-radius:11px;background:#fff;color:#33456b;cursor:pointer">❄️ 札幌店</button>
       <button type="button" class="area" data-s="tkm" data-i="a_tkm" style="flex:1;min-width:96px;font-size:13.5px;font-weight:800;padding:12px 6px;border:1.5px solid #cdd6e5;border-radius:11px;background:#fff;color:#33456b;cursor:pointer">🍜 高松空港店</button>
     </div>
-    <label data-i="l_q" style="margin-top:16px">予約番号・電話番号・メールアドレス（いずれか1つ）</label>
-    <input id="q" type="text" autocomplete="off" spellcheck="false" data-ph="ph_q" placeholder="例：R0XXXXXX / 09012345678 / example@mail.com">
-    <div class="hint" data-i="hint">予約番号・お電話番号・メールアドレスのいずれか1つをご入力ください。</div>
-    <button class="btn" id="go" data-i="btn">マイページを開く</button>
-    <div class="msg" id="msg"></div>
+    <div id="inputSec" style="display:none">
+      <label data-i="l_q" style="margin-top:16px">予約番号・電話番号・メールアドレス（いずれか1つ）</label>
+      <input id="q" type="text" autocomplete="off" spellcheck="false" data-ph="ph_q" placeholder="例：R0XXXXXX / 09012345678 / example@mail.com">
+      <div class="hint" data-i="hint">予約番号・お電話番号・メールアドレスのいずれか1つをご入力ください。</div>
+      <button class="btn" id="go" data-i="btn">マイページを開く</button>
+      <div class="msg" id="msg"></div>
+    </div>
     <div class="note" data-i="note">※ ご本人確認のため、予約番号と連絡先の両方が一致した場合のみ表示されます。<br>ご不明な場合はカスタマーダイヤル 050-1724-6197（9:00〜19:00）まで。</div>
   </div>
 </div>
@@ -108,6 +110,9 @@ document.getElementById("areas").addEventListener("click",function(e){
     x.style.background=on?"#0a1f44":"#fff"; x.style.color=on?"#fff":"#33456b"; x.style.borderColor=on?"#0a1f44":"#cdd6e5";
   });
   msg.className="msg";
+  var sec=document.getElementById("inputSec");
+  sec.style.display="block";
+  try{document.getElementById("q").focus();}catch(e){}
 });
 async function submit(){
   if(BUSY)return;
