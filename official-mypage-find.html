@@ -57,11 +57,9 @@
 
 <div class="wrap">
   <div class="card">
-    <label data-i="l_resv">予約番号</label>
-    <input id="resv" type="text" autocomplete="off" spellcheck="false" data-ph="ph_resv" placeholder="例：R0XXXXXX / HDMT2609…">
-    <label data-i="l_contact">ご登録のメールアドレス または 電話番号</label>
-    <input id="contact" type="text" autocomplete="off" spellcheck="false" data-ph="ph_contact" placeholder="example@mail.com / 09012345678">
-    <div class="hint" data-i="hint">ご予約時にご登録いただいたメールアドレス、または電話番号をご入力ください。</div>
+    <label data-i="l_q">予約番号・電話番号・メールアドレス（いずれか1つ）</label>
+    <input id="q" type="text" autocomplete="off" spellcheck="false" data-ph="ph_q" placeholder="例：R0XXXXXX / 09012345678 / example@mail.com">
+    <div class="hint" data-i="hint">予約番号・お電話番号・メールアドレスのいずれか1つをご入力ください。</div>
     <button class="btn" id="go" data-i="btn">マイページを開く</button>
     <div class="msg" id="msg"></div>
     <div class="note" data-i="note">※ ご本人確認のため、予約番号と連絡先の両方が一致した場合のみ表示されます。<br>ご不明な場合はカスタマーダイヤル 050-1724-6197（9:00〜19:00）まで。</div>
@@ -74,10 +72,10 @@
 var EF="https://ckrxttbnawkclshczsia.supabase.co/functions/v1/mypage-find";
 var ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8";
 var I={
- ja:{back:"← TOP",h1:'ご予約の<span class="y">確認</span>',lead:"予約番号とご登録の連絡先でマイページを開きます",l_resv:"予約番号",l_contact:"ご登録のメールアドレス または 電話番号",ph_resv:"例：R0XXXXXX / HDMT2609…",ph_contact:"example@mail.com / 09012345678",hint:"ご予約時にご登録いただいたメールアドレス、または電話番号をご入力ください。",btn:"マイページを開く",note:"※ ご本人確認のため、予約番号と連絡先の両方が一致した場合のみ表示されます。<br>ご不明な場合はカスタマーダイヤル 050-1724-6197（9:00〜19:00）まで。",busy:"確認中…",errfind:"ご予約が見つかりませんでした。予約番号とメールアドレス／電話番号をご確認ください。",errinput:"予約番号と、メールアドレスまたは電話番号をご入力ください。",errnet:"通信エラーが発生しました。時間をおいて再度お試しください。",okgo:"ご予約が確認できました。マイページを開きます…"},
- en:{back:"← TOP",h1:'Find your <span class="y">Booking</span>',lead:"Open your page with your booking number and registered contact",l_resv:"Booking number",l_contact:"Registered email or phone number",ph_resv:"e.g. R0XXXXXX / HDMT2609…",ph_contact:"example@mail.com / 09012345678",hint:"Enter the email address or phone number you registered when booking.",btn:"Open My Page",note:"* For your security, the page opens only when both the booking number and contact match.<br>Questions: Customer Dial 050-1724-6197 (9:00–19:00).",busy:"Checking…",errfind:"Booking not found. Please check your booking number and email/phone.",errinput:"Please enter your booking number and email or phone.",errnet:"A network error occurred. Please try again later.",okgo:"Booking confirmed. Opening your page…"},
- zh:{back:"← TOP",h1:'查詢您的<span class="y">預約</span>',lead:"以預約編號與登記的聯絡方式開啟會員頁",l_resv:"預約編號",l_contact:"登記的電子郵件 或 電話號碼",ph_resv:"例：R0XXXXXX / HDMT2609…",ph_contact:"example@mail.com / 09012345678",hint:"請輸入預約時登記的電子郵件或電話號碼。",btn:"開啟會員頁",note:"※ 為保護您的資料，僅在預約編號與聯絡方式皆相符時顯示。<br>如有疑問請洽客服專線 050-1724-6197（9:00〜19:00）。",busy:"確認中…",errfind:"查無預約。請確認預約編號與電子郵件／電話。",errinput:"請輸入預約編號與電子郵件或電話。",errnet:"發生連線錯誤，請稍後再試。",okgo:"已確認預約，正在開啟…"},
- ko:{back:"← TOP",h1:'예약 <span class="y">확인</span>',lead:"예약번호와 등록된 연락처로 마이페이지를 엽니다",l_resv:"예약번호",l_contact:"등록된 이메일 또는 전화번호",ph_resv:"예：R0XXXXXX / HDMT2609…",ph_contact:"example@mail.com / 09012345678",hint:"예약 시 등록하신 이메일 또는 전화번호를 입력해 주세요.",btn:"마이페이지 열기",note:"※ 본인 확인을 위해 예약번호와 연락처가 모두 일치할 때만 표시됩니다.<br>문의: 고객센터 050-1724-6197 (9:00~19:00).",busy:"확인 중…",errfind:"예약을 찾을 수 없습니다. 예약번호와 이메일/전화번호를 확인해 주세요.",errinput:"예약번호와 이메일 또는 전화번호를 입력해 주세요.",errnet:"통신 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",okgo:"예약이 확인되었습니다. 페이지를 엽니다…"}
+ ja:{back:"← TOP",h1:'ご予約の<span class="y">確認</span>',lead:"予約番号とご登録の連絡先でマイページを開きます",l_q:"予約番号・電話番号・メールアドレス（いずれか1つ）",ph_q:"例：R0XXXXXX / 09012345678 / example@mail.com",hint:"予約番号・お電話番号・メールアドレスのいずれか1つをご入力ください。",btn:"マイページを開く",note:"※ ご不明な場合はカスタマーダイヤル 050-1724-6197（9:00〜19:00）まで。",busy:"確認中…",errfind:"ご予約が見つかりませんでした。入力内容をご確認ください。",errinput:"予約番号・電話番号・メールアドレスのいずれかをご入力ください。",errnet:"通信エラーが発生しました。時間をおいて再度お試しください。",okgo:"ご予約が確認できました。マイページを開きます…"},
+ en:{back:"← TOP",h1:'Find your <span class="y">Booking</span>',lead:"Open your page with your booking number and registered contact",l_q:"Booking number, phone, or email (any one)",ph_q:"e.g. R0XXXXXX / 09012345678 / example@mail.com",hint:"Enter your booking number, phone number, or email address (any one).",btn:"Open My Page",note:"* Questions: Customer Dial 050-1724-6197 (9:00–19:00).",busy:"Checking…",errfind:"Booking not found. Please check your input.",errinput:"Please enter your booking number, phone, or email.",errnet:"A network error occurred. Please try again later.",okgo:"Booking confirmed. Opening your page…"},
+ zh:{back:"← TOP",h1:'查詢您的<span class="y">預約</span>',lead:"以預約編號與登記的聯絡方式開啟會員頁",l_q:"預約編號・電話號碼・電子郵件（任一）",ph_q:"例：R0XXXXXX / 09012345678 / example@mail.com",hint:"請輸入預約編號、電話號碼或電子郵件其中一項。",btn:"開啟會員頁",note:"※ 如有疑問請洽客服專線 050-1724-6197（9:00〜19:00）。",busy:"確認中…",errfind:"查無預約，請確認輸入內容。",errinput:"請輸入預約編號、電話號碼或電子郵件。",errnet:"發生連線錯誤，請稍後再試。",okgo:"已確認預約，正在開啟…"},
+ ko:{back:"← TOP",h1:'예약 <span class="y">확인</span>',lead:"예약번호와 등록된 연락처로 마이페이지를 엽니다",l_q:"예약번호・전화번호・이메일 (하나만)",ph_q:"예：R0XXXXXX / 09012345678 / example@mail.com",hint:"예약번호, 전화번호, 이메일 중 하나를 입력해 주세요.",btn:"마이페이지 열기",note:"※ 문의: 고객센터 050-1724-6197 (9:00~19:00).",busy:"확인 중…",errfind:"예약을 찾을 수 없습니다. 입력 내용을 확인해 주세요.",errinput:"예약번호, 전화번호 또는 이메일을 입력해 주세요.",errnet:"통신 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",okgo:"예약이 확인되었습니다. 페이지를 엽니다…"}
 };
 var LANG="ja";
 function t(k){return (I[LANG]||I.ja)[k];}
@@ -97,12 +95,11 @@ function showMsg(cls,txt){msg.className="msg "+cls;msg.innerHTML=txt;}
 var BUSY=false;
 async function submit(){
   if(BUSY)return;
-  var resv=document.getElementById("resv").value.trim();
-  var contact=document.getElementById("contact").value.trim();
-  if(resv.length<4||contact.length<3){showMsg("err",t("errinput"));return;}
+  var q=document.getElementById("q").value.trim();
+  if(q.length<4){showMsg("err",t("errinput"));return;}
   BUSY=true; go.disabled=true; var org=go.textContent; go.textContent=t("busy"); msg.className="msg";
   try{
-    var r=await fetch(EF,{method:"POST",headers:{"Content-Type":"application/json",apikey:ANON,Authorization:"Bearer "+ANON},body:JSON.stringify({resv_no:resv,contact:contact})});
+    var r=await fetch(EF,{method:"POST",headers:{"Content-Type":"application/json",apikey:ANON,Authorization:"Bearer "+ANON},body:JSON.stringify({q:q})});
     var j=await r.json();
     if(j&&j.ok&&j.url){showMsg("ok",t("okgo"));location.href=j.url;return;}
     showMsg("err",t("errfind"));
@@ -110,7 +107,7 @@ async function submit(){
   BUSY=false; go.disabled=false; go.textContent=org;
 }
 go.addEventListener("click",submit);
-document.getElementById("contact").addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.isComposing)submit();});
+document.getElementById("q").addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.isComposing)submit();});
 </script>
 </body>
 </html>
