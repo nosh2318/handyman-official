@@ -269,11 +269,11 @@ select.fld:focus{box-shadow:0 0 0 3px rgba(250,190,0,.35)}
   <nav id="nav" onclick="if(event.target.tagName==='A')closeMenu()">
     <a href="https://plump-cap-ebe.notion.site/_-_-298c8329c12680858251f1755e436e72" target="_blank" rel="noopener" data-i18n="mn_guide_nha">ご利用方法（沖縄那覇店）</a>
     <a href="https://plump-cap-ebe.notion.site/User-Guide-2a1c8329c12681729aebf8c3b3ea4466" target="_blank" rel="noopener" data-i18n="mn_guide_spk">ご利用方法（札幌店）</a>
-    <a href="official-design.html#cars" data-i18n="mn_cars">車両と料金</a>
+    <a href="index.html#cars" data-i18n="mn_cars">車両と料金</a>
     <a href="official-insurance.html" target="_blank" rel="noopener" data-i18n="mn_ins">保険プラン一覧</a>
     <a href="https://plump-cap-ebe.notion.site/_OKI-2a4c8329c12680258f48ebb7e6d30234" target="_blank" rel="noopener" data-i18n="mn_faq_nha">よくある質問（沖縄那覇店）</a>
     <a href="https://plump-cap-ebe.notion.site/_SPK-234c8329c1268021b0c6e86b86dde0ac" target="_blank" rel="noopener" data-i18n="mn_faq_spk">よくある質問（札幌店）</a>
-    <a href="official-design.html#" data-i18n="mn_contact">お問い合わせ</a>
+    <a href="index.html#" data-i18n="mn_contact">お問い合わせ</a>
     <a href="official-bus.html" target="_blank" rel="noopener" data-i18n="mn_bus">沖縄那覇店 無料空港送迎バス時刻表</a>
   </nav>
 </div></header>
@@ -299,7 +299,7 @@ select.fld:focus{box-shadow:0 0 0 3px rgba(250,190,0,.35)}
   <!-- ===== STEP2：受取（送迎場所）＋ 車両選択 ===== -->
   <div id="stepSelect">
     <div class="sec"><h2><span class="snum">STEP 1</span><span data-i18n="fl_pick_head">🚙 ご利用日程の空車から選択</span></h2>
-      <div class="vempty" id="vEmpty" style="display:none"><span data-i18n="fl_allfull">🈵 選択された日程は、あいにく全クラス満車です。日程を変更してお試しください。</span> <a href="official-design.html#search" style="color:var(--navy2);font-weight:800" data-i18n="fl_change">条件を変更</a></div>
+      <div class="vempty" id="vEmpty" style="display:none"><span data-i18n="fl_allfull">🈵 選択された日程は、あいにく全クラス満車です。日程を変更してお試しください。</span> <a href="index.html#search" style="color:var(--navy2);font-weight:800" data-i18n="fl_change">条件を変更</a></div>
       <div class="vgrid" id="vgrid"></div>
       <div class="hint" data-i18n="fl_car_hint">車種・色・仕様はお選びいただけません（同クラス内からランダム）。全車禁煙・ペット同乗不可。料金は暦日制（0:00〜24:00で1日）1日あたりの目安です。</div></div>
     <div class="sec locked" id="methodSec"><h2><span class="snum">STEP 2</span><span id="methodTitle">🚗 受取の詳細</span></h2>
@@ -486,7 +486,7 @@ document.getElementById('sumbar').innerHTML=
   '<span class="it"><b>'+T('sum_recv')+'</b>'+T('mt_'+MKEY[method])+'</span>'+
   '<span class="it"><b>'+T('sum_dep')+'</b>'+fmtDT(pD,pT)+'</span>'+
   '<span class="it"><b>'+T('sum_ret')+'</b>'+fmtDT(rD,rT)+'</span>'+
-  '<a class="edit" href="official-design.html#search">'+T('sum_change')+'</a>';
+  '<a class="edit" href="index.html#search">'+T('sum_change')+'</a>';
 
 // 受取方法別の入力
 document.getElementById('methodTitle').textContent=T('mt_'+MKEY[method]);
