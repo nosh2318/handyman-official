@@ -8,7 +8,7 @@
     ja:{
       nav_cars:'車種一覧', nav_price:'ラインナップ', nav_news:'お知らせ', nav_book:'予約する',
       hero_copy:'旅は、目的地に着く前から<br>始まっている。',
-      s_store:'📍 店舗を選択', s_store_ph:'店舗を選択', s_naha:'那覇空港店（沖縄）', s_sapporo:'札幌店（北海道）',
+      s_store:'📍 店舗を選択', s_store_ph:'店舗を選択', s_naha:'那覇空港店（沖縄）', s_sapporo:'札幌店（北海道）',s_takamatsu:'高松空港店（香川）',
       s_method:'🚗 受取方法を選択', m_delivery:'デリバリー', m_airport:'無料送迎（空港/駅）', m_store:'来店',
       spk_msg:'<b>❄️ 札幌はデリバリー専門</b>　お届け先を地図で指定して予約します。「検索する」で予約画面へ進みます。',
       s_pick:'📅 出発 日時', s_ret:'📅 返却 日時', s_time:'時間',
@@ -26,7 +26,7 @@
     en:{
       nav_cars:'Car Types', nav_price:'Cars & Rates', nav_news:'News', nav_book:'Book Now',
       hero_copy:'The journey begins<br>before you arrive.',
-      s_store:'📍 Select store', s_store_ph:'Select store', s_naha:'Naha Airport (Okinawa)', s_sapporo:'Sapporo (Hokkaido)',
+      s_store:'📍 Select store', s_store_ph:'Select store', s_naha:'Naha Airport (Okinawa)', s_sapporo:'Sapporo (Hokkaido)',s_takamatsu:'Takamatsu Airport (Kagawa)',
       s_method:'🚗 Pickup method', m_delivery:'Delivery', m_airport:'Free shuttle (airport/station)', m_store:'In-store',
       spk_msg:'<b>❄️ Sapporo is delivery-only.</b>  Set your delivery spot on the map. Tap “Search” to continue.',
       s_pick:'📅 Pick-up', s_ret:'📅 Return', s_time:'Time',
@@ -44,7 +44,7 @@
     zh:{
       nav_cars:'車型一覽', nav_price:'車輛與費用', nav_news:'公告', nav_book:'立即預約',
       hero_copy:'旅程，早在抵達之前<br>就已開始。',
-      s_store:'📍 選擇門市', s_store_ph:'選擇門市', s_naha:'那覇機場店（沖繩）', s_sapporo:'札幌店（北海道）',
+      s_store:'📍 選擇門市', s_store_ph:'選擇門市', s_naha:'那覇機場店（沖繩）', s_sapporo:'札幌店（北海道）',s_takamatsu:'高松機場店（香川）',
       s_method:'🚗 選擇取車方式', m_delivery:'送車', m_airport:'免費接送（機場/車站）', m_store:'到店',
       spk_msg:'<b>❄️ 札幌僅提供送車服務。</b>  請於地圖指定送車地點，點「搜尋」進入預約。',
       s_pick:'📅 取車 日期時間', s_ret:'📅 還車 日期時間', s_time:'時間',
@@ -62,7 +62,7 @@
     ko:{
       nav_cars:'차종 목록', nav_price:'차량 및 요금', nav_news:'공지', nav_book:'예약하기',
       hero_copy:'여행은 목적지에 도착하기 전부터<br>시작됩니다.',
-      s_store:'📍 매장 선택', s_store_ph:'매장 선택', s_naha:'나하공항점(오키나와)', s_sapporo:'삿포로점(홋카이도)',
+      s_store:'📍 매장 선택', s_store_ph:'매장 선택', s_naha:'나하공항점(오키나와)', s_sapporo:'삿포로점(홋카이도)',s_takamatsu:'다카마쓰공항점(가가와)',
       s_method:'🚗 수령 방법 선택', m_delivery:'배달', m_airport:'무료 셔틀(공항/역)', m_store:'방문',
       spk_msg:'<b>❄️ 삿포로는 배달 전용입니다.</b>  지도에서 배달 장소를 지정하고 「검색」으로 진행하세요.',
       s_pick:'📅 대여 일시', s_ret:'📅 반납 일시', s_time:'시간',
