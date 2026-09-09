@@ -193,13 +193,16 @@
 </div><a class="cta" href="index.html">🚗 렌터카 예약하기</a></div>
 </div>
 
+<script src="official-i18n.js"></script>
 <script>
 (function(){
-  var KEY='kd_lang', LS=['ja','en','zh','ko'];
+  var _s=document.createElement('style');_s.textContent='.hdmlang{display:none!important}';document.head.appendChild(_s); // 共有エンジンのフローティング🌐は隠し、ヘッダーの言語ボタンを主UIに（言語は共有hdm_langで全ページ保持）
+  var KEY='hdm_lang', LS=['ja','en','zh','ko'];
   var T={ja:'貸渡約款｜HANDYMAN RENTCAR',en:'Rental Agreement｜HANDYMAN RENTCAR',zh:'租車條款｜HANDYMAN RENTCAR',ko:'대여 약관｜HANDYMAN RENTCAR'};
-  function detect(){try{var s=localStorage.getItem(KEY);if(s&&LS.indexOf(s)>=0)return s;}catch(e){}var n=(navigator.language||'ja').toLowerCase();return n.indexOf('ko')===0?'ko':n.indexOf('zh')===0?'zh':n.indexOf('en')===0?'en':'ja';}
+  function detect(){if(window.hdmLang){try{var h=window.hdmLang();if(LS.indexOf(h)>=0)return h;}catch(e){}}try{var s=localStorage.getItem(KEY);if(s&&LS.indexOf(s)>=0)return s;}catch(e){}var n=(navigator.language||'ja').toLowerCase();return n.indexOf('ko')===0?'ko':n.indexOf('zh')===0?'zh':n.indexOf('en')===0?'en':'ja';}
   function apply(l){if(LS.indexOf(l)<0)l='ja';document.documentElement.lang=l;document.title=T[l]||T.ja;document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-lang')===l);});document.querySelectorAll('#langsw button').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-l')===l);});try{localStorage.setItem(KEY,l);}catch(e){}}
-  document.querySelectorAll('#langsw button').forEach(function(b){b.onclick=function(){apply(b.getAttribute('data-l'));};});
+  document.querySelectorAll('#langsw button').forEach(function(b){b.onclick=function(){var l=b.getAttribute('data-l');apply(l);if(window.hdmSetLang)try{window.hdmSetLang(l);}catch(e){}};});
+  window.hdmOnLang=function(){apply(detect());}; // 他ページ/共有セレクタでの言語変更に追従
   apply(detect());
 })();
 </script>

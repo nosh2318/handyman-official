@@ -339,16 +339,20 @@ let DATA = null;
 /* ================= 多言語 i18n（日本語/English/繁體中文/한국어）================= */
 const LANGS=[{k:"ja",n:"日本語"},{k:"en",n:"EN"},{k:"zh",n:"繁中"},{k:"ko",n:"한국어"}];
 function detectLang(){
-  const s=localStorage.getItem("mypage_lang"); if(s&&LANGS.some(l=>l.k===s))return s;
+  if(window.hdmLang){try{const h=window.hdmLang(); if(LANGS.some(l=>l.k===h))return h;}catch(e){}}
+  const s=localStorage.getItem("hdm_lang")||localStorage.getItem("mypage_lang"); if(s&&LANGS.some(l=>l.k===s))return s;
   const n=(navigator.language||"ja").toLowerCase();
   if(n.startsWith("ja"))return"ja"; if(n.startsWith("ko"))return"ko"; if(n.startsWith("zh"))return"zh"; return"en";
 }
 let L=detectLang();
-function setLang(k){L=k;localStorage.setItem("mypage_lang",k);closeSheet();render();}
+function setLang(k){L=k;try{localStorage.setItem("mypage_lang",k);}catch(e){} if(window.hdmSetLang){try{window.hdmSetLang(k);}catch(e){}} closeSheet();render();}
+// 共有セレクタ/他ページでの言語変更に追従（共有hdm_langで全ページ言語を保持）
+window.hdmOnLang=function(){try{var h=(window.hdmLang?window.hdmLang():L); if(LANGS.some(l=>l.k===h)&&h!==L){L=h;render();}}catch(e){}};
 const TX={
  loading:{ja:"読み込み中…",en:"Loading…",zh:"載入中…",ko:"불러오는 중…"},
  no_key:{ja:"アクセスキーがありません。LINEに届いたURLからお開きください。",en:"No access key. Please open from the URL sent via LINE.",zh:"沒有存取金鑰。請從 LINE 收到的網址開啟。",ko:"액세스 키가 없습니다. LINE으로 받은 URL에서 열어주세요."},
- not_found:{ja:"予約が見つかりませんでした",en:"Reservation not found",zh:"找不到預約",ko:"예약을 찾을 수 없습니다"},
+ not_found:{ja:"予約が見つかりませんでした。LINE／メールに届いたURLからもう一度お開きください。",en:"Reservation not found. Please reopen from the URL sent via LINE / email.",zh:"找不到預約。請從 LINE／電子郵件收到的網址重新開啟。",ko:"예약을 찾을 수 없습니다. LINE／이메일로 받은 URL에서 다시 열어 주세요."},
+ reload:{ja:"🔄 再読み込み",en:"🔄 Reload",zh:"🔄 重新載入",ko:"🔄 새로고침"},
  your_page:{ja:"様 専用ページ",en:" — Your Reservation Page",zh:" 專屬頁面",ko:"님 전용 페이지"},
  guest:{ja:"お客",en:"Guest",zh:"貴賓",ko:"고객"},
  nh_days_pre:{ja:"ご出発まで",en:"Departure in",zh:"距離出發",ko:"출발까지"},
@@ -649,6 +653,7 @@ const TX={
  ready_time_req:{ja:"時間を選んでください",en:"Please select a time",zh:"請選擇時間",ko:"시간을 선택하세요"},
  ready_send:{ja:"この内容で知らせる",en:"Notify",zh:"通知",ko:"알리기"},
  ready_at:{ja:"希望時間の目安",en:"Preferred time",zh:"希望時間",ko:"희망 시간"},
+ travel_guide:{ja:"旅のしおり",en:"Travel Guide",zh:"旅遊手冊",ko:"여행 안내"},
 };
 const OTANAME={J:{ja:"じゃらん",en:"Jalan",zh:"Jalan",ko:"Jalan"},R:{ja:"楽天トラベル",en:"Rakuten Travel",zh:"樂天旅遊",ko:"라쿠텐 트래블"},S:{ja:"skyticket",en:"skyticket",zh:"skyticket",ko:"skyticket"},O:{ja:"エアトリ",en:"Airtrip",zh:"Airtrip",ko:"에어트립"},RC:{ja:"レンタカードットコム",en:"Rentalcars.com",zh:"Rentalcars",ko:"렌터카닷컴"},G:{ja:"GoGoOut",en:"GoGoOut",zh:"GoGoOut",ko:"GoGoOut"},HP:{ja:"公式サイト",en:"Official site",zh:"官方網站",ko:"공식 사이트"},SP:{ja:"公式サイト",en:"Official site",zh:"官方網站",ko:"공식 사이트"},direct:{ja:"直販",en:"Direct",zh:"直營",ko:"직판"},KEYDROP:{ja:"KEYDROP",en:"KEYDROP",zh:"KEYDROP",ko:"KEYDROP"}};
 function otaName(o){const e=OTANAME[o];return e?(e[L]||e.ja):(o||"-");}
@@ -1138,7 +1143,7 @@ function render(){
     <div style="font-size:12px;color:#64748b;margin-top:8px;line-height:1.6">${{ja:'※ ご出発3日前の19:00までにお願いいたします。お支払い後、こちらのページに反映されます。',en:'※ Please pay by 19:00, 3 days before departure. Status updates here after payment.',zh:'※ 請於出發前3天19:00前付款。付款後此頁面將更新。',ko:'※ 출발 3일 전 19:00까지 부탁드립니다. 결제 후 이 페이지에 반영됩니다.'}[L]||'※ ご出発3日前の19:00までにお願いいたします。'}</div>`:`<div style="font-size:13px;color:#64748b">${{ja:'決済リンクを準備中です。しばらくお待ちください。',en:'Preparing payment link. Please wait.',zh:'正在準備付款連結，請稍候。',ko:'결제 링크를 준비 중입니다.'}[L]||'決済リンクを準備中です。'}</div>`)}
   </div>`:""}
 
-  <div class="divlabel">旅のしおり</div>
+  <div class="divlabel">${t('travel_guide')}</div>
 
   <details class="acc">
     <summary><span class="ic">🚗</span>${t('resv_content')}<span class="chev">▾</span></summary>
@@ -1656,8 +1661,8 @@ async function load(){
   const {status,json}=res;
   if(!json.ok){
     const netmsg={ja:"通信が不安定なため読み込めませんでした。電波の良い場所で再読み込みしてください。",en:"Network unstable. Please reload where signal is good.",zh:"網路不穩定，請在訊號良好處重新載入。",ko:"네트워크가 불안정합니다. 신호가 좋은 곳에서 새로고침 해주세요."};
-    const msg=json._neterr?(netmsg[L]||netmsg.ja):esc(json.error||t('not_found'));
-    $("#app").innerHTML=`<div class="center">${msg}<br><br><button onclick="location.reload()" style="margin-top:10px;padding:9px 20px;border-radius:8px;border:none;background:#0F1F45;color:#fff;font-weight:800;font-size:15px;cursor:pointer">🔄 再読み込み</button></div>`;
+    const msg=json._neterr?(netmsg[L]||netmsg.ja):t('not_found');
+    $("#app").innerHTML=`<div class="center">${msg}<br><br><button onclick="location.reload()" style="margin-top:10px;padding:9px 20px;border-radius:8px;border:none;background:#0F1F45;color:#fff;font-weight:800;font-size:15px;cursor:pointer">${t('reload')}</button></div>`;
     return;
   }
   DATA=json;
@@ -1709,5 +1714,7 @@ async function load(){
 
 load();
 </script>
+<script src="official-i18n.js"></script>
+<script>(function(){var s=document.createElement('style');s.textContent='.hdmlang{display:none!important}';document.head.appendChild(s);})();</script>
 </body>
 </html>

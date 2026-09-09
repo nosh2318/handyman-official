@@ -152,5 +152,31 @@
 })();
 </script>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_transaction",area:"official"});</script>
+<!-- 共通多言語エンジンと言語状態を同期（このページは既に4言語ペインを内蔵。エンジンの hdm_lang とヘッダー #langsw を協調させ、サイト全体で言語を引き継ぐ） -->
+<style>.hdmlang{display:none!important}</style>
+<script src="official-i18n.js"></script>
+<script>
+(function(){
+  var LS=['ja','en','zh','ko'];
+  // このページ内蔵の言語切替（#langsw / .pane）
+  function localApply(l){
+    if(LS.indexOf(l)<0)l='ja';
+    document.documentElement.lang=l;
+    document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-lang')===l);});
+    document.querySelectorAll('#langsw button').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-l')===l);});
+    try{localStorage.setItem('kd_lang',l);}catch(e){}
+  }
+  // エンジン→ページ（他ページや共通ボタンでの言語変更を反映）
+  var prevOnLang=window.hdmOnLang;
+  window.hdmOnLang=function(l){try{localApply(l);}catch(e){}if(typeof prevOnLang==='function')try{prevOnLang(l);}catch(e){}};
+  // ページ→エンジン（このページのヘッダーボタンでの変更をエンジンに反映＝hdm_lang統一）
+  document.querySelectorAll('#langsw button').forEach(function(b){
+    b.onclick=function(){var l=b.getAttribute('data-l');if(window.hdmSetLang)window.hdmSetLang(l);else localApply(l);};
+  });
+  // 初期同期：エンジンが決めた言語（hdm_lang優先）にページも合わせる
+  var init=(window.hdmLang?window.hdmLang():null);
+  if(init)localApply(init);
+})();
+</script>
 </body>
 </html>
