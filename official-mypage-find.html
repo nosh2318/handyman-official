@@ -94,9 +94,13 @@ function render(lang){
   document.querySelectorAll("#langsw button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-l")===lang);});
   try{localStorage.setItem("hdm_lang",lang);}catch(e){}
 }
-document.getElementById("langsw").addEventListener("click",function(e){var b=e.target.closest("button");if(b)render(b.getAttribute("data-l"));});
-var init="ja";try{var s=localStorage.getItem("hdm_lang");if(s&&I[s])init=s;else{var n=(navigator.language||"ja").slice(0,2);if(I[n])init=n;}}catch(e){}
+document.getElementById("langsw").addEventListener("click",function(e){var b=e.target.closest("button");if(b){render(b.getAttribute("data-l"));if(window.hdmSetLang)try{hdmSetLang(b.getAttribute("data-l"));}catch(_){}}});
+var init="ja";
+if(window.hdmLang){try{var hl=hdmLang();if(hl&&I[hl])init=hl;}catch(e){}}
+else{try{var s=localStorage.getItem("hdm_lang");if(s&&I[s])init=s;else{var n=(navigator.language||"ja").slice(0,2);if(I[n])init=n;}}catch(e){}}
 render(init);
+// 共通i18nエンジン(official-i18n.js)の言語切替に追従
+(function(){var prev=window.hdmOnLang;window.hdmOnLang=function(L){try{if(L&&I[L])render(L);}catch(e){}if(typeof prev==="function")try{prev(L);}catch(e){}};})();
 
 var msg=document.getElementById("msg"), go=document.getElementById("go");
 function showMsg(cls,txt){msg.className="msg "+cls;msg.innerHTML=txt;}
@@ -131,6 +135,7 @@ async function submit(){
 go.addEventListener("click",submit);
 document.getElementById("q").addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.isComposing)submit();});
 </script>
+<script src="official-i18n.js"></script>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_mypage_find",area:"official"});</script>
 </body>
 </html>

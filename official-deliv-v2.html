@@ -84,16 +84,16 @@ html.embed .card{border:0;box-shadow:none;padding:0}
 html.embed .qsub{margin:0 2px 12px}
 </style></head>
 <body>
-<div class="devtag">🛠 新UX試作 v2（現行と比較用・ダミー）／那覇デリバリー お届け先の選び方</div>
-<header><span style="font-size:18px">🚗</span><span class="b">お届け先を選ぶ</span><span class="step">STEP 2</span></header>
+<div class="devtag" data-p="devtag">🛠 新UX試作 v2（現行と比較用・ダミー）／那覇デリバリー お届け先の選び方</div>
+<header><span style="font-size:18px">🚗</span><span class="b" data-p="hdr">お届け先を選ぶ</span><span class="step">STEP 2</span></header>
 
 <div class="wrap">
-  <div class="q">車をどこにお届けしますか？</div>
-  <div class="qsub">ホテル名・住所・駅名で検索するか、地図を動かしてピンを合わせてください。<b style="color:#3f8a3f">回収も同じ場所が既定</b>です。</div>
+  <div class="q" data-p="q">車をどこにお届けしますか？</div>
+  <div class="qsub" data-p="qsub">ホテル名・住所・駅名で検索するか、地図を動かしてピンを合わせてください。<b style="color:#3f8a3f">回収も同じ場所が既定</b>です。</div>
 
   <div class="card">
     <div class="searchbox">
-      <div class="inp" id="sInp"><span class="ic" onclick="submitSearch(1)" title="検索">🔍</span><input id="q" placeholder="ホテル名・住所・駅名で検索" autocomplete="off"><button class="clr" id="clr" onclick="clearQ()">×</button></div>
+      <div class="inp" id="sInp"><span class="ic" onclick="submitSearch(1)" title="検索">🔍</span><input id="q" data-p-ph="ph_del" placeholder="ホテル名・住所・駅名で検索" autocomplete="off"><button class="clr" id="clr" onclick="clearQ()">×</button></div>
       <div class="sugg" id="sugg"></div>
     </div>
     <div class="maparea" id="maparea">
@@ -101,45 +101,45 @@ html.embed .qsub{margin:0 2px 12px}
       <div class="pinshadow"></div>
       <div class="centerpin">📍</div>
       <button class="geobtn" onclick="locateMe()" title="現在地">🎯</button>
-      <div class="maptip" id="maptip">地図を動かして、お届けしたい場所にピンを合わせてください</div>
+      <div class="maptip" id="maptip" data-p="tip_del">地図を動かして、お届けしたい場所にピンを合わせてください</div>
     </div>
 
     <div class="selcard empty" id="selcard">
       <span class="pin">📍</span>
-      <div style="min-width:0"><div class="lb">お届け先</div><div class="val" id="selval">場所を選ぶと、ここに表示されます</div><div class="addr" id="seladdr"></div></div>
+      <div style="min-width:0"><div class="lb" data-p="lb_del">お届け先</div><div class="val" id="selval" data-p="selph">場所を選ぶと、ここに表示されます</div><div class="addr" id="seladdr"></div></div>
     </div>
   </div>
 
   <div class="rettoggle">
     <div class="row">
-      <div><div class="tt">🔄 回収も同じ場所にする</div><div class="td">別の場所で返す場合はオフに</div></div>
+      <div><div class="tt" data-p="same_tt">🔄 回収も同じ場所にする</div><div class="td" data-p="same_td">別の場所で返す場合はオフに</div></div>
       <div class="sw" id="sameSw" onclick="toggleSame()"></div>
     </div>
     <div class="retbody" id="retbody">
-      <div class="retlead">🏁 回収（返却）先を選ぶ</div>
+      <div class="retlead" data-p="ret_lead">🏁 回収（返却）先を選ぶ</div>
       <div class="searchbox">
-        <div class="inp" id="sInp2"><span class="ic" onclick="submitSearch(2)" title="検索">🔍</span><input id="q2" placeholder="回収先を検索" autocomplete="off"><button class="clr" id="clr2" onclick="clearQ(2)">×</button></div>
+        <div class="inp" id="sInp2"><span class="ic" onclick="submitSearch(2)" title="検索">🔍</span><input id="q2" data-p-ph="ph_col" placeholder="回収先を検索" autocomplete="off"><button class="clr" id="clr2" onclick="clearQ(2)">×</button></div>
         <div class="sugg" id="sugg2"></div>
       </div>
       <div class="maparea" id="maparea2">
         <div id="map2"></div>
         <div class="pinshadow"></div>
         <div class="centerpin">🏁</div>
-        <div class="maptip" id="maptip2">回収してほしい場所にピンを合わせてください</div>
+        <div class="maptip" id="maptip2" data-p="tip_col">回収してほしい場所にピンを合わせてください</div>
       </div>
       <div class="selcard empty" id="selcard2">
         <span class="pin">🏁</span>
-        <div style="min-width:0"><div class="lb">回収先</div><div class="val" id="selval2">場所を選ぶと、ここに表示されます</div><div class="addr" id="seladdr2"></div></div>
+        <div style="min-width:0"><div class="lb" data-p="lb_col">回収先</div><div class="val" id="selval2" data-p="selph">場所を選ぶと、ここに表示されます</div><div class="addr" id="seladdr2"></div></div>
       </div>
     </div>
   </div>
 
-  <div class="note"><b style="color:#3f8a3f" id="areaNote">対応エリア内のみお届け／回収</b>します（空港・基地敷地は不可）。営業時間 9:00〜19:00。<br>コインパーキング・自宅・ホテル・駅など、どこでもOK（地図で指定できます）。</div>
+  <div class="note"><b style="color:#3f8a3f" id="areaNote" data-p="area_note">対応エリア内のみお届け／回収</b><span data-p="note_1">します（空港・基地敷地は不可）。営業時間 9:00〜19:00。</span><br><span data-p="note_2">コインパーキング・自宅・ホテル・駅など、どこでもOK（地図で指定できます）。</span></div>
 </div>
 
 <div class="cta">
-  <div class="sum" id="ctaSum">お届け先を選んでください</div>
-  <button id="nextBtn" disabled onclick="alert('（試作）この後の画面へ進みます。\\nお届け先: '+(loc.del||'-')+'\\n回収先: '+(same?'同じ場所':(loc.col||'-')))">次へ →</button>
+  <div class="sum" id="ctaSum" data-p="cta_ph">お届け先を選んでください</div>
+  <button id="nextBtn" data-p="next" disabled onclick="alert('（試作）この後の画面へ進みます。\\nお届け先: '+(loc.del||'-')+'\\n回収先: '+(same?'同じ場所':(loc.col||'-')))">次へ →</button>
 </div>
 
 <script>
@@ -224,18 +224,18 @@ function reverseGeo(lat,lng,cb){
    })
    .catch(function(){cb(lat.toFixed(4)+', '+lng.toFixed(4),null);});
 }
-function apply(which,name,addr,lat,lng,comps){var k=which===2?'col':'del';var sc=document.getElementById(which===2?'selcard2':'selcard');var vid=which===2?'selval2':'selval';var aid=which===2?'seladdr2':'seladdr';
-  if(isAirport(lat,lng,(name||'')+' '+(addr||''))){loc[k]='';locName[k]='';_ll[k]=null;sc.className='selcard err';document.getElementById(vid).innerHTML='🚫 禁止エリア（空港・基地敷地）はお届け／回収の対象外です。<br>空港でのお受け取りは「無料送迎（空港/駅）」をご利用ください。';document.getElementById(aid).textContent='';renderCta();return;}
-  if(!inCity(comps,addr)){loc[k]='';locName[k]='';_ll[k]=null;sc.className='selcard err';document.getElementById(vid).innerHTML='🚫 対応エリア外です。<br>お届け・回収は<b>'+AREALABEL+'</b>のみ承ります。';document.getElementById(aid).textContent='';renderCta();return;}
+function apply(which,name,addr,lat,lng,comps){var k=which===2?'col':'del';var sc=document.getElementById(which===2?'selcard2':'selcard');var vid=which===2?'selval2':'selval';var aid=which===2?'seladdr2':'seladdr';var PT=window.hdmPT||function(x){return x;};
+  if(isAirport(lat,lng,(name||'')+' '+(addr||''))){loc[k]='';locName[k]='';_ll[k]=null;sc.className='selcard err';document.getElementById(vid).innerHTML=PT('err_airport');document.getElementById(aid).textContent='';renderCta();return;}
+  if(!inCity(comps,addr)){loc[k]='';locName[k]='';_ll[k]=null;sc.className='selcard err';document.getElementById(vid).innerHTML=PT('err_area').replace('{area}','<b>'+AREALABEL+'</b>');document.getElementById(aid).textContent='';renderCta();return;}
   loc[k]=addr||name||'';locName[k]=name||'';if(lat!=null)_ll[k]=[lat,lng];sc.className='selcard';
   document.getElementById(vid).textContent=name||addr||'';
   document.getElementById(aid).textContent=(name&&addr&&addr!==name)?('📮 '+addr):'';
   renderCta();}
 function commit(which,name,addr,lat,lng,comps){var mid=which===2?'map2':'map';if(lat!=null&&maps[mid]){suppress[mid]=Date.now()+1800;_lastCommit[mid]=[lat,lng];maps[mid].setView([lat,lng],16,{animate:false});}apply(which,name,addr,lat,lng,comps);}
 
-function renderCta(){var ok=!!loc.del&&(same||!!loc.col);var btn=document.getElementById('nextBtn');if(btn)btn.disabled=!ok;
+function renderCta(){var ok=!!loc.del&&(same||!!loc.col);var btn=document.getElementById('nextBtn');if(btn)btn.disabled=!ok;var PT=window.hdmPT||function(x){return x;};
   var s=document.getElementById('ctaSum');
-  if(s){if(!loc.del)s.innerHTML='お届け先を選んでください';else s.innerHTML='<b>お届け:</b> '+esc(locName.del||loc.del)+(same?'　<b>回収:</b> 同じ場所':(loc.col?('　<b>回収:</b> '+esc(locName.col||loc.col)):'　<b>回収先</b>を選んでください'));}
+  if(s){if(!loc.del)s.innerHTML=PT('cta_ph');else s.innerHTML='<b>'+PT('sum_del')+':</b> '+esc(locName.del||loc.del)+(same?('　<b>'+PT('sum_col')+':</b> '+PT('sum_same')):(loc.col?('　<b>'+PT('sum_col')+':</b> '+esc(locName.col||loc.col)):('　<b>'+PT('lb_col')+'</b>'+PT('sum_col_pick'))));}
   postState();}
 function esc(s){return (s||'').replace(/[<>&]/g,'');}
 
@@ -265,8 +265,8 @@ function nomiS(q,cb){
 }
 function renderSugg(which){var q=(document.getElementById(which===2?'q2':'q').value||'').trim();var box=document.getElementById(which===2?'sugg2':'sugg');
   if(!q){box.classList.remove('on');return;}
-  clearTimeout(predTimer[which]);predTimer[which]=setTimeout(function(){searchChain(q,function(items){lastPreds[which]=items;
-    if(!items||!items.length){box.innerHTML='<div class="head" style="color:#8090ac;padding:11px 14px">該当する候補が見つかりません。地図を動かしてピンで指定できます。</div>';box.classList.add('on');return;}
+  clearTimeout(predTimer[which]);predTimer[which]=setTimeout(function(){searchChain(q,function(items){lastPreds[which]=items;var PT=window.hdmPT||function(x){return x;};
+    if(!items||!items.length){box.innerHTML='<div class="head" style="color:#8090ac;padding:11px 14px">'+PT('no_result')+'</div>';box.classList.add('on');return;}
     box.innerHTML=items.slice(0,7).map(function(it,i){return '<div class="it" data-i="'+i+'"><span class="si">📍</span><div><div class="st">'+esc(it.main)+'</div><div class="ss">'+esc(it.sub||'')+'</div></div></div>';}).join('');
     box.querySelectorAll('.it').forEach(function(el){el.onclick=function(){pickItem(items[+el.getAttribute('data-i')],which);};});
     box.classList.add('on');
@@ -291,7 +291,8 @@ function locateMe(){if(!navigator.geolocation)return;navigator.geolocation.getCu
 
 window.addEventListener('DOMContentLoaded',function(){
   if(_EMBED)document.documentElement.classList.add('embed');
-  var an=document.getElementById('areaNote');if(an)an.textContent='お届け・回収は'+AREALABEL+'のみ';
+  var _PT0=window.hdmPT||function(x){return x;};
+  var an=document.getElementById('areaNote');if(an){an.textContent=_PT0('area_note_full').replace('{area}',AREALABEL);an.removeAttribute('data-p');}
   maps.map=makeMap('map',1);
   document.getElementById('sameSw').classList.remove('off'); // 既定ON
   postState(); // 初期状態(未選択)を親へ
@@ -305,6 +306,150 @@ window.addEventListener('DOMContentLoaded',function(){
   });
   document.addEventListener('click',function(e){if(!e.target.closest('.searchbox')){document.getElementById('sugg').classList.remove('on');var s2=document.getElementById('sugg2');if(s2)s2.classList.remove('on');}});
 });
+</script>
+<script src="official-i18n.js"></script>
+<script>
+(function(){
+  // embed時は親ページにセレクタがあるので official-i18n.js の🌐セレクタを隠す
+  if(new URLSearchParams(location.search).get('embed')==='1'){var _s=document.createElement('style');_s.textContent='.hdmlang{display:none!important}';document.head.appendChild(_s);}
+  var P={
+    ja:{
+      devtag:"🛠 新UX試作 v2（現行と比較用・ダミー）／那覇デリバリー お届け先の選び方",
+      hdr:"お届け先を選ぶ",
+      q:"車をどこにお届けしますか？",
+      qsub:"ホテル名・住所・駅名で検索するか、地図を動かしてピンを合わせてください。<b style=\"color:#3f8a3f\">回収も同じ場所が既定</b>です。",
+      ph_del:"ホテル名・住所・駅名で検索",
+      ph_col:"回収先を検索",
+      tip_del:"地図を動かして、お届けしたい場所にピンを合わせてください",
+      tip_col:"回収してほしい場所にピンを合わせてください",
+      lb_del:"お届け先",
+      lb_col:"回収先",
+      selph:"場所を選ぶと、ここに表示されます",
+      same_tt:"🔄 回収も同じ場所にする",
+      same_td:"別の場所で返す場合はオフに",
+      ret_lead:"🏁 回収（返却）先を選ぶ",
+      area_note:"対応エリア内のみお届け／回収",
+      note_1:"します（空港・基地敷地は不可）。営業時間 9:00〜19:00。",
+      note_2:"コインパーキング・自宅・ホテル・駅など、どこでもOK（地図で指定できます）。",
+      cta_ph:"お届け先を選んでください",
+      next:"次へ →",
+      area_note_full:"お届け・回収は{area}のみ",
+      sum_del:"お届け",
+      sum_col:"回収",
+      sum_same:"同じ場所",
+      sum_col_pick:"を選んでください",
+      err_airport:"🚫 禁止エリア（空港・基地敷地）はお届け／回収の対象外です。<br>空港でのお受け取りは「無料送迎（空港/駅）」をご利用ください。",
+      err_area:"🚫 対応エリア外です。<br>お届け・回収は{area}のみ承ります。",
+      no_result:"該当する候補が見つかりません。地図を動かしてピンで指定できます。"
+    },
+    en:{
+      devtag:"🛠 New UX prototype v2 (for comparison / dummy) / Naha delivery — how to choose your delivery spot",
+      hdr:"Choose your delivery spot",
+      q:"Where should we deliver your car?",
+      qsub:"Search by hotel name, address or station, or drag the map to place the pin. <b style=\"color:#3f8a3f\">The same place is used for collection by default.</b>",
+      ph_del:"Search by hotel, address or station",
+      ph_col:"Search collection spot",
+      tip_del:"Drag the map to place the pin at your delivery spot",
+      tip_col:"Place the pin where you'd like the car collected",
+      lb_del:"Delivery spot",
+      lb_col:"Collection spot",
+      selph:"Your selection will appear here",
+      same_tt:"🔄 Use the same place for collection",
+      same_td:"Turn off to return the car at a different place",
+      ret_lead:"🏁 Choose the collection (return) spot",
+      area_note:"Delivery/collection within the service area only",
+      note_1:" (airports and base premises not allowed). Hours 9:00–19:00.",
+      note_2:"Parking, home, hotel, station — anywhere is fine (set it on the map).",
+      cta_ph:"Please choose a delivery spot",
+      next:"Next →",
+      area_note_full:"Delivery/collection in {area} only",
+      sum_del:"Delivery",
+      sum_col:"Collection",
+      sum_same:"Same place",
+      sum_col_pick:" — please choose",
+      err_airport:"🚫 Restricted area (airport / base premises) cannot be used for delivery or collection.<br>For airport pickup, please use \"Free shuttle (airport/station)\".",
+      err_area:"🚫 Outside the service area.<br>Delivery/collection is available in {area} only.",
+      no_result:"No matching results. You can set the location by dragging the map and placing the pin."
+    },
+    zh:{
+      devtag:"🛠 新UX試作版 v2（比較用／示範）／那霸送車 送車地點的選擇方式",
+      hdr:"選擇送車地點",
+      q:"要將車輛送到哪裡？",
+      qsub:"可用飯店名稱、地址或車站名稱搜尋，或移動地圖將圖釘對準位置。<b style=\"color:#3f8a3f\">收車預設為相同地點</b>。",
+      ph_del:"以飯店名稱、地址或車站搜尋",
+      ph_col:"搜尋收車地點",
+      tip_del:"移動地圖，將圖釘對準您希望送車的地點",
+      tip_col:"將圖釘對準您希望收車的地點",
+      lb_del:"送車地點",
+      lb_col:"收車地點",
+      selph:"選擇地點後將顯示於此",
+      same_tt:"🔄 收車也使用相同地點",
+      same_td:"若在不同地點還車請關閉",
+      ret_lead:"🏁 選擇收車（還車）地點",
+      area_note:"僅於服務區域內送車／收車",
+      note_1:"（機場、基地用地不可）。營業時間 9:00〜19:00。",
+      note_2:"投幣停車場、住家、飯店、車站等皆可（可於地圖指定）。",
+      cta_ph:"請選擇送車地點",
+      next:"下一步 →",
+      area_note_full:"送車／收車僅限{area}",
+      sum_del:"送車",
+      sum_col:"收車",
+      sum_same:"相同地點",
+      sum_col_pick:"請選擇",
+      err_airport:"🚫 禁止區域（機場、基地用地）無法送車／收車。<br>如需於機場取車，請利用「免費接送（機場／車站）」。",
+      err_area:"🚫 超出服務區域。<br>送車／收車僅限{area}。",
+      no_result:"找不到符合的候選項目。可移動地圖以圖釘指定位置。"
+    },
+    ko:{
+      devtag:"🛠 신규 UX 시제품 v2 (비교용/데모) / 나하 배달 배달 장소 선택 방법",
+      hdr:"배달 장소 선택",
+      q:"차량을 어디로 배달할까요?",
+      qsub:"호텔명·주소·역명으로 검색하거나 지도를 움직여 핀을 맞춰 주세요. <b style=\"color:#3f8a3f\">회수도 같은 장소가 기본</b>입니다.",
+      ph_del:"호텔명·주소·역명으로 검색",
+      ph_col:"회수 장소 검색",
+      tip_del:"지도를 움직여 배달할 장소에 핀을 맞춰 주세요",
+      tip_col:"회수를 원하는 장소에 핀을 맞춰 주세요",
+      lb_del:"배달 장소",
+      lb_col:"회수 장소",
+      selph:"장소를 선택하면 여기에 표시됩니다",
+      same_tt:"🔄 회수도 같은 장소로 하기",
+      same_td:"다른 장소에서 반납할 경우 끄세요",
+      ret_lead:"🏁 회수(반납) 장소 선택",
+      area_note:"대응 지역 내에서만 배달／회수",
+      note_1:"합니다(공항·기지 부지 불가). 영업시간 9:00〜19:00.",
+      note_2:"코인주차장·자택·호텔·역 등 어디든 OK(지도에서 지정 가능).",
+      cta_ph:"배달 장소를 선택해 주세요",
+      next:"다음 →",
+      area_note_full:"배달／회수는 {area}만 가능",
+      sum_del:"배달",
+      sum_col:"회수",
+      sum_same:"같은 장소",
+      sum_col_pick:"을(를) 선택해 주세요",
+      err_airport:"🚫 금지 구역(공항·기지 부지)은 배달／회수 대상이 아닙니다.<br>공항에서의 수령은 「무료 셔틀(공항/역)」을 이용해 주세요.",
+      err_area:"🚫 대응 지역 밖입니다.<br>배달·회수는 {area}만 가능합니다.",
+      no_result:"해당하는 후보를 찾을 수 없습니다. 지도를 움직여 핀으로 지정할 수 있습니다."
+    }
+  };
+  window.hdmPT=function(k){var L=(window.hdmLang?window.hdmLang():'ja');var d=P[L]||P.ja;return d[k]!=null?d[k]:(P.ja[k]!=null?P.ja[k]:k);};
+  function apply(){
+    document.querySelectorAll('[data-p]').forEach(function(el){el.innerHTML=window.hdmPT(el.getAttribute('data-p'));});
+    document.querySelectorAll('[data-p-ph]').forEach(function(el){el.setAttribute('placeholder',window.hdmPT(el.getAttribute('data-p-ph')));});
+    // areaNote は data-p 除去済み（動的にエリア名を埋める）→ 手動で再描画
+    var an=document.getElementById('areaNote');
+    if(an&&!an.hasAttribute('data-p')&&typeof AREALABEL!=='undefined'){an.textContent=window.hdmPT('area_note_full').replace('{area}',AREALABEL);}
+  }
+  var prev=window.hdmOnLang;
+  window.hdmOnLang=function(L){
+    try{apply();}catch(e){}
+    try{if(typeof renderCta==='function')renderCta();}catch(e){}          // サマリー再描画
+    try{if(typeof renderSugg==='function'){                                // 開いているサジェストを再描画
+      if(document.getElementById('sugg')&&document.getElementById('sugg').classList.contains('on'))renderSugg(1);
+      if(document.getElementById('sugg2')&&document.getElementById('sugg2').classList.contains('on'))renderSugg(2);
+    }}catch(e){}
+    if(typeof prev==='function')try{prev(L);}catch(e){}
+  };
+  if(window.hdmLang)apply();else document.addEventListener('DOMContentLoaded',apply);
+})();
 </script>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_deliv",area:"official"});</script>
 </body></html>

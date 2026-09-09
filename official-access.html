@@ -49,6 +49,8 @@
   footer a{color:#a8bae0;text-decoration:none;margin:0 8px;white-space:nowrap;display:inline-block}
   footer .cp{color:#5b6c8a;font-size:11px;margin-top:10px}
   @media(max-width:520px){.row .lb{width:90px}.mapbox iframe{height:220px}}
+  /* 共通エンジン(official-i18n.js)の固定言語ボタンは非表示：本ページはヘッダー内langswを使用（両者ともhdm_lang/hdmSetLangで同期） */
+  .hdmlang{display:none!important}
 </style>
 </head>
 <body>
@@ -137,9 +139,11 @@ function render(lang){
   document.querySelectorAll("#langsw button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-l")===lang);});
   try{localStorage.setItem("hdm_lang",lang);}catch(e){}
 }
-document.getElementById("langsw").addEventListener("click",function(e){var b=e.target.closest("button");if(b)render(b.getAttribute("data-l"));});
+document.getElementById("langsw").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var l=b.getAttribute("data-l");if(window.hdmSetLang)window.hdmSetLang(l);else render(l);});
+// 共通多言語エンジン(official-i18n.js)と連動：共通の言語切替でこのページも再描画
+window.hdmOnLang=function(L){if(I[L])render(L);};
 var init="ja";try{var s=localStorage.getItem("hdm_lang");if(s&&I[s])init=s;else{var n=(navigator.language||"ja").slice(0,2);if(I[n])init=n;}}catch(e){}
-render(init);
+render(window.hdmLang?window.hdmLang():init);
 </script>
 
 <!-- LocalBusiness 構造化データ（SEO：各営業所をGoogleに店舗として認識させる） -->
@@ -151,5 +155,6 @@ render(init);
 ]
 </script>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_access",area:"official"});</script>
+<script src="official-i18n.js"></script>
 </body>
 </html>

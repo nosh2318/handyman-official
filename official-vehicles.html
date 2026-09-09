@@ -1,7 +1,7 @@
 <!doctype html><html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>車両と料金 ｜ HANDYMAN RENTCAR</title>
+<title data-p="doc_title">車両と料金 ｜ HANDYMAN RENTCAR</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -49,27 +49,50 @@ footer .lk{font-size:12px;margin-top:12px}footer a{color:var(--mut);text-decorat
 <body>
 <header><div class="hin">
   <a href="index.html"><img class="logoFull" src="official-clone/img/common/img_logo_v2.png" alt="HANDYMAN RENTCAR" style="height:30px"><img class="logoShort" src="official-clone/img/common/img_logo_short.png" alt="HANDYMAN" style="height:30px"></a>
-  <nav><a href="official-vehicles.html">車両と料金</a><a href="#">保険プラン</a><a href="#">ご利用方法</a><a href="#">お問い合わせ</a><a class="res" href="official-design.html#search">予約する</a></nav>
+  <nav><a href="official-vehicles.html" data-p="nav_cars">車両と料金</a><a href="#" data-p="nav_ins">保険プラン</a><a href="#" data-p="nav_use">ご利用方法</a><a href="#" data-p="nav_contact">お問い合わせ</a><a class="res" href="official-design.html#search" data-p="nav_book">予約する</a></nav>
   <button class="ham"><span></span><span></span><span></span></button>
 </div></header>
 
-<div class="pagehead"><div class="en cap">CAR TYPE</div><div class="jp">車両と料金</div></div>
+<div class="pagehead"><div class="en cap">CAR TYPE</div><div class="jp" data-p="pagehead_jp">車両と料金</div></div>
 
 <div class="wrap">
-  <div class="areaTab"><button id="tNaha" class="on" onclick="setArea('naha')">🌺 那覇エリア</button><button id="tSpk" onclick="setArea('sapporo')">❄️ 札幌エリア</button></div>
+  <div class="areaTab"><button id="tNaha" class="on" onclick="setArea('naha')" data-p="tab_naha">🌺 那覇エリア</button><button id="tSpk" onclick="setArea('sapporo')" data-p="tab_sapporo">❄️ 札幌エリア</button></div>
   <div class="areaNote" id="areaNote"></div>
   <div class="grid" id="grid"></div>
 
   <div class="equip">
-    <h3>🔧 全車標準装備</h3>
+    <h3 data-p="equip_h3">🔧 全車標準装備</h3>
     <div class="tags" id="equipTags"></div>
     <p id="equipNote"></p>
   </div>
 </div>
 
-<footer><a href="index.html"><img src="official-clone/img/common/img_logo_v2.png" alt="HANDYMAN" style="height:26px;margin:0 auto"></a><div class="lk"><a href="#">お知らせ</a>・<a href="#">会社概要</a>・<a href="#">貸渡約款</a>・<a href="#">プライバシー</a>・<a href="#">特定商取引法</a></div><div style="color:#5b6c8a;font-size:11px;margin-top:10px">© HANDYMAN RENTCAR</div></footer>
+<footer><a href="index.html"><img src="official-clone/img/common/img_logo_v2.png" alt="HANDYMAN" style="height:26px;margin:0 auto"></a><div class="lk"><a href="#" data-p="ft_news">お知らせ</a>・<a href="#" data-p="ft_company">会社概要</a>・<a href="#" data-p="ft_terms">貸渡約款</a>・<a href="#" data-p="ft_privacy">プライバシー</a>・<a href="#" data-p="ft_law">特定商取引法</a></div><div style="color:#5b6c8a;font-size:11px;margin-top:10px">© HANDYMAN RENTCAR</div></footer>
 
 <script>
+// 多言語 安全スタブ（official-i18n.js 読込前でも動的生成が落ちないように）
+if(typeof window.hdmTerm!=='function')window.hdmTerm=function(s){return s==null?s:String(s);};
+function _vL(){return (window.hdmLang?window.hdmLang():'ja');}
+// 動的生成で使う固定文言（単位・注記・ボタン・エリア注記など）
+var VDYN={
+ ja:{seats_suffix:'名',price_suffix:'〜 / 1日',book_btn:'この条件で予約',
+     note_sapporo:'❄️ 札幌店：デリバリー専門。札幌市・北広島市へお届け／回収します。',
+     note_naha:'🌺 那覇店：デリバリー・空港送迎・来店に対応。',
+     eqnote:'車種・色・仕様はお選びいただけません（同クラス内からランダムでご用意）。全車禁煙・ペット同乗不可。料金は1日（24時間）あたりの目安です。ハイシーズンは別料金。'},
+ en:{seats_suffix:' pax',price_suffix:'~ / day',book_btn:'Book with these settings',
+     note_sapporo:'❄️ Sapporo Store: Delivery only. We deliver / collect in Sapporo City and Kitahiroshima City.',
+     note_naha:'🌺 Naha Store: Delivery, airport shuttle and in-store pickup available.',
+     eqnote:'Car model, color and specs cannot be selected (assigned at random from within the same class). All cars are non-smoking; pets not allowed. Prices are a guide per day (24 hours). Separate rates apply in high season.'},
+ zh:{seats_suffix:'人',price_suffix:'～ / 每日',book_btn:'以此條件預約',
+     note_sapporo:'❄️ 札幌店：僅提供送車服務。可送車／取車至札幌市、北廣島市。',
+     note_naha:'🌺 那覇店：提供送車、機場接送與到店取車。',
+     eqnote:'無法指定車款、顏色與規格（於同級距中隨機提供）。全車禁菸、禁止攜帶寵物。價格為每日（24小時）參考價。旺季另計。'},
+ ko:{seats_suffix:'명',price_suffix:'~ / 1일',book_btn:'이 조건으로 예약',
+     note_sapporo:'❄️ 삿포로점: 배달 전문. 삿포로시·기타히로시마시로 배달／회수합니다.',
+     note_naha:'🌺 나하점: 배달·공항 셔틀·방문에 대응합니다.',
+     eqnote:'차종·색상·사양은 선택하실 수 없습니다(동일 클래스 내에서 무작위로 준비). 전 차량 금연·반려동물 동승 불가. 요금은 1일(24시간) 기준 참고 금액입니다. 성수기는 별도 요금.'}
+};
+function _vd(k){var d=VDYN[_vL()]||VDYN.ja;return d[k]!=null?d[k]:VDYN.ja[k];}
 // KEYDROP実データ（public_keydrop_classes_v 準拠）
 const ICON={A:'🚐',A2:'🚐',B:'🚐',B2:'🚐',C:'🚙',S:'🚙',F:'🚗',H:'🚗'};
 // KEYDROPと同じ車両画像（那覇=_nha優先→共通フォールバック / 札幌=共通）
@@ -81,21 +104,78 @@ const STORE={
 };
 const EQUIP=['ナビ','ETC車載器','Bluetooth','4WD','スタッドレスタイヤ'];
 const EQNOTE='車種・色・仕様はお選びいただけません（同クラス内からランダムでご用意）。全車禁煙・ペット同乗不可。料金は1日（24時間）あたりの目安です。ハイシーズンは別料金。';
+var _curArea='naha';
+function _seatsTxt(seats){var s=String(seats||'');var m=s.replace(/名$/,'');return m+_vd('seats_suffix');}
 function setArea(a){
+ _curArea=a;
  document.getElementById('tNaha').classList.toggle('on',a==='naha');
  document.getElementById('tSpk').classList.toggle('on',a==='sapporo');
  var st=STORE[a];
- document.getElementById('areaNote').textContent=st.note;
+ document.getElementById('areaNote').textContent=(a==='naha'?_vd('note_naha'):_vd('note_sapporo'));
  document.getElementById('grid').innerHTML=st.order.map(function(k){var c=st.cls[k];return (
-   '<div class="car"><div class="pic">'+carImg(k,a)+'<span class="clschip">'+c.label+'</span></div>'+
-   '<div class="bd"><div class="nm">'+c.vehicles+'</div><div class="spec">👥 '+c.seats+'</div>'+
-   '<div class="pr"><b>¥'+c.price.toLocaleString()+'</b><small>〜 / 1日</small></div>'+
-   '<a class="bk" href="index.html#search">この条件で予約</a></div></div>');
+   '<div class="car"><div class="pic">'+carImg(k,a)+'<span class="clschip">'+window.hdmTerm(c.label)+'</span></div>'+
+   '<div class="bd"><div class="nm">'+window.hdmTerm(c.vehicles)+'</div><div class="spec">👥 '+_seatsTxt(c.seats)+'</div>'+
+   '<div class="pr"><b>¥'+c.price.toLocaleString()+'</b><small>'+_vd('price_suffix')+'</small></div>'+
+   '<a class="bk" href="index.html#search">'+_vd('book_btn')+'</a></div></div>');
  }).join('');
 }
-document.getElementById('equipTags').innerHTML=EQUIP.map(function(e){return '<span class="tag">'+e+'</span>';}).join('');
-document.getElementById('equipNote').textContent=EQNOTE;
+function _renderEquip(){
+ document.getElementById('equipTags').innerHTML=EQUIP.map(function(e){return '<span class="tag">'+window.hdmTerm(e)+'</span>';}).join('');
+ document.getElementById('equipNote').textContent=_vd('eqnote');
+}
 setArea('naha');
+_renderEquip();
+</script>
+<script src="official-i18n.js"></script>
+<script>
+(function(){
+  var P={
+    ja:{
+      doc_title:'車両と料金 ｜ HANDYMAN RENTCAR',
+      nav_cars:'車両と料金', nav_ins:'保険プラン', nav_use:'ご利用方法', nav_contact:'お問い合わせ', nav_book:'予約する',
+      pagehead_jp:'車両と料金',
+      tab_naha:'🌺 那覇エリア', tab_sapporo:'❄️ 札幌エリア',
+      equip_h3:'🔧 全車標準装備',
+      ft_news:'お知らせ', ft_company:'会社概要', ft_terms:'貸渡約款', ft_privacy:'プライバシー', ft_law:'特定商取引法'
+    },
+    en:{
+      doc_title:'Vehicles & Rates ｜ HANDYMAN RENTCAR',
+      nav_cars:'Vehicles & Rates', nav_ins:'Insurance Plans', nav_use:'How to Use', nav_contact:'Contact', nav_book:'Book',
+      pagehead_jp:'Vehicles & Rates',
+      tab_naha:'🌺 Naha Area', tab_sapporo:'❄️ Sapporo Area',
+      equip_h3:'🔧 Standard Equipment (All Cars)',
+      ft_news:'News', ft_company:'About Us', ft_terms:'Rental Terms', ft_privacy:'Privacy', ft_law:'Commercial Transaction Act'
+    },
+    zh:{
+      doc_title:'車輛與費用 ｜ HANDYMAN RENTCAR',
+      nav_cars:'車輛與費用', nav_ins:'保險方案', nav_use:'使用方式', nav_contact:'聯絡我們', nav_book:'預約',
+      pagehead_jp:'車輛與費用',
+      tab_naha:'🌺 那覇地區', tab_sapporo:'❄️ 札幌地區',
+      equip_h3:'🔧 全車標準配備',
+      ft_news:'最新消息', ft_company:'公司簡介', ft_terms:'租賃條款', ft_privacy:'隱私權', ft_law:'特定商業交易法'
+    },
+    ko:{
+      doc_title:'차량과 요금 ｜ HANDYMAN RENTCAR',
+      nav_cars:'차량과 요금', nav_ins:'보험 플랜', nav_use:'이용 방법', nav_contact:'문의하기', nav_book:'예약하기',
+      pagehead_jp:'차량과 요금',
+      tab_naha:'🌺 나하 지역', tab_sapporo:'❄️ 삿포로 지역',
+      equip_h3:'🔧 전 차량 표준 장비',
+      ft_news:'공지사항', ft_company:'회사 소개', ft_terms:'대여 약관', ft_privacy:'개인정보', ft_law:'특정상거래법'
+    }
+  };
+  function apply(){
+    var L=(window.hdmLang?window.hdmLang():'ja'); var d=P[L]||P.ja;
+    document.querySelectorAll('[data-p]').forEach(function(el){var k=el.getAttribute('data-p'); if(d[k]!=null) el.innerHTML=d[k];});
+    document.querySelectorAll('[data-p-ph]').forEach(function(el){var k=el.getAttribute('data-p-ph'); if(d[k]!=null) el.setAttribute('placeholder',d[k]);});
+    if(d.doc_title!=null) document.title=d.doc_title;
+    // 動的生成部（車種クラス/車名/装備/単位/注記/ボタン）を現在言語で再描画
+    try{ if(typeof setArea==='function') setArea(typeof _curArea!=='undefined'?_curArea:'naha'); }catch(e){}
+    try{ if(typeof _renderEquip==='function') _renderEquip(); }catch(e){}
+  }
+  var prev=window.hdmOnLang;
+  window.hdmOnLang=function(L){try{apply();}catch(e){} if(typeof prev==='function')try{prev(L);}catch(e){}};
+  if(window.hdmLang) apply(); else document.addEventListener('DOMContentLoaded',apply);
+})();
 </script>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_vehicles",area:"official"});</script>
 </body></html>

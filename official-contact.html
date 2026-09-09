@@ -2,7 +2,7 @@
 <html lang="ja"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>お問い合わせ ｜ HANDYMAN RENTCAR</title>
+<title data-p="title">お問い合わせ ｜ HANDYMAN RENTCAR</title>
 <style>
 :root{--navy:#0a1f44;--navy2:#0a2e80;--y:#f2b600;--line:#dfe6f0;--mut:#5a6b85;--err:#d23}
 *{box-sizing:border-box}
@@ -41,71 +41,71 @@ a.home{display:inline-block;margin-top:16px;color:var(--navy2);font-weight:700;t
 <body>
 <header><a href="index.html"><img src="official-clone/img/common/img_logo_v2.png" alt="HANDYMAN RENTCAR" onerror="this.style.display='none'"></a></header>
 <div class="wrap">
-  <h1>お問い合わせ</h1>
-  <div class="sub">ご予約・料金・変更/キャンセル等、お気軽にお問い合わせください。内容を確認のうえ担当よりご連絡いたします（営業時間 9:00〜19:00）。</div>
+  <h1 data-p="h1">お問い合わせ</h1>
+  <div class="sub" data-p="sub">ご予約・料金・変更/キャンセル等、お気軽にお問い合わせください。内容を確認のうえ担当よりご連絡いたします（営業時間 9:00〜19:00）。</div>
 
   <!-- 入力 -->
   <div class="card" id="formCard">
-    <label class="fl">お名前<span class="req">必須</span></label>
-    <input class="fld" id="f_name" autocomplete="name" placeholder="山田 太郎">
-    <div class="emsg" id="e_name">お名前をご入力ください。</div>
+    <label class="fl"><span data-p="l_name">お名前</span><span class="req" data-p="req">必須</span></label>
+    <input class="fld" id="f_name" autocomplete="name" placeholder="山田 太郎" data-p-ph="ph_name">
+    <div class="emsg" id="e_name" data-p="e_name">お名前をご入力ください。</div>
 
-    <label class="fl">お電話番号<span class="opt">任意</span></label>
+    <label class="fl"><span data-p="l_phone">お電話番号</span><span class="opt" data-p="opt">任意</span></label>
     <input class="fld" id="f_phone" inputmode="tel" autocomplete="tel" placeholder="09012345678">
 
-    <label class="fl">メールアドレス<span class="req">必須</span></label>
+    <label class="fl"><span data-p="l_email">メールアドレス</span><span class="req" data-p="req">必須</span></label>
     <input class="fld" id="f_email" inputmode="email" autocomplete="email" placeholder="example@email.com">
-    <div class="emsg" id="e_email">正しいメールアドレスをご入力ください。</div>
+    <div class="emsg" id="e_email" data-p="e_email">正しいメールアドレスをご入力ください。</div>
 
-    <label class="fl">メールアドレス（確認用）<span class="req">必須</span></label>
+    <label class="fl"><span data-p="l_email2">メールアドレス（確認用）</span><span class="req" data-p="req">必須</span></label>
     <input class="fld" id="f_email2" inputmode="email" placeholder="example@email.com">
-    <div class="emsg" id="e_email2">メールアドレスが一致しません。</div>
+    <div class="emsg" id="e_email2" data-p="e_email2">メールアドレスが一致しません。</div>
 
-    <label class="fl">ご利用店舗<span class="opt">任意</span></label>
+    <label class="fl"><span data-p="l_store">ご利用店舗</span><span class="opt" data-p="opt">任意</span></label>
     <select class="fld" id="f_store">
-      <option value="">選択してください</option>
-      <option value="naha">那覇空港店（沖縄）</option>
-      <option value="sapporo">札幌店（北海道）</option>
-      <option value="takamatsu">高松空港店（香川）</option>
-      <option value="other">その他・未定</option>
+      <option value="" data-p="o_store0">選択してください</option>
+      <option value="naha" data-p="o_naha">那覇空港店（沖縄）</option>
+      <option value="sapporo" data-p="o_sapporo">札幌店（北海道）</option>
+      <option value="takamatsu" data-p="o_takamatsu">高松空港店（香川）</option>
+      <option value="other" data-p="o_other">その他・未定</option>
     </select>
 
-    <label class="fl">お問い合わせ種別<span class="req">必須</span></label>
+    <label class="fl"><span data-p="l_type">お問い合わせ種別</span><span class="req" data-p="req">必須</span></label>
     <select class="fld" id="f_type">
-      <option value="">お問い合わせの種類を選択してください</option>
-      <option>ご予約について</option>
-      <option>料金・お見積りについて</option>
-      <option>予約の変更・キャンセル</option>
-      <option>車両・在庫について</option>
-      <option>空港送迎・受け渡しについて</option>
-      <option>その他</option>
+      <option value="" data-p="o_type0">お問い合わせの種類を選択してください</option>
+      <option data-p="o_type_book">ご予約について</option>
+      <option data-p="o_type_price">料金・お見積りについて</option>
+      <option data-p="o_type_change">予約の変更・キャンセル</option>
+      <option data-p="o_type_vehicle">車両・在庫について</option>
+      <option data-p="o_type_transfer">空港送迎・受け渡しについて</option>
+      <option data-p="o_type_other">その他</option>
     </select>
-    <div class="emsg" id="e_type">お問い合わせ種別をお選びください。</div>
+    <div class="emsg" id="e_type" data-p="e_type">お問い合わせ種別をお選びください。</div>
 
-    <label class="fl">お問い合わせ内容<span class="req">必須</span></label>
-    <textarea class="fld" id="f_msg" placeholder="お問い合わせ内容をご記入ください。"></textarea>
-    <div class="emsg" id="e_msg">お問い合わせ内容をご入力ください。</div>
+    <label class="fl"><span data-p="l_msg">お問い合わせ内容</span><span class="req" data-p="req">必須</span></label>
+    <textarea class="fld" id="f_msg" placeholder="お問い合わせ内容をご記入ください。" data-p-ph="ph_msg"></textarea>
+    <div class="emsg" id="e_msg" data-p="e_msg">お問い合わせ内容をご入力ください。</div>
 
-    <button class="btn btn-p" onclick="toConfirm()">確認画面へ ›</button>
-    <div class="note">※ ご入力いただいた個人情報は、お問い合わせ対応の目的にのみ利用いたします。</div>
+    <button class="btn btn-p" onclick="toConfirm()" data-p="btn_confirm">確認画面へ ›</button>
+    <div class="note" data-p="note">※ ご入力いただいた個人情報は、お問い合わせ対応の目的にのみ利用いたします。</div>
   </div>
 
   <!-- 確認 -->
   <div class="card hide" id="confirmCard">
-    <div style="font-weight:900;font-size:16px;color:var(--navy2);margin-bottom:8px">内容のご確認</div>
-    <div style="font-size:12.5px;color:var(--mut);margin-bottom:6px">以下の内容で送信します。よろしければ「送信する」を押してください。</div>
+    <div style="font-weight:900;font-size:16px;color:var(--navy2);margin-bottom:8px" data-p="cfm_title">内容のご確認</div>
+    <div style="font-size:12.5px;color:var(--mut);margin-bottom:6px" data-p="cfm_sub">以下の内容で送信します。よろしければ「送信する」を押してください。</div>
     <div class="rev" id="reviewBox"></div>
-    <button class="btn btn-y" id="sendBtn" onclick="submitForm()">この内容で送信する ›</button>
-    <button class="btn btn-g" onclick="backToForm()">‹ 修正する</button>
+    <button class="btn btn-y" id="sendBtn" onclick="submitForm()" data-p="btn_send">この内容で送信する ›</button>
+    <button class="btn btn-g" onclick="backToForm()" data-p="btn_back">‹ 修正する</button>
   </div>
 
   <!-- 完了 -->
   <div class="card hide" id="doneCard">
     <div class="thanks">
       <div class="ic">✅</div>
-      <h2>お問い合わせを受け付けました</h2>
-      <div style="color:var(--mut);font-size:13.5px">ご入力いただいたメールアドレス宛に、担当より順次ご連絡いたします。<br>お急ぎの場合はお電話でもお問い合わせください。</div>
-      <a class="home" href="index.html">← トップページへ戻る</a>
+      <h2 data-p="done_title">お問い合わせを受け付けました</h2>
+      <div style="color:var(--mut);font-size:13.5px" data-p="done_body">ご入力いただいたメールアドレス宛に、担当より順次ご連絡いたします。<br>お急ぎの場合はお電話でもお問い合わせください。</div>
+      <a class="home" href="index.html" data-p="done_home">← トップページへ戻る</a>
     </div>
   </div>
 </div>
@@ -114,7 +114,8 @@ a.home{display:inline-block;margin-top:16px;color:var(--navy2);font-weight:700;t
 // 問い合わせ受付EF（BTプロジェクト・DB保存＋自動返信メール＋Slack通知）
 var INQ_EF='https://ggqugvyskyiblxiycpci.supabase.co/functions/v1/official-inquiry';
 var BT_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdncXVndnlza3lpYmx4aXljcGNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxMDc3NjksImV4cCI6MjA5MzY4Mzc2OX0.uNhWcBd_Dl5nzemZDQfJ8mQV6iY73MwystGGpTRPC18';
-var STORE_LABEL={naha:'那覇空港店',sapporo:'札幌店',takamatsu:'高松空港店',other:'その他・未定'};
+function _CL(){var L=(window.hdmLang?hdmLang():'ja');return (window.__CT_MSG&&window.__CT_MSG[L])||(window.__CT_MSG&&window.__CT_MSG.ja)||{};}
+function _STORE_LABEL(k){var m=_CL().store||{};return m[k]||k;}
 function val(id){return (document.getElementById(id).value||'').trim();}
 function bad(id,on){document.getElementById(id).classList.toggle('bad',on);}
 function emsg(id,on){document.getElementById(id).classList.toggle('on',on);}
@@ -129,7 +130,9 @@ function toConfirm(){
   bad('f_msg',!msg);emsg('e_msg',!msg);if(!msg)ok=false;
   if(!ok){var f=document.querySelector('.fld.bad');if(f)f.scrollIntoView({behavior:'smooth',block:'center'});return;}
   var store=val('f_store');
-  var rows=[['お名前',name],['お電話番号',val('f_phone')||'（未入力）'],['メールアドレス',email],['ご利用店舗',store?STORE_LABEL[store]:'（未選択）'],['お問い合わせ種別',type],['お問い合わせ内容',msg]];
+  var C=_CL();
+  var typeLabel=(C.type_map&&C.type_map[type])||type;
+  var rows=[[C.r_name,name],[C.r_phone,val('f_phone')||C.blank],[C.r_email,email],[C.r_store,store?_STORE_LABEL(store):C.unsel],[C.r_type,typeLabel],[C.r_msg,msg]];
   document.getElementById('reviewBox').innerHTML=rows.map(function(r){return '<div class="r"><b>'+r[0]+'</b><span>'+String(r[1]).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c];})+'</span></div>';}).join('');
   document.getElementById('formCard').classList.add('hide');
   document.getElementById('confirmCard').classList.remove('hide');
@@ -139,7 +142,7 @@ function backToForm(){document.getElementById('confirmCard').classList.add('hide
 var SENDING=false;
 function submitForm(){
   if(SENDING)return;SENDING=true;
-  var btn=document.getElementById('sendBtn');btn.disabled=true;btn.textContent='送信中…';
+  var btn=document.getElementById('sendBtn');btn.disabled=true;btn.textContent=(_CL().sending||'送信中…');
   var payload={
     name:val('f_name'),email:val('f_email'),phone:val('f_phone'),
     inquiry_type:val('f_type'),inquiry_content:val('f_msg'),
@@ -154,10 +157,33 @@ function submitForm(){
      window.scrollTo(0,0);
    })
    .catch(function(e){
-     SENDING=false;btn.disabled=false;btn.textContent='この内容で送信する ›';
-     alert('送信に失敗しました。通信環境をご確認のうえ再度お試しください。\n繰り返し失敗する場合はお電話でお問い合わせください。');
+     SENDING=false;btn.disabled=false;btn.textContent=(_CL().btn_send||'この内容で送信する ›');
+     alert(_CL().send_fail||'送信に失敗しました。通信環境をご確認のうえ再度お試しください。\n繰り返し失敗する場合はお電話でお問い合わせください。');
    });
 }
 </script>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_contact",area:"official"});</script>
+<script src="official-i18n.js"></script>
+<script>
+// JSメッセージ辞書（確認行ラベル/店舗/種別/alert/ボタン）
+window.__CT_MSG={
+ ja:{r_name:'お名前',r_phone:'お電話番号',r_email:'メールアドレス',r_store:'ご利用店舗',r_type:'お問い合わせ種別',r_msg:'お問い合わせ内容',blank:'（未入力）',unsel:'（未選択）',sending:'送信中…',btn_send:'この内容で送信する ›',send_fail:'送信に失敗しました。通信環境をご確認のうえ再度お試しください。\n繰り返し失敗する場合はお電話でお問い合わせください。',store:{naha:'那覇空港店',sapporo:'札幌店',takamatsu:'高松空港店',other:'その他・未定'},type_map:{'ご予約について':'ご予約について','料金・お見積りについて':'料金・お見積りについて','予約の変更・キャンセル':'予約の変更・キャンセル','車両・在庫について':'車両・在庫について','空港送迎・受け渡しについて':'空港送迎・受け渡しについて','その他':'その他'}},
+ en:{r_name:'Name',r_phone:'Phone',r_email:'Email',r_store:'Store',r_type:'Inquiry type',r_msg:'Message',blank:'(not entered)',unsel:'(not selected)',sending:'Sending…',btn_send:'Send this ›',send_fail:'Failed to send. Please check your connection and try again.\nIf it keeps failing, please contact us by phone.',store:{naha:'Naha Airport Store',sapporo:'Sapporo Store',takamatsu:'Takamatsu Airport Store',other:'Other / Undecided'},type_map:{'ご予約について':'About reservations','料金・お見積りについて':'Pricing / quotes','予約の変更・キャンセル':'Change / cancel a booking','車両・在庫について':'Vehicles / availability','空港送迎・受け渡しについて':'Airport transfer / handover','その他':'Other'}},
+ zh:{r_name:'姓名',r_phone:'電話',r_email:'電子郵件',r_store:'使用門市',r_type:'諮詢類別',r_msg:'諮詢內容',blank:'（未填寫）',unsel:'（未選擇）',sending:'傳送中…',btn_send:'以此內容送出 ›',send_fail:'傳送失敗。請確認網路連線後再試一次。\n若持續失敗，請以電話與我們聯絡。',store:{naha:'那霸機場店（沖繩）',sapporo:'札幌店（北海道）',takamatsu:'高松機場店（香川）',other:'其他・未定'},type_map:{'ご予約について':'關於預約','料金・お見積りについて':'費用・報價','予約の変更・キャンセル':'預約變更・取消','車両・在庫について':'車輛・庫存','空港送迎・受け渡しについて':'機場接送・交車','その他':'其他'}},
+ ko:{r_name:'성명',r_phone:'전화번호',r_email:'이메일',r_store:'이용 지점',r_type:'문의 종류',r_msg:'문의 내용',blank:'（미입력）',unsel:'（미선택）',sending:'전송 중…',btn_send:'이 내용으로 보내기 ›',send_fail:'전송에 실패했습니다. 통신 환경을 확인하신 후 다시 시도해 주세요.\n계속 실패하는 경우 전화로 문의해 주세요.',store:{naha:'나하공항점（오키나와）',sapporo:'삿포로점（홋카이도）',takamatsu:'다카마쓰공항점（가가와）',other:'기타・미정'},type_map:{'ご予約について':'예약 관련','料金・お見積りについて':'요금・견적 관련','予約の変更・キャンセル':'예약 변경・취소','車両・在庫について':'차량・재고 관련','空港送迎・受け渡しについて':'공항 픽업・차량 인도','その他':'기타'}}
+};
+// data-p 表示辞書
+(function(){var P={
+ja:{title:'お問い合わせ ｜ HANDYMAN RENTCAR',h1:'お問い合わせ',sub:'ご予約・料金・変更/キャンセル等、お気軽にお問い合わせください。内容を確認のうえ担当よりご連絡いたします（営業時間 9:00〜19:00）。',req:'必須',opt:'任意',l_name:'お名前',ph_name:'山田 太郎',e_name:'お名前をご入力ください。',l_phone:'お電話番号',l_email:'メールアドレス',e_email:'正しいメールアドレスをご入力ください。',l_email2:'メールアドレス（確認用）',e_email2:'メールアドレスが一致しません。',l_store:'ご利用店舗',o_store0:'選択してください',o_naha:'那覇空港店（沖縄）',o_sapporo:'札幌店（北海道）',o_takamatsu:'高松空港店（香川）',o_other:'その他・未定',l_type:'お問い合わせ種別',o_type0:'お問い合わせの種類を選択してください',o_type_book:'ご予約について',o_type_price:'料金・お見積りについて',o_type_change:'予約の変更・キャンセル',o_type_vehicle:'車両・在庫について',o_type_transfer:'空港送迎・受け渡しについて',o_type_other:'その他',e_type:'お問い合わせ種別をお選びください。',l_msg:'お問い合わせ内容',ph_msg:'お問い合わせ内容をご記入ください。',e_msg:'お問い合わせ内容をご入力ください。',btn_confirm:'確認画面へ ›',note:'※ ご入力いただいた個人情報は、お問い合わせ対応の目的にのみ利用いたします。',cfm_title:'内容のご確認',cfm_sub:'以下の内容で送信します。よろしければ「送信する」を押してください。',btn_send:'この内容で送信する ›',btn_back:'‹ 修正する',done_title:'お問い合わせを受け付けました',done_body:'ご入力いただいたメールアドレス宛に、担当より順次ご連絡いたします。<br>お急ぎの場合はお電話でもお問い合わせください。',done_home:'← トップページへ戻る'},
+en:{title:'Contact ｜ HANDYMAN RENTCAR',h1:'Contact',sub:'Feel free to contact us about reservations, pricing, changes/cancellations and more. We will review your message and get back to you (Hours 9:00–19:00).',req:'required',opt:'optional',l_name:'Name',ph_name:'Taro Yamada',e_name:'Please enter your name.',l_phone:'Phone',l_email:'Email',e_email:'Please enter a valid email address.',l_email2:'Email (confirmation)',e_email2:'The email addresses do not match.',l_store:'Store',o_store0:'Please select',o_naha:'Naha Airport Store (Okinawa)',o_sapporo:'Sapporo Store (Hokkaido)',o_takamatsu:'Takamatsu Airport Store (Kagawa)',o_other:'Other / Undecided',l_type:'Inquiry type',o_type0:'Please select the type of inquiry',o_type_book:'About reservations',o_type_price:'Pricing / quotes',o_type_change:'Change / cancel a booking',o_type_vehicle:'Vehicles / availability',o_type_transfer:'Airport transfer / handover',o_type_other:'Other',e_type:'Please select an inquiry type.',l_msg:'Message',ph_msg:'Please write your inquiry here.',e_msg:'Please enter your message.',btn_confirm:'Go to confirmation ›',note:'* The personal information you provide will be used only for responding to your inquiry.',cfm_title:'Please confirm',cfm_sub:'We will send the following. If it looks correct, please press “Send”.',btn_send:'Send this ›',btn_back:'‹ Edit',done_title:'Your inquiry has been received',done_body:'Our staff will contact you at the email address you provided.<br>If your matter is urgent, please also feel free to call us.',done_home:'← Back to top'},
+zh:{title:'聯絡我們 ｜ HANDYMAN RENTCAR',h1:'聯絡我們',sub:'預約、費用、變更/取消等，歡迎隨時與我們聯絡。我們確認內容後將由專人與您聯繫（營業時間 9:00〜19:00）。',req:'必填',opt:'選填',l_name:'姓名',ph_name:'王小明',e_name:'請輸入您的姓名。',l_phone:'電話',l_email:'電子郵件',e_email:'請輸入正確的電子郵件地址。',l_email2:'電子郵件（確認用）',e_email2:'兩次輸入的電子郵件不一致。',l_store:'使用門市',o_store0:'請選擇',o_naha:'那霸機場店（沖繩）',o_sapporo:'札幌店（北海道）',o_takamatsu:'高松機場店（香川）',o_other:'其他・未定',l_type:'諮詢類別',o_type0:'請選擇諮詢類別',o_type_book:'關於預約',o_type_price:'費用・報價',o_type_change:'預約變更・取消',o_type_vehicle:'車輛・庫存',o_type_transfer:'機場接送・交車',o_type_other:'其他',e_type:'請選擇諮詢類別。',l_msg:'諮詢內容',ph_msg:'請填寫您的諮詢內容。',e_msg:'請輸入諮詢內容。',btn_confirm:'前往確認畫面 ›',note:'※ 您所提供的個人資料僅用於回覆諮詢之目的。',cfm_title:'內容確認',cfm_sub:'將以下列內容送出。若確認無誤，請按「送出」。',btn_send:'以此內容送出 ›',btn_back:'‹ 修改',done_title:'已收到您的諮詢',done_body:'我們將透過您所填寫的電子郵件地址依序與您聯繫。<br>如有急事，也歡迎來電洽詢。',done_home:'← 返回首頁'},
+ko:{title:'문의 ｜ HANDYMAN RENTCAR',h1:'문의',sub:'예약・요금・변경/취소 등 편하게 문의해 주세요. 내용을 확인한 후 담당자가 연락드립니다（영업시간 9:00〜19:00）.',req:'필수',opt:'선택',l_name:'성명',ph_name:'홍길동',e_name:'성명을 입력해 주세요.',l_phone:'전화번호',l_email:'이메일',e_email:'올바른 이메일 주소를 입력해 주세요.',l_email2:'이메일（확인용）',e_email2:'이메일 주소가 일치하지 않습니다.',l_store:'이용 지점',o_store0:'선택해 주세요',o_naha:'나하공항점（오키나와）',o_sapporo:'삿포로점（홋카이도）',o_takamatsu:'다카마쓰공항점（가가와）',o_other:'기타・미정',l_type:'문의 종류',o_type0:'문의 종류를 선택해 주세요',o_type_book:'예약 관련',o_type_price:'요금・견적 관련',o_type_change:'예약 변경・취소',o_type_vehicle:'차량・재고 관련',o_type_transfer:'공항 픽업・차량 인도',o_type_other:'기타',e_type:'문의 종류를 선택해 주세요.',l_msg:'문의 내용',ph_msg:'문의 내용을 입력해 주세요.',e_msg:'문의 내용을 입력해 주세요.',btn_confirm:'확인 화면으로 ›',note:'※ 입력하신 개인정보는 문의 대응 목적으로만 이용됩니다.',cfm_title:'내용 확인',cfm_sub:'아래 내용으로 전송합니다. 이상이 없으면 “보내기”를 눌러 주세요.',btn_send:'이 내용으로 보내기 ›',btn_back:'‹ 수정하기',done_title:'문의가 접수되었습니다',done_body:'입력하신 이메일 주소로 담당자가 순차적으로 연락드립니다.<br>급하신 경우 전화로도 문의해 주세요.',done_home:'← 첫 화면으로'}
+};
+function apply(){var L=(window.hdmLang?window.hdmLang():'ja');var d=P[L]||P.ja;
+ document.querySelectorAll('[data-p]').forEach(function(el){var k=el.getAttribute('data-p');if(d[k]!=null)el.innerHTML=d[k];});
+ document.querySelectorAll('[data-p-ph]').forEach(function(el){var k=el.getAttribute('data-p-ph');if(d[k]!=null)el.setAttribute('placeholder',d[k]);});
+ if(d.title)document.title=d.title;}
+var prev=window.hdmOnLang;window.hdmOnLang=function(L){try{apply();}catch(e){}if(typeof prev==='function')try{prev(L);}catch(e){}};
+if(window.hdmLang)apply();else document.addEventListener('DOMContentLoaded',apply);})();
+</script>
 </body></html>

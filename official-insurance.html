@@ -37,7 +37,7 @@ header .back:hover{background:rgba(255,255,255,.06)}
 <body>
 <header>
   <a class="logo" href="index.html"><img src="official-clone/img/common/img_logo_v2.png" alt="HANDYMAN RENTCAR"></a>
-  <a class="back" href="index.html">← トップへ戻る</a>
+  <a class="back" href="index.html" data-i18n="ins_back">← トップへ戻る</a>
 </header>
 
 <div class="hero">
@@ -82,7 +82,89 @@ header .back:hover{background:rgba(255,255,255,.06)}
 
   <div class="note" data-i18n="ins_note">※ 金額はすべて税込・24時間あたりです。NOC（ノンオペレーションチャージ）＝事故・故障で車両が使用できない期間の休業補償です。補償内容の詳細は店舗までお問い合わせください。</div>
 
-  <a class="cta" href="official-design.html#search">🚗 車を予約する</a>
+  <a class="cta" href="official-design.html#search" data-i18n="ins_cta">🚗 車を予約する</a>
 </div>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_insurance",area:"official"});</script>
+<script src="official-i18n.js"></script>
+<script>
+(function(){
+  var P={
+    ja:{},
+    en:{
+      ins_back:"← Back to top",
+      ins_title:"Insurance Plans",
+      ins_lead:"For peace of mind, we offer three coverage plans. You can choose one when making your reservation.",
+      ins_p1_nm:"Basic Plan (Insurance Included)",
+      ins_p1_ds:"A plan that provides basic coverage only. Included as standard with every reservation.",
+      ins_c_pd:"<b>Bodily Injury / Property Damage</b>: Unlimited (no deductible waiver)",
+      ins_c_car:"<b>Vehicle Coverage</b>: Up to the market value of the vehicle (deductible ¥150,000)",
+      ins_c_ph:"<b>Personal Injury Coverage</b>: Up to ¥30,000,000",
+      ins_p2_nm:"Basic Plan + CDW (Deductible Waiver)",
+      ins_per:"/ 24 hours",
+      ins_p2_ds:"In addition to basic coverage, this waives the deductible you would otherwise pay in the event of an accident.",
+      ins_p2_c1:"Includes everything in the Basic Plan coverage",
+      ins_p2_c2:"<b>Waives the ¥150,000 vehicle deductible</b>",
+      ins_reco:"★ Recommended",
+      ins_p3_nm:"Basic Plan + CDW + NOC Coverage (Wide Assurance Pack)",
+      ins_p3_ds:"For an extra ¥550 (tax incl.) on top of the CDW, the Non-Operation Charge (NOC) is also waived. The most reassuring plan that bundles all coverage together.",
+      ins_p3_c1:"Includes everything in the CDW coverage",
+      ins_p3_c2:"<b>Waives the NOC (Non-Operation Charge / business compensation)</b>",
+      ins_p3_c3:"Also covers repair of damaged tires and loss of wheel caps",
+      ins_note:"* All amounts include tax and are per 24 hours. NOC (Non-Operation Charge) is compensation for the period the vehicle cannot be operated due to an accident or breakdown. For details of coverage, please contact the store.",
+      ins_cta:"🚗 Book a Car"
+    },
+    zh:{
+      ins_back:"← 返回首頁",
+      ins_title:"保險方案一覽",
+      ins_lead:"為以防萬一，我們備有3種保障方案。可於預約時選擇。",
+      ins_p1_nm:"基本方案（含保險）",
+      ins_p1_ds:"僅適用基本保障的方案。所有預約皆標準附帶。",
+      ins_c_pd:"<b>對人・對物</b>：無上限（不含免責保障）",
+      ins_c_car:"<b>車輛保障</b>：至車輛時價總額（自負額15萬日圓）",
+      ins_c_ph:"<b>人身傷害保障</b>：至3,000萬日圓",
+      ins_p2_nm:"基本方案＋免責保障（CDW）",
+      ins_per:"/ 24小時",
+      ins_p2_ds:"在基本保障之外，免除事故時客人須負擔的自負額（免責額）的制度。",
+      ins_p2_c1:"包含基本方案的所有保障內容",
+      ins_p2_c2:"<b>免除車輛保障的自負額15萬日圓</b>",
+      ins_reco:"★ 推薦",
+      ins_p3_nm:"基本方案＋免責保障＋NOC保障（安心廣域套餐）",
+      ins_p3_ds:"在免責保障上加550日圓（含稅），連休業補償（NOC營業補償）也免除。將所有保障整合為一、最令人安心的方案。",
+      ins_p3_c1:"包含免責保障的所有內容",
+      ins_p3_c2:"<b>免除NOC（NOC營業補償／休業補償）</b>",
+      ins_p3_c3:"亦保障受損輪胎的修理費與輪圈蓋遺失",
+      ins_note:"※ 金額皆為含稅、以24小時計。NOC（NOC營業補償）＝因事故・故障導致車輛無法使用期間的休業補償。保障內容詳情請洽詢店舖。",
+      ins_cta:"🚗 預約車輛"
+    },
+    ko:{
+      ins_back:"← 첫 화면으로",
+      ins_title:"보험 플랜 목록",
+      ins_lead:"만일에 대비하여 3가지 보장 플랜을 준비하고 있습니다. 예약 시 선택하실 수 있습니다.",
+      ins_p1_nm:"기본 플랜(보험 포함)",
+      ins_p1_ds:"기본 보장만 적용되는 플랜입니다. 모든 예약에 기본으로 포함됩니다.",
+      ins_c_pd:"<b>대인·대물</b>: 무제한(면책 보장 없음)",
+      ins_c_car:"<b>차량 보장</b>: 차량 시가 총액까지(자기부담금 15만 엔)",
+      ins_c_ph:"<b>인신상해 보장</b>: 3,000만 엔까지",
+      ins_p2_nm:"기본 플랜＋면책 보장(CDW)",
+      ins_per:"/ 24시간",
+      ins_p2_ds:"기본 보장에 더해, 사고 시 고객님이 부담하는 자기부담금(면책금)을 면제하는 제도입니다.",
+      ins_p2_c1:"기본 플랜의 보장 내용을 모두 포함",
+      ins_p2_c2:"<b>차량 보장의 자기부담금 15만 엔을 면제</b>",
+      ins_reco:"★ 추천",
+      ins_p3_nm:"기본 플랜＋면책 보장＋NOC 보장(안심 와이드 팩)",
+      ins_p3_ds:"면책 보장에 550엔(세금 포함)을 추가하면 휴업 보상(NOC 영업보상)도 불필요. 모든 보장을 하나로 묶은 가장 안심되는 플랜입니다.",
+      ins_p3_c1:"면책 보장의 내용을 모두 포함",
+      ins_p3_c2:"<b>NOC(NOC 영업보상／휴업 보상)를 면제</b>",
+      ins_p3_c3:"손상된 타이어 수리비·휠캡 분실도 보장",
+      ins_note:"※ 금액은 모두 세금 포함·24시간 기준입니다. NOC(NOC 영업보상)＝사고·고장으로 차량을 사용할 수 없는 기간의 휴업 보상입니다. 보장 내용의 자세한 사항은 매장으로 문의해 주세요.",
+      ins_cta:"🚗 차량 예약하기"
+    }
+  };
+  function apply(){var L=(window.hdmLang?window.hdmLang():'ja');var d=P[L]||P.ja;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(d[k]!=null)el.innerHTML=d[k];});
+    document.querySelectorAll('[data-i18n-ph]').forEach(function(el){var k=el.getAttribute('data-i18n-ph');if(d[k]!=null)el.setAttribute('placeholder',d[k]);});}
+  var prev=window.hdmOnLang;window.hdmOnLang=function(L){try{apply();}catch(e){}if(typeof prev==='function')try{prev(L);}catch(e){}};
+  if(window.hdmLang)apply();else document.addEventListener('DOMContentLoaded',apply);
+})();
+</script>
 </body></html>
