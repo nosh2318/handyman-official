@@ -403,10 +403,11 @@ var P=new URLSearchParams(location.search);
 var area=P.get('area')||'naha';
 var method=P.get('method')||'delivery';
 function T(k){return (window.hdmT?window.hdmT(k):k);}
+if(typeof window.hdmTerm!=='function')window.hdmTerm=function(s){return s==null?s:String(s);}; // i18n.js読込前の初期描画で落ちない安全スタブ（読込後に本体で上書き）
 var MKEY={delivery:'del',airport:'air',store:'store'};
 function toggleMenu(e){if(e){e.stopPropagation();}var n=document.getElementById('nav');if(n)n.classList.toggle('open');}
 function closeMenu(){var n=document.getElementById('nav');if(n)n.classList.remove('open');}
-function openBus(){var f=document.getElementById('busFrame');if(!f.getAttribute('src'))f.setAttribute('src',(area==='takamatsu'?'official-tkm-airport.html':'official-bus.html')+'?embed=1');var bar=document.querySelector('.busbar>span');if(bar&&area==='takamatsu')bar.innerHTML='🚐 高松空港 無料送迎のご案内';document.getElementById('busScrim').classList.add('on');document.body.style.overflow='hidden';}
+function openBus(){var f=document.getElementById('busFrame');if(!f.getAttribute('src'))f.setAttribute('src',(area==='takamatsu'?'official-tkm-airport.html':'official-bus.html')+'?embed=1');var bar=document.querySelector('.busbar>span');if(bar&&area==='takamatsu')bar.innerHTML=T('am_title');document.getElementById('busScrim').classList.add('on');document.body.style.overflow='hidden';}
 function closeBus(){document.getElementById('busScrim').classList.remove('on');document.body.style.overflow='';}
 document.addEventListener('click',function(e){if(!e.target.closest('header'))closeMenu();});
 var selCls=P.get('class')||'';
@@ -482,7 +483,7 @@ var NHA_HOTELS=['ホテルコレクティブ','ホテルリソルトリニティ
 // サマリー
 function renderMethod(){
 document.getElementById('sumbar').innerHTML=
-  '<span class="it"><b>'+T('sum_area')+'</b>'+SHOP+'</span>'+
+  '<span class="it"><b>'+T('sum_area')+'</b>'+T('tab_'+area)+'</span>'+
   '<span class="it"><b>'+T('sum_recv')+'</b>'+T('mt_'+MKEY[method])+'</span>'+
   '<span class="it"><b>'+T('sum_dep')+'</b>'+fmtDT(pD,pT)+'</span>'+
   '<span class="it"><b>'+T('sum_ret')+'</b>'+fmtDT(rD,rT)+'</span>'+
@@ -496,14 +497,14 @@ var mc=document.getElementById('methodCard');
 if(method==='delivery'){
   // お届け/回収 場所の指定は検証済みの新UX(official-deliv-v2)を埋め込み。選択結果はpostMessageで受信。
   if(!document.getElementById('delivFrame')){
-    mc.innerHTML='<iframe id="delivFrame" src="official-deliv-v2.html?embed=1&area='+area+'&cb='+Date.now()+'" style="width:100%;border:0;height:660px;display:block" title="お届け先の指定" scrolling="no"></iframe>';
+    mc.innerHTML='<iframe id="delivFrame" src="official-deliv-v2.html?embed=1&area='+area+'&cb='+Date.now()+'" style="width:100%;border:0;height:660px;display:block" title="'+T('iframe_deliv')+'" scrolling="no"></iframe>';
   }
 }else if(method==='airport'){
   // 高松＝送迎場所は高松空港のみ（行き帰り）。その他店舗＝那覇空港/赤嶺駅
   var apSel=(area==='takamatsu')
-    ? '<select class="fld"><option value="高松空港" selected>高松空港</option></select>'
-    : '<select class="fld"><option value="">'+T('air_sel')+'</option><option>那覇空港</option><option>赤嶺駅</option></select>';
-  var busLabel=(area==='takamatsu')?'🚐 高松空港 無料送迎について確認する':T('air_busbtn');
+    ? '<select class="fld"><option value="高松空港" selected>'+window.hdmTerm('高松空港')+'</option></select>'
+    : '<select class="fld"><option value="">'+T('air_sel')+'</option><option value="那覇空港">'+window.hdmTerm('那覇空港')+'</option><option value="赤嶺駅">'+window.hdmTerm('赤嶺駅')+'</option></select>';
+  var busLabel=(area==='takamatsu')?T('am_busbtn'):T('air_busbtn');
   mc.innerHTML='<div class="row2"><div><label class="fl">'+T('air_go_place')+'<span style="color:#b8860b;font-weight:700">'+T('air_selectable')+'</span></label>'+apSel+'</div><div><label class="fl">'+T('air_time_go')+'</label><input class="fld" value="'+fmtDT(pD,pT)+'" readonly style="background:#eef2f8;color:#5a6b85"></div></div>'+
     '<div class="row2" style="margin-top:12px"><div><label class="fl">'+T('air_ret_place')+'<span style="color:#b8860b;font-weight:700">'+T('air_selectable')+'</span></label>'+apSel+'</div><div><label class="fl">'+T('air_time_ret')+'</label><input class="fld" value="'+fmtDT(rD,rT)+'" readonly style="background:#eef2f8;color:#5a6b85"></div></div>'+
     '<div class="row2" style="margin-top:12px"><div><label class="fl">'+T('air_flight')+'</label><input class="fld" placeholder="'+T('ph_flight')+'"></div><div></div></div>'+
@@ -511,9 +512,9 @@ if(method==='delivery'){
     '<button type="button" class="busbtn" onclick="openBus()">'+busLabel+'</button>'+
     (area==='takamatsu'?'':busTable()); // 高松は無料シャトル時刻表を表示しない（送迎案内はボタンから）
 }else{
-  var stName=(area==='takamatsu')?'高松空港店':'那覇空港店';
-  var stP=(area==='takamatsu')?'高松空港店':T('store_p2');
-  var stAddr=(area==='takamatsu')?'香川県高松市・高松空港周辺（詳細はご予約時にご案内）':T('store_addr');
+  var stName=(area==='takamatsu')?T('tab_takamatsu'):T('tab_naha');
+  var stP=(area==='takamatsu')?T('tab_takamatsu'):T('store_p2');
+  var stAddr=(area==='takamatsu')?T('am_store_addr'):T('store_addr');
   var stMap=(area==='takamatsu')?'https://maps.app.goo.gl/zVK6Ty6Qvpgk5mEp8':'https://maps.app.goo.gl/rCQ3obibiHU18G5H8';
   mc.innerHTML='<label class="fl">'+T('store_l')+'</label><select class="fld"><option>'+stName+'</option></select>'+
     '<div class="storeloc"><div class="slbody"><div class="slname">'+stP+'</div><div class="sladdr">'+stAddr+'</div></div>'+
@@ -529,7 +530,7 @@ var delMap=null,delMarker=null;
 function initDelMap(){
   // 地図は遅延＋例外隔離（地図が失敗してもフロー全体は必ず動く）
   var tries=0;
-  function fallback(el){if(el)el.innerHTML='<div style="padding:26px;color:#5a6b85;text-align:center;font-size:12px;line-height:1.7">地図を表示できません。<br>上の入力欄にお届け先（ホテル名・住所）をご記入ください。</div>';}
+  function fallback(el){if(el)el.innerHTML='<div style="padding:26px;color:#5a6b85;text-align:center;font-size:12px;line-height:1.7">'+T('dl_map_fail')+'</div>';}
   function go(){
     var el=document.getElementById('delMap');if(!el)return;
     var ar=(area==='sapporo')?'sapporo':'naha';var cf=MAPCFG[ar];
@@ -554,7 +555,7 @@ function setLocType(t){
     if(map)map.style.display='none'; if(pull)pull.style.display='block';
     var list=(t==='hotel')?NHA_HOTELS:NHA_STATIONS;
     var sel=document.getElementById('placeSel');
-    if(sel)sel.innerHTML='<option value="">'+(t==='hotel'?'ホテルを選択':'駅を選択')+'</option>'+list.map(function(x){return '<option>'+x+'</option>';}).join('')+'<option value="__other">一覧にない（地図で指定）</option>';
+    if(sel)sel.innerHTML='<option value="">'+(t==='hotel'?T('dl_sel_hotel'):T('dl_sel_station'))+'</option>'+list.map(function(x){return '<option>'+x+'</option>';}).join('')+'<option value="__other">'+T('dl_other')+'</option>';
   }
   setPending('');
 }
@@ -598,8 +599,8 @@ function carImg(k){var base=(k==='A2')?'A':k;var common='official-assets/cars/cl
 function renderV(){
   var visible=ORDER.filter(function(k){return classAvail(k);});
   document.getElementById('vgrid').innerHTML=ORDER.map(function(k){var c=CLS[k];var av=classAvail(k);return (
-    '<div class="vc'+(state.cls===k?' on':'')+(av?'':' soldout')+'" data-k="'+k+'"><div class="pic">'+carImg(k)+'<span class="clschip">'+c.l+'</span>'+(c.az?'<span class="azukari">'+T('azukari')+'</span>':'')+(av?'<span class="check">✓</span>':'<span class="soldbadge">'+T('fl_full')+'</span>')+'</div>'+
-    '<div class="bd"><div class="nm">'+c.v+'</div><div class="pr"><b>¥'+c.p.toLocaleString()+'</b><small>'+T('perday')+'</small></div><div class="sp">👥 '+String(c.s).replace(/名/,T('seats'))+'</div>'+
+    '<div class="vc'+(state.cls===k?' on':'')+(av?'':' soldout')+'" data-k="'+k+'"><div class="pic">'+carImg(k)+'<span class="clschip">'+window.hdmTerm(c.l)+'</span>'+(c.az?'<span class="azukari">'+T('azukari')+'</span>':'')+(av?'<span class="check">✓</span>':'<span class="soldbadge">'+T('fl_full')+'</span>')+'</div>'+
+    '<div class="bd"><div class="nm">'+window.hdmTerm(c.v)+'</div><div class="pr"><b>¥'+c.p.toLocaleString()+'</b><small>'+T('perday')+'</small></div><div class="sp">👥 '+String(c.s).replace(/名/,T('seats'))+'</div>'+
     '<div class="vbtns">'+(av?'<button class="vpick" onclick="decideV(\''+k+'\')">'+(state.cls===k?T('fl_decided'):T('fl_decide'))+'</button>':'<div class="soldmsg">'+T('fl_nostock')+'</div>')+
     '<button class="vdetail" onclick="openDetail(\''+k+'\')">'+T('fl_detail')+'</button></div></div></div>');
   }).join('');
@@ -612,12 +613,12 @@ function pickV(k){decideV(k);} // 後方互換
 function unlockMethod(){var lk=document.getElementById('methodLock');if(lk)lk.style.display='none';var mc=document.getElementById('methodCard');if(mc)mc.style.display='';var s=document.getElementById('methodSec');if(s)s.classList.remove('locked');if(typeof delMap!=='undefined'&&delMap){setTimeout(function(){try{delMap.invalidateSize();}catch(e){}},130);}}
 // 車両クラス詳細モーダル（KEYDROPと同じ情報＝STA.equip / STA.note を使用）
 function openDetail(k){var c=CLS[k];if(!c)return;
-  document.getElementById('dPic').innerHTML=carImg(k)+'<span class="dclschip">'+c.l+'</span>'+(c.az?'<span class="azukari" style="position:absolute;top:10px;right:54px">'+T('azukari')+'</span>':'')+'<button class="dclose" onclick="closeDetail()">×</button>';
-  document.getElementById('dBody').innerHTML='<h3>'+c.l+'</h3><div class="dv">'+c.v+'</div>'+
+  document.getElementById('dPic').innerHTML=carImg(k)+'<span class="dclschip">'+window.hdmTerm(c.l)+'</span>'+(c.az?'<span class="azukari" style="position:absolute;top:10px;right:54px">'+T('azukari')+'</span>':'')+'<button class="dclose" onclick="closeDetail()">×</button>';
+  document.getElementById('dBody').innerHTML='<h3>'+window.hdmTerm(c.l)+'</h3><div class="dv">'+window.hdmTerm(c.v)+'</div>'+
     '<div class="drow"><span class="lb">'+T('dt_seats')+'</span><span class="vl">👥 '+String(c.s).replace(/名/,T('seats'))+'</span></div>'+
     '<div class="drow dprice"><span class="lb">'+T('dt_price')+'</span><span class="vl"><b>¥'+c.p.toLocaleString()+'</b> '+T('perday')+'</span></div>'+
-    '<div class="drow"><span class="lb">'+T('dt_equip')+'</span><span class="vl" style="flex:1"><div class="dtags">'+STA.equip.map(function(e){return '<span class="dtag">'+e+'</span>';}).join('')+'</div></span></div>'+
-    '<div class="dnote">'+STA.note+'</div>'+
+    '<div class="drow"><span class="lb">'+T('dt_equip')+'</span><span class="vl" style="flex:1"><div class="dtags">'+STA.equip.map(function(e){return '<span class="dtag">'+window.hdmTerm(e)+'</span>';}).join('')+'</div></span></div>'+
+    '<div class="dnote">'+T('fnote_'+area)+'</div>'+
     (classAvail(k)?'<button class="dpick" onclick="pickFromDetail(\''+k+'\')">'+T('dt_pick')+'</button>':'<div class="dpick" style="background:#e7ebf2;color:#8a97ad;text-align:center;cursor:default">'+T('fl_nostock2')+'</div>');
   document.getElementById('dscrim').classList.add('on');
 }
@@ -657,8 +658,8 @@ function calc(){
   document.getElementById('totPr').textContent=base?('¥'+tot.toLocaleString()):'¥—';
 }
 // 選択中の車両カード（STEP3で表示）
-function renderChosen(){var el=document.getElementById('chosenCar');if(!el)return;var c=CLS[state.cls];if(!c){el.innerHTML='車両が未選択です';return;}
-  el.innerHTML='<div style="display:flex;gap:12px;align-items:center"><div style="width:96px;height:62px;border-radius:8px;overflow:hidden;flex:0 0 auto;background:#fff">'+carImg(state.cls)+'</div><div><div style="font-weight:900;color:#0a1f44;font-size:14px;word-break:keep-all">'+c.l+'　'+c.v+'</div><div style="font-size:12px;color:var(--mut);margin-top:3px">👥 '+c.s+'　¥'+c.p.toLocaleString()+'〜 / 1日</div></div></div>';}
+function renderChosen(){var el=document.getElementById('chosenCar');if(!el)return;var c=CLS[state.cls];if(!c){el.innerHTML=({ja:'車両が未選択です',en:'No car selected',zh:'尚未選擇車輛',ko:'차량이 선택되지 않았습니다'}[(window.hdmLang?hdmLang():'ja')]||'車両が未選択です');return;}
+  el.innerHTML='<div style="display:flex;gap:12px;align-items:center"><div style="width:96px;height:62px;border-radius:8px;overflow:hidden;flex:0 0 auto;background:#fff">'+carImg(state.cls)+'</div><div><div style="font-weight:900;color:#0a1f44;font-size:14px;word-break:keep-all">'+window.hdmTerm(c.l)+'　'+window.hdmTerm(c.v)+'</div><div style="font-size:12px;color:var(--mut);margin-top:3px">👥 '+String(c.s).replace(/名/,T('seats'))+'　¥'+c.p.toLocaleString()+T('perday')+'</div></div></div>';}
 // 引き継ぐ共通パラメータ
 function qs(extra){return 'area='+area+'&method='+method+'&pd='+encodeURIComponent(pD)+'&pt='+encodeURIComponent(pT)+'&rd='+encodeURIComponent(rD)+'&rt='+encodeURIComponent(rT)+(extra||'');}
 // ===== ステップ表示切替（画面内遷移・stateは保持）=====
@@ -747,7 +748,7 @@ async function payWithCard(){
       del_place:(loc&&loc.del&&loc.del.label)||'',col_place:(loc&&loc.col&&loc.col.label)||(loc&&loc.del&&loc.del.label)||'',
       del_lat:(loc&&loc.del)?loc.del.lat:null,del_lng:(loc&&loc.del)?loc.del.lng:null,
       col_lat:(loc&&loc.col)?loc.col.lat:((loc&&loc.del)?loc.del.lat:null),col_lng:(loc&&loc.col)?loc.col.lng:((loc&&loc.del)?loc.del.lng:null)};
-    if(area==='naha'&&method==='delivery'){var _ng=function(o){if(!o)return false;if(nahaNoGoText((o.label||'')+' '+(o.addr||'')))return true;if(o.lat!=null&&inNahaNoGo(o.lat,o.lng))return true;return false;};if(_ng(loc.del)||(!colSame&&_ng(loc.col))){alert('🚫 空港・基地（禁止エリア）はお届け／回収の対象外です。お届け先を選び直してください。');reEnable();return;}}
+    if(area==='naha'&&method==='delivery'){var _ng=function(o){if(!o)return false;if(nahaNoGoText((o.label||'')+' '+(o.addr||'')))return true;if(o.lat!=null&&inNahaNoGo(o.lat,o.lng))return true;return false;};if(_ng(loc.del)||(!colSame&&_ng(loc.col))){alert(T('al_nogo'));reEnable();return;}}
     var _payUrl=(area==='takamatsu')?(BT_PAY_URL+'/functions/v1/official-pay-tkm'):(SUPABASE_URL+'/functions/v1/official-pay');
     var _payKey=(area==='takamatsu')?BT_ANON:SUPABASE_KEY;
     var res=await fetch(_payUrl,{method:'POST',headers:{'apikey':_payKey,'Authorization':'Bearer '+_payKey,'Content-Type':'application/json'},body:JSON.stringify(payload)});
@@ -800,8 +801,8 @@ function renderConfirm(){
     recvRows=row(T('cf_recvm'),methodDetail()+editBtn)+row(T('sum_dep'),fmtDT(pD,pT))+row(T('sum_ret'),fmtDT(rD,rT));
   }
   document.getElementById('confirmBox').innerHTML=
-    row(T('cf_store'),SHOP)+recvRows+row(T('cf_use'),dys+T('cf_days_unit'))+
-    row(T('cf_car'),c.l+'（'+c.v+'）')+
+    row(T('cf_store'),T('tab_'+area))+recvRows+row(T('cf_use'),dys+T('cf_days_unit'))+
+    row(T('cf_car'),window.hdmTerm(c.l)+'（'+window.hdmTerm(c.v)+'）')+
     row(T('cf_opt'),optLines.length?optLines.join('／'):T('cf_none'))+
     row(T('cf_ins'),insName)+
     row(T('cf_booker'),(nm||'-')+'　'+(kn?'（'+kn+'）':''))+

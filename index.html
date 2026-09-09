@@ -248,7 +248,7 @@ footer a{color:var(--mut);text-decoration:none;margin:0 8px;white-space:nowrap;d
 
 <!-- CAR TYPE -->
 <section class="cars" id="cars"><div class="wrap"><div class="shead"><div class="en cap">CAR TYPE</div><div class="jp" data-i18n="cars_jp">取扱車種・料金</div></div>
-  <div class="cttabs" id="cttabs"><button type="button" class="cttab on" data-a="naha" onclick="ctTab('naha')" data-i18n="tab_naha">那覇空港店</button><button type="button" class="cttab" data-a="sapporo" onclick="ctTab('sapporo')" data-i18n="tab_sapporo">札幌店</button><button type="button" class="cttab" data-a="takamatsu" onclick="ctTab('takamatsu')">高松空港店</button></div>
+  <div class="cttabs" id="cttabs"><button type="button" class="cttab on" data-a="naha" onclick="ctTab('naha')" data-i18n="tab_naha">那覇空港店</button><button type="button" class="cttab" data-a="sapporo" onclick="ctTab('sapporo')" data-i18n="tab_sapporo">札幌店</button><button type="button" class="cttab" data-a="takamatsu" onclick="ctTab('takamatsu')" data-i18n="tab_takamatsu">高松空港店</button></div>
   </div>
   <div class="canote" id="canote" style="display:none"></div>
   <div class="cagrid" id="cagrid" style="display:none"></div>
@@ -291,7 +291,7 @@ var BT_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZi
 // BTクラス → 表示ラベル / 画像キー(既存official-assets)
 var TKM_MAP={A:{l:'プレミアムミニバン',img:'A',p:15000},C:{l:'ミニバン',img:'B',p:11000},D:{l:'SUV',img:'S',p:9000},E:{l:'セダン / ハイブリッド',img:'H',p:7500},F:{l:'コンパクトSUV',img:'C',p:6500},G:{l:'コンパクト',img:'F',p:5500},H:{l:'ハイトワゴン',img:'F',p:5500}};
 var TKM_ORDER=['A','C','D','E','F','G','H'];
-function tkmFallback(T){var st=STORE.takamatsu;document.getElementById('cagrid').innerHTML=st.order.map(function(k){var c=st.cls[k];return '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\'takamatsu\')"><div class="pic">'+carImg(k,'takamatsu')+'</div><div class="bd"><div class="nm2"><span class="clsbadge">'+c.l+'</span><span class="nmtx">'+c.v+'</span></div><div class="spec">👥 '+String(c.s).replace(/名/,T('seats'))+'</div><div class="pr2"><small>料金は空車検索で</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>';}).join('');}
+function tkmFallback(T){var TC=(window.hdmTerm||function(x){return x;});var st=STORE.takamatsu;document.getElementById('cagrid').innerHTML=st.order.map(function(k){var c=st.cls[k];return '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\'takamatsu\')"><div class="pic">'+carImg(k,'takamatsu')+'</div><div class="bd"><div class="nm2"><span class="clsbadge">'+TC(c.l)+'</span><span class="nmtx">'+TC(c.v)+'</span></div><div class="spec">👥 '+String(c.s).replace(/名/,T('seats'))+'</div><div class="pr2"><small>'+T('price_on_search')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>';}).join('');}
 function loadTakamatsuLive(T){
   var grid=document.getElementById('cagrid');grid.innerHTML='<div style="padding:20px;color:var(--mut);font-size:13px">🚙 本番在庫を読み込み中…</div>';
   fetch(BT_URL+'/rest/v1/public_bt_classes_v?select=*',{headers:{apikey:BT_ANON,Authorization:'Bearer '+BT_ANON}})
@@ -299,12 +299,13 @@ function loadTakamatsuLive(T){
    .then(function(rows){
      if(!rows||!rows.length){tkmFallback(T);return;}
      var byc={};rows.forEach(function(x){byc[x.class]=x;});
+     var TC=(window.hdmTerm||function(x){return x;});
      grid.innerHTML=TKM_ORDER.filter(function(k){return byc[k];}).map(function(k){var c=byc[k];var m=TKM_MAP[k]||{l:k,img:k};
        var tkmImg='<img src="official-assets/cars/tkm/tkm_'+k+'.jpg" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\'official-assets/cars/class_'+m.img+'.png\'" alt="" style="width:100%;height:100%;object-fit:contain;background:#fff;padding:5px">';
        return '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\'takamatsu\')"><div class="pic">'+tkmImg+'</div>'+
-        '<div class="bd"><div class="nm2"><span class="clsbadge">'+m.l+'</span><span class="nmtx">'+c.vehicles+'</span></div>'+
-        '<div class="spec">👥 '+c.seats+T('seats')+' ・ 在庫 '+c.cnt+'台</div>'+
-        '<div class="pr2"><b>¥'+(m.p||0).toLocaleString()+'</b><small>〜 / 1日</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>';
+        '<div class="bd"><div class="nm2"><span class="clsbadge">'+TC(m.l)+'</span><span class="nmtx">'+TC(c.vehicles)+'</span></div>'+
+        '<div class="spec">👥 '+c.seats+T('seats')+' ・ '+T('stock')+c.cnt+T('stock_unit')+'</div>'+
+        '<div class="pr2"><b>¥'+(m.p||0).toLocaleString()+'</b><small>'+T('perday')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>';
      }).join('');
    }).catch(function(){tkmFallback(T);});
 }
@@ -316,9 +317,10 @@ function setCar(a){
   var T=(window.hdmT||function(k){return k;});
   var nt=T('note_'+a);if(nt==='note_'+a)nt=st.note||'';document.getElementById('canote').textContent=nt;
   if(a==='takamatsu'){loadTakamatsuLive(T);return;} // 高松＝BUDDICA本番在庫と連携
+  var TC=(window.hdmTerm||function(x){return x;});
   document.getElementById('cagrid').innerHTML=st.order.map(function(k){var c=st.cls[k];return (
     '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\''+a+'\')"><div class="pic">'+carImg(k,a)+'</div>'+
-    '<div class="bd"><div class="nm2"><span class="clsbadge">'+c.l+'</span><span class="nmtx">'+c.v+'</span></div><div class="spec">👥 '+String(c.s).replace(/名/,T('seats'))+'</div>'+
+    '<div class="bd"><div class="nm2"><span class="clsbadge">'+TC(c.l)+'</span><span class="nmtx">'+TC(c.v)+'</span></div><div class="spec">👥 '+String(c.s).replace(/名/,T('seats'))+'</div>'+
     '<div class="pr2"><b>¥'+c.p.toLocaleString()+'</b><small>'+T('perday')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>');
   }).join('');
 }

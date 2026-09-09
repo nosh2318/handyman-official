@@ -218,6 +218,131 @@
   for(var _LB in BG){if(DICT[_LB])for(var _kB in BG[_LB])DICT[_LB][_kB]=BG[_LB][_kB];}
   for(var _L2 in FLOW2){if(DICT[_L2])for(var _k2 in FLOW2[_L2])DICT[_L2][_k2]=FLOW2[_L2][_k2];}
   for(var _L in FLOW){if(DICT[_L])for(var _k in FLOW[_L])DICT[_L][_k]=FLOW[_L][_k];}
+  // ===== 追加キー（車両単位・在庫・タブ・エリア注記・高松送迎モーダル） =====
+  var EXTRA={
+   ja:{stock:'在庫 ',stock_unit:'台',price_on_search:'料金は空車検索で',tab_takamatsu:'高松空港店',
+    note_takamatsu:'🍜 高松空港店：香川・四国の旅に。高松空港での無料送迎・来店に対応（デリバリーはございません）。',
+    fnote_naha:'沖縄エリア・デリバリー対応。車種・色・仕様はお選びいただけません（同クラス内からランダム）。',
+    fnote_sapporo:'車種・色・仕様はお選びいただけません（同クラス内からランダム）。全車禁煙・ペット同乗不可。',
+    fnote_takamatsu:'香川・四国エリア。高松空港での無料送迎・来店に対応（デリバリーはございません）。車種・色はお選びいただけません（同クラス内から）。',
+    am_title:'🚐 高松空港 無料送迎のご案内',am_sub:'HANDYMAN RENTCAR 高松空港店｜行き・帰りとも無料送迎いたします（予約不要・お時間に合わせてお迎え）。',
+    am_pick_h:'🚐 お迎え（高松空港 → 店舗）',am_free:'無料',am_node_air:'高松空港',am_node_store:'HANDYMAN 店舗',
+    am_run:'運行時間',am_dur:'空港から店舗まで',am_dur_v:'約5分',
+    am_pick_lead:'ご到着されましたら、下記の待ち合わせ場所へお越しください。スタッフがお迎えにまいります。便名・到着時刻を予約時にお知らせいただくとスムーズです。',
+    am_spot:'📍 待ち合わせ場所',am_spot_cap:'▲ 待機場所：国内線到着口を出て「レンタカー会社受付」付近',
+    am_spot_lead:'高松空港1F、国内線到着口の出口付近（地図の赤いピン）が待ち合わせ場所です。ご到着されましたら「レンタカー会社受付」付近でお待ちください。スタッフがHANDYMANのプラカードを持ってお迎えに向かいます。',
+    am_ret_h:'🚙 お帰り（店舗 → 高松空港）',am_ret_lead:'ご返却時は、店舗から高松空港まで無料でお送りします。ご搭乗便のお時間に合わせてご出発いただけますので、受付時にご希望の時間をお申し付けください。',
+    am_flow_h:'🧭 当日の流れ',am_s1:'高松空港 国内線到着口を出て「レンタカー会社受付」付近でお待ちください。',am_s2:'スタッフ（HANDYMANのプラカード）がお迎えにまいります。',am_s3:'店舗まで約5分。ご契約・お車の確認後、ご出発です。',am_s4:'ご返却時は店舗から高松空港まで無料送迎（ご搭乗便に合わせて出発）。',
+    am_note:'※ 運行時間 9:00–18:50。ご到着・ご返却のお時間はご予約時／公式LINEにてお知らせください。時間外のお受け渡しはご相談ください。',am_back:'← TOPに戻る'},
+   en:{stock:'Stock: ',stock_unit:'',price_on_search:'See price in availability search',tab_takamatsu:'Takamatsu Airport',
+    note_takamatsu:'🍜 Takamatsu Airport: for trips around Kagawa & Shikoku. Free airport shuttle & in-store pickup (no delivery).',
+    fnote_naha:'Okinawa area, delivery available. Specific model, color and trim cannot be chosen (random within the class).',
+    fnote_sapporo:'Specific model, color and trim cannot be chosen (random within the class). All cars non-smoking, no pets.',
+    fnote_takamatsu:'Kagawa & Shikoku area. Free shuttle at Takamatsu Airport & in-store pickup (no delivery). Model/color cannot be chosen (random within the class).',
+    am_title:'🚐 Takamatsu Airport free shuttle guide',am_sub:'HANDYMAN RENTCAR Takamatsu Airport｜Free shuttle both ways (no reservation needed; we pick you up at your time).',
+    am_pick_h:'🚐 Pick-up (Takamatsu Airport → Store)',am_free:'Free',am_node_air:'Takamatsu Airport',am_node_store:'HANDYMAN Store',
+    am_run:'Hours',am_dur:'Airport to store',am_dur_v:'approx. 5 min',
+    am_pick_lead:'On arrival, please come to the meeting point below. Our staff will pick you up. Letting us know your flight number & arrival time when booking makes it smoother.',
+    am_spot:'📍 Meeting point',am_spot_cap:'▲ Waiting area: exit the domestic arrivals gate, near the “Rental Car Reception”.',
+    am_spot_lead:'The meeting point is near the domestic arrivals exit on the 1F of Takamatsu Airport (red pin on the map). On arrival, please wait near the “Rental Car Reception”. Our staff will come to meet you holding a HANDYMAN placard.',
+    am_ret_h:'🚙 Return (Store → Takamatsu Airport)',am_ret_lead:'On return, we take you from the store to Takamatsu Airport free of charge. You can depart to match your flight — just tell us your preferred time at check-in.',
+    am_flow_h:'🧭 On the day',am_s1:'Exit the domestic arrivals gate at Takamatsu Airport and wait near the “Rental Car Reception”.',am_s2:'Our staff (holding a HANDYMAN placard) will come to meet you.',am_s3:'About 5 min to the store. After the contract & car check, you’re off.',am_s4:'On return, free shuttle from the store to Takamatsu Airport (departs to match your flight).',
+    am_note:'※ Hours 9:00–18:50. Please tell us your arrival/return times when booking or via official LINE. For handover outside hours, please ask.',am_back:'← Back to top'},
+   zh:{stock:'庫存 ',stock_unit:'台',price_on_search:'費用請見空車搜尋',tab_takamatsu:'高松機場店',
+    note_takamatsu:'🍜 高松機場店：香川・四國之旅。提供高松機場免費接送・到店取車（無送車服務）。',
+    fnote_naha:'沖繩區域・提供送車。無法指定車種・顏色・配備（同車型隨機）。',
+    fnote_sapporo:'無法指定車種・顏色・配備（同車型隨機）。全車禁菸・禁攜寵物。',
+    fnote_takamatsu:'香川・四國區域。提供高松機場免費接送・到店取車（無送車服務）。無法指定車種・顏色（同車型隨機）。',
+    am_title:'🚐 高松機場 免費接送指南',am_sub:'HANDYMAN RENTCAR 高松機場店｜去程・回程皆免費接送（無需預約・依您時間接送）。',
+    am_pick_h:'🚐 接機（高松機場 → 門市）',am_free:'免費',am_node_air:'高松機場',am_node_store:'HANDYMAN 門市',
+    am_run:'運行時間',am_dur:'機場到門市',am_dur_v:'約5分鐘',
+    am_pick_lead:'抵達後，請前往下方的會合地點，工作人員將前往迎接。預約時告知航班編號・抵達時間會更順利。',
+    am_spot:'📍 會合地點',am_spot_cap:'▲ 等候處：走出國內線到達口，「租車公司櫃檯」附近。',
+    am_spot_lead:'會合地點在高松機場1F國內線到達口出口附近（地圖上的紅色標記）。抵達後請於「租車公司櫃檯」附近等候，工作人員將手持 HANDYMAN 看板前往迎接。',
+    am_ret_h:'🚙 送機（門市 → 高松機場）',am_ret_lead:'還車時，將由門市免費送您至高松機場。可配合您的航班時間出發，請於受理時告知希望的時間。',
+    am_flow_h:'🧭 當日流程',am_s1:'走出高松機場國內線到達口，於「租車公司櫃檯」附近等候。',am_s2:'工作人員（手持 HANDYMAN 看板）前往迎接。',am_s3:'至門市約5分鐘。完成合約・車輛確認後即可出發。',am_s4:'還車時由門市免費送至高松機場（配合航班出發）。',
+    am_note:'※ 運行時間 9:00–18:50。抵達・還車時間請於預約時／官方LINE告知。營業時間外之交還請洽詢。',am_back:'← 返回首頁'},
+   ko:{stock:'재고 ',stock_unit:'대',price_on_search:'요금은 빈차 검색에서',tab_takamatsu:'다카마쓰공항점',
+    note_takamatsu:'🍜 다카마쓰공항점: 가가와・시코쿠 여행에. 다카마쓰공항 무료 셔틀・방문 수령 대응(배달 없음).',
+    fnote_naha:'오키나와 지역・배달 대응. 차종・색상・사양은 선택할 수 없습니다(같은 클래스 내 랜덤).',
+    fnote_sapporo:'차종・색상・사양은 선택할 수 없습니다(같은 클래스 내 랜덤). 전 차량 금연・반려동물 불가.',
+    fnote_takamatsu:'가가와・시코쿠 지역. 다카마쓰공항 무료 셔틀・방문 수령 대응(배달 없음). 차종・색상은 선택할 수 없습니다(같은 클래스 내 랜덤).',
+    am_title:'🚐 다카마쓰공항 무료 셔틀 안내',am_sub:'HANDYMAN RENTCAR 다카마쓰공항점｜가는편・오는편 모두 무료 셔틀(예약 불필요・시간에 맞춰 픽업).',
+    am_pick_h:'🚐 픽업(다카마쓰공항 → 매장)',am_free:'무료',am_node_air:'다카마쓰공항',am_node_store:'HANDYMAN 매장',
+    am_run:'운행 시간',am_dur:'공항에서 매장까지',am_dur_v:'약 5분',
+    am_pick_lead:'도착하시면 아래 만남 장소로 오세요. 스태프가 픽업하러 나갑니다. 예약 시 항공편명・도착 시각을 알려주시면 원활합니다.',
+    am_spot:'📍 만남 장소',am_spot_cap:'▲ 대기 장소: 국내선 도착구를 나와 「렌터카 회사 접수처」 부근.',
+    am_spot_lead:'만남 장소는 다카마쓰공항 1F 국내선 도착구 출구 부근(지도의 빨간 핀)입니다. 도착하시면 「렌터카 회사 접수처」 부근에서 기다려 주세요. 스태프가 HANDYMAN 팻말을 들고 마중 나갑니다.',
+    am_ret_h:'🚙 배웅(매장 → 다카마쓰공항)',am_ret_lead:'반납 시 매장에서 다카마쓰공항까지 무료로 모셔다드립니다. 탑승편 시간에 맞춰 출발하실 수 있으니 접수 시 희망 시간을 말씀해 주세요.',
+    am_flow_h:'🧭 당일 흐름',am_s1:'다카마쓰공항 국내선 도착구를 나와 「렌터카 회사 접수처」 부근에서 기다려 주세요.',am_s2:'스태프(HANDYMAN 팻말)가 마중 나갑니다.',am_s3:'매장까지 약 5분. 계약・차량 확인 후 출발합니다.',am_s4:'반납 시 매장에서 다카마쓰공항까지 무료 셔틀(탑승편에 맞춰 출발).',
+    am_note:'※ 운행 시간 9:00–18:50. 도착・반납 시간은 예약 시／공식 LINE으로 알려주세요. 영업시간 외 인수는 문의해 주세요.',am_back:'← 처음으로'}
+  };
+  var EXTRA2={
+   ja:{am_busbtn:'🚐 高松空港 無料送迎について確認する',am_store_addr:'香川県高松市・高松空港周辺（詳細はご予約時にご案内）',
+    dl_map_fail:'地図を表示できません。<br>上の入力欄にお届け先（ホテル名・住所）をご記入ください。',
+    dl_sel_hotel:'ホテルを選択',dl_sel_station:'駅を選択',dl_other:'一覧にない（地図で指定）',
+    al_nogo:'🚫 空港・基地（禁止エリア）はお届け／回収の対象外です。お届け先を選び直してください。',iframe_deliv:'お届け先の指定'},
+   en:{am_busbtn:'🚐 About the Takamatsu Airport free shuttle',am_store_addr:'Around Takamatsu City & Takamatsu Airport, Kagawa (details provided when booking)',
+    dl_map_fail:'The map cannot be shown.<br>Please type your delivery spot (hotel name / address) in the field above.',
+    dl_sel_hotel:'Select a hotel',dl_sel_station:'Select a station',dl_other:'Not listed (set on map)',
+    al_nogo:'🚫 Airports & bases (restricted areas) are not eligible for delivery/collection. Please choose another spot.',iframe_deliv:'Set delivery spot'},
+   zh:{am_busbtn:'🚐 了解高松機場免費接送',am_store_addr:'香川縣高松市・高松機場周邊（詳情於預約時說明）',
+    dl_map_fail:'無法顯示地圖。<br>請於上方欄位填寫送車地點（飯店名稱／地址）。',
+    dl_sel_hotel:'選擇飯店',dl_sel_station:'選擇車站',dl_other:'清單中沒有（於地圖指定）',
+    al_nogo:'🚫 機場・基地（禁止區域）不提供送車／收車。請重新選擇地點。',iframe_deliv:'指定送車地點'},
+   ko:{am_busbtn:'🚐 다카마쓰공항 무료 셔틀 안내',am_store_addr:'가가와현 다카마쓰시・다카마쓰공항 주변(자세한 내용은 예약 시 안내)',
+    dl_map_fail:'지도를 표시할 수 없습니다.<br>위 입력란에 배달 장소(호텔명／주소)를 입력해 주세요.',
+    dl_sel_hotel:'호텔 선택',dl_sel_station:'역 선택',dl_other:'목록에 없음(지도에서 지정)',
+    al_nogo:'🚫 공항・기지(금지 구역)는 배달／회수 대상이 아닙니다. 장소를 다시 선택해 주세요.',iframe_deliv:'배달 장소 지정'}
+  };
+  for(var _LE in EXTRA){if(DICT[_LE])for(var _kE in EXTRA[_LE])DICT[_LE][_kE]=EXTRA[_LE][_kE];}
+  for(var _L2E in EXTRA2){if(DICT[_L2E])for(var _k2E in EXTRA2[_L2E])DICT[_L2E][_k2E]=EXTRA2[_L2E][_k2E];}
+  // ===== 車両クラス名・車種名・装備の用語辞書（hdmTerm で「/」「等」「（…）」を分解翻訳） =====
+  var TERMS={
+   'Aクラス':{en:'Class A',zh:'A車型',ko:'A클래스'},'A2クラス':{en:'Class A2',zh:'A2車型',ko:'A2클래스'},
+   'Bクラス':{en:'Class B',zh:'B車型',ko:'B클래스'},'B2クラス':{en:'Class B2',zh:'B2車型',ko:'B2클래스'},
+   'Cクラス':{en:'Class C',zh:'C車型',ko:'C클래스'},'Sクラス':{en:'Class S',zh:'S車型',ko:'S클래스'},
+   'Fクラス':{en:'Class F',zh:'F車型',ko:'F클래스'},'Hクラス':{en:'Class H',zh:'H車型',ko:'H클래스'},
+   'プレミアムミニバン':{en:'Premium Minivan',zh:'豪華廂型車',ko:'프리미엄 미니밴'},
+   'ミニバン':{en:'Minivan',zh:'廂型車',ko:'미니밴'},
+   'コンパクトSUV':{en:'Compact SUV',zh:'小型SUV',ko:'컴팩트 SUV'},
+   'コンパクト':{en:'Compact',zh:'小型車',ko:'컴팩트'},
+   'SUV':{en:'SUV',zh:'SUV',ko:'SUV'},
+   'ハイトワゴン':{en:'Tall Wagon',zh:'高頂旅行車',ko:'톨 왜건'},
+   'セダン':{en:'Sedan',zh:'轎車',ko:'세단'},'ハイブリッド':{en:'Hybrid',zh:'油電混合',ko:'하이브리드'},
+   'セダン / ハイブリッド':{en:'Sedan / Hybrid',zh:'轎車／油電混合',ko:'세단 / 하이브리드'},
+   // 車種名（en/zh/ko とも国際表記＝ラテン）
+   'アルファード':{en:'Alphard',zh:'Alphard',ko:'Alphard'},'ヴェルファイア':{en:'Vellfire',zh:'Vellfire',ko:'Vellfire'},
+   'ノア':{en:'Noah',zh:'Noah',ko:'Noah'},'ヴォクシー':{en:'Voxy',zh:'Voxy',ko:'Voxy'},
+   'デリカD5':{en:'Delica D5',zh:'Delica D5',ko:'Delica D5'},'セレナ':{en:'Serena',zh:'Serena',ko:'Serena'},
+   'ロッキー':{en:'Rocky',zh:'Rocky',ko:'Rocky'},'CX-3':{en:'CX-3',zh:'CX-3',ko:'CX-3'},'CX-5':{en:'CX-5',zh:'CX-5',ko:'CX-5'},
+   'ハリアー':{en:'Harrier',zh:'Harrier',ko:'Harrier'},'ソリオ':{en:'Solio',zh:'Solio',ko:'Solio'},
+   'アクセラ':{en:'Axela',zh:'Axela',ko:'Axela'},'ライズ':{en:'Raize',zh:'Raize',ko:'Raize'},
+   'ヤリスクロス':{en:'Yaris Cross',zh:'Yaris Cross',ko:'Yaris Cross'},'ヤリス':{en:'Yaris',zh:'Yaris',ko:'Yaris'},
+   'ルーミー':{en:'Roomy',zh:'Roomy',ko:'Roomy'},'プリウス':{en:'Prius',zh:'Prius',ko:'Prius'},'プリウスα':{en:'Prius α',zh:'Prius α',ko:'Prius α'},
+   'アクア':{en:'Aqua',zh:'Aqua',ko:'Aqua'},'ヴィッツ':{en:'Vitz',zh:'Vitz',ko:'Vitz'},'ノート':{en:'Note',zh:'Note',ko:'Note'},
+   // 装備
+   'ETC車載器':{en:'ETC',zh:'ETC',ko:'ETC'},'4WD':{en:'AWD',zh:'4WD',ko:'4WD'},
+   'スタッドレスタイヤ':{en:'Snow tires',zh:'雪胎',ko:'스노우 타이어'},'ナビ':{en:'Navigation',zh:'導航',ko:'내비게이션'},'Bluetooth':{en:'Bluetooth',zh:'Bluetooth',ko:'Bluetooth'},
+   // 括弧補足
+   '高年式モデル':{en:'newer model',zh:'高年式車款',ko:'최신 연식'},
+   // 送迎/来店の地点名
+   '高松空港':{en:'Takamatsu Airport',zh:'高松機場',ko:'다카마쓰공항'},'那覇空港':{en:'Naha Airport',zh:'那覇機場',ko:'나하공항'},'赤嶺駅':{en:'Akamine Sta.',zh:'赤嶺站',ko:'아카미네역'}
+  };
+  var ETC_SUF={en:' etc.',zh:' 等',ko:' 등'};
+  // JP用語文字列を現在言語へ（「/」「／」区切り・末尾「等」・末尾「（…）」を分解）
+  window.hdmTerm=function(s){
+    if(s==null)return s;var L=LANG;if(L==='ja')return String(s);
+    return String(s).split(/\s*[\/／]\s*/).map(function(tok){
+      tok=tok.trim();if(!tok)return tok;
+      var suf='';if(/等$/.test(tok)){tok=tok.replace(/\s*等\s*$/,'');suf=ETC_SUF[L]||'';}
+      var paren='';var m=tok.match(/[（(]([^）)]+)[）)]\s*$/);
+      if(m){var inner=m[1].trim();tok=tok.replace(/[（(][^）)]+[）)]\s*$/,'').trim();
+        var it=(TERMS[inner]&&TERMS[inner][L])||inner;paren=' ('+it+')';}
+      var t=(TERMS[tok]&&TERMS[tok][L])||tok;
+      return t+paren+suf;
+    }).join(' / ');
+  };
   var SHORT={ja:'日本語',en:'EN',zh:'繁中',ko:'한국어'};
   var NAMES={ja:'日本語',en:'English',zh:'繁體中文',ko:'한국어'};
   function detect(){try{var s=localStorage.getItem('hdm_lang');if(s&&DICT[s])return s;var n=(navigator.language||'ja').toLowerCase();if(n.indexOf('ko')===0)return 'ko';if(n.indexOf('zh')===0)return 'zh';if(n.indexOf('en')===0)return 'en';}catch(e){}return 'ja';}
