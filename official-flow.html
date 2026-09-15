@@ -665,15 +665,18 @@ function loadPriceMaster(){
      if(m.insurance){if(m.insurance.cdw!=null)insPrice.cdw=+m.insurance.cdw;if(m.insurance.noc!=null)insPrice.noc=+m.insurance.noc;}
      if(m.seat){if(m.seat.child!=null)CHILD_P=+m.seat.child;if(m.seat.junior!=null)JR_P=+m.seat.junior;}
      window._HIGH={};(m.high_dates||[]).forEach(function(x){window._HIGH[x]=1;});
+     window._BM=m.b_months||{};
      try{renderV();calc();if(step==='confirm')renderConfirm();}catch(e){}
    }).catch(function(){});
 }
-// 基本料金 日別合算（暦日・連休はB高設定）＝RPCと同一ロジック
+// 基本料金 日別合算（暦日・Bの日はその月の高料金 b_months）＝RPCと同一ロジック
 function baseSum(){
-  var c=CLS[state.cls];if(!c)return 0;var a=(c._a!=null?c._a:c.p),b=(c._b!=null?c._b:a);
+  var cl=state.cls,c=CLS[cl];if(!c)return 0;var a=(c._a!=null?c._a:c.p);
   if(!pD||!rD)return a;
-  var s=new Date(pD),e=new Date(rD),t=0,g=0;
-  while(s<=e&&g<400){var k=s.getFullYear()+'-'+('0'+(s.getMonth()+1)).slice(-2)+'-'+('0'+s.getDate()).slice(-2);t+=(window._HIGH&&window._HIGH[k])?b:a;s.setDate(s.getDate()+1);g++;}
+  var s=new Date(pD),e=new Date(rD),t=0,g=0,BM=window._BM||{};
+  while(s<=e&&g<400){var ym=s.getFullYear()+'-'+('0'+(s.getMonth()+1)).slice(-2),k=ym+'-'+('0'+s.getDate()).slice(-2);
+    if(window._HIGH&&window._HIGH[k]){t+=(BM[ym]&&BM[ym][cl]!=null)?+BM[ym][cl]:a;}else t+=a;
+    s.setDate(s.getDate()+1);g++;}
   return t;
 }
 function calc(){
