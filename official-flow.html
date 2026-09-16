@@ -666,6 +666,9 @@ function loadPriceMaster(){
      if(m.seat){if(m.seat.child!=null)CHILD_P=+m.seat.child;if(m.seat.junior!=null)JR_P=+m.seat.junior;}
      window._HIGH={};(m.high_dates||[]).forEach(function(x){window._HIGH[x]=1;});
      window._MONTHS=m.months||{};
+     window._BOOK_UNTIL=m.book_until||'';
+     // 予約可能期限を超える日程でのアクセス(URL直/古いリンク)を防御
+     try{var _pd=new URLSearchParams(location.search).get('rd')||new URLSearchParams(location.search).get('pd');if(window._BOOK_UNTIL&&_pd&&_pd>window._BOOK_UNTIL){alert('ご予約は '+window._BOOK_UNTIL+' までとなります。トップから日程を選び直してください。');location.href='index.html';}}catch(e){}
      try{renderV();calc();if(step==='confirm')renderConfirm();}catch(e){}
    }).catch(function(){});
 }

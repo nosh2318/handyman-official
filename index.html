@@ -359,6 +359,8 @@ function doSearch(){
   // 安全弁：最短予約日より前／返却が出発より前は不可
   if(window.__MINPICK&&pd<window.__MINPICK){var e1=document.getElementById('pickDate');e1.classList.add('need');e1.focus();alert('ご出発日は最短予約日（'+window.__MINPICK+'）以降をお選びください。');return;}
   if(rd<pd){var e2=document.getElementById('retDate');e2.classList.add('need');e2.focus();alert('ご返却日はご出発日以降をお選びください。');return;}
+  var _bk=(window.__BOOKUNTIL||{})[a];
+  if(_bk&&(pd>_bk||rd>_bk)){var e3=document.getElementById(pd>_bk?'pickDate':'retDate');e3.classList.add('need');e3.focus();alert('ご予約は '+_bk+' までとなります。それ以前の日程をお選びください。');return;}
   var dt='&pd='+encodeURIComponent(pd)+'&pt='+encodeURIComponent(pt)+'&rd='+encodeURIComponent(rd)+'&rt='+encodeURIComponent(rt);
   if(a==='sapporo'){ // 札幌=KEYDROP仕様を完全コピー(公式サイト内・デリバリー専門)
     location.href='official-flow.html?area=sapporo&method=delivery'+dt;return;
@@ -387,6 +389,14 @@ function doSearch(){
     });
     rdEl.addEventListener('change',function(){if(rdEl.value&&rdEl.value<rdEl.min)rdEl.value=rdEl.min;});
   }
+  // ★予約可能期限(book_until)連動：価格マスターの期限まで しか予約日を選べない
+  window.__BOOKUNTIL={};
+  var MAIN_URL='https://ckrxttbnawkclshczsia.supabase.co',MAIN_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8';
+  function applyMaxBook(){var a=(document.getElementById('areaSel')||{}).value||'';var st=a==='sapporo'?'spk':(a==='takamatsu'?'tkm':(a==='naha'?'nha':''));var bk=window.__BOOKUNTIL[st]||'';if(pdEl)pdEl.max=bk||'';if(rdEl)rdEl.max=bk||'';}
+  function pull(url,key,tbl,map){fetch(url+'/rest/v1/'+tbl+'?key=eq.hdm_official_price&select=value',{headers:{apikey:key,Authorization:'Bearer '+key}}).then(function(r){return r.ok?r.json():null;}).then(function(d){if(!d||!d[0])return;var o;try{o=JSON.parse(d[0].value);}catch(e){return;}Object.keys(map).forEach(function(st){var bu=(o[st]||{}).book_until;if(bu)window.__BOOKUNTIL[st]=bu;});applyMaxBook();}).catch(function(){});}
+  pull(MAIN_URL,MAIN_ANON,'app_settings',{nha:1,spk:1});
+  pull(BT_URL,BT_ANON,'bt_app_settings',{tkm:1});
+  var asel=document.getElementById('areaSel');if(asel)asel.addEventListener('change',applyMaxBook);
 })();
 // 運営からのお知らせ（将来：Supabase news テーブルに差し替え可）
 var NEWS=[
