@@ -210,6 +210,7 @@ footer a{color:var(--mut);text-decoration:none;margin:0 8px;white-space:nowrap;d
     <a href="https://plump-cap-ebe.notion.site/User-Guide-2a1c8329c12681729aebf8c3b3ea4466" target="_blank" rel="noopener" data-i18n="mn_guide_spk">ご利用方法（札幌店）</a>
     <a href="official-tkm-airport.html" data-tkm="guide">ご利用方法（高松空港店）</a>
     <a href="#cars" data-i18n="mn_cars">車両と料金</a>
+    <a href="daisha.html" style="color:#f2b600;font-weight:800">🔧 代車のお届けサービス</a>
     <a href="official-insurance.html" data-i18n="mn_ins">保険プラン一覧</a>
     <a href="https://plump-cap-ebe.notion.site/_OKI-2a4c8329c12680258f48ebb7e6d30234" target="_blank" rel="noopener" data-i18n="mn_faq_nha">よくある質問（沖縄那覇店）</a>
     <a href="https://plump-cap-ebe.notion.site/_SPK-234c8329c1268021b0c6e86b86dde0ac" target="_blank" rel="noopener" data-i18n="mn_faq_spk">よくある質問（札幌店）</a>
@@ -289,7 +290,7 @@ var STORE={
 var BT_URL='https://ggqugvyskyiblxiycpci.supabase.co';
 var BT_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdncXVndnlza3lpYmx4aXljcGNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxMDc3NjksImV4cCI6MjA5MzY4Mzc2OX0.uNhWcBd_Dl5nzemZDQfJ8mQV6iY73MwystGGpTRPC18';
 // BTクラス → 表示ラベル / 画像キー(既存official-assets)
-var TKM_MAP={A:{l:'プレミアムミニバン',img:'A',p:15000},C:{l:'ミニバン',img:'B',p:11000},D:{l:'SUV',img:'S',p:9000},E:{l:'セダン / ハイブリッド',img:'H',p:7500},F:{l:'コンパクトSUV',img:'C',p:6500},G:{l:'コンパクト',img:'F',p:5500},H:{l:'ハイトワゴン',img:'F',p:5500}};
+var TKM_MAP={A:{l:'プレミアムミニバン',v:'アルファード / ヴェルファイア',img:'A',p:15000},C:{l:'ミニバン',v:'ヴォクシー / ノア',img:'B',p:11000},D:{l:'SUV',v:'ハリアー',img:'S',p:9000},E:{l:'セダン / ハイブリッド',v:'プリウス',img:'H',p:7500},F:{l:'コンパクトSUV',v:'ヤリスクロス / ライズ',img:'C',p:6500},G:{l:'コンパクト',v:'ヤリス / ヴィッツ / アクア',img:'F',p:5500},H:{l:'コンパクトハイトワゴン',v:'ルーミー / タンク / ソリオ',img:'F',p:5500}};
 var TKM_ORDER=['A','C','D','E','F','G','H'];
 function tkmFallback(T){var TC=(window.hdmTerm||function(x){return x;});var st=STORE.takamatsu;document.getElementById('cagrid').innerHTML=st.order.map(function(k){var c=st.cls[k];return '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\'takamatsu\')"><div class="pic">'+carImg(k,'takamatsu')+'</div><div class="bd"><div class="nm2"><span class="clsbadge">'+TC(c.l)+'</span><span class="nmtx">'+TC(c.v)+'</span></div><div class="spec">👥 '+String(c.s).replace(/名/,T('seats'))+'</div><div class="pr2"><small>'+T('price_on_search')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>';}).join('');}
 function loadTakamatsuLive(T){
@@ -303,7 +304,7 @@ function loadTakamatsuLive(T){
      grid.innerHTML=TKM_ORDER.filter(function(k){return byc[k];}).map(function(k){var c=byc[k];var m=TKM_MAP[k]||{l:k,img:k};
        var tkmImg='<img src="official-assets/cars/tkm/tkm_'+k+'.jpg" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\'official-assets/cars/class_'+m.img+'.png\'" alt="" style="width:100%;height:100%;object-fit:contain;background:#fff;padding:5px">';
        return '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\'takamatsu\')"><div class="pic">'+tkmImg+'</div>'+
-        '<div class="bd"><div class="nm2"><span class="clsbadge">'+TC(m.l)+'</span><span class="nmtx">'+TC(c.vehicles)+'</span></div>'+
+        '<div class="bd"><div class="nm2"><span class="clsbadge">'+TC(m.l)+'</span><span class="nmtx">'+TC(m.v||c.vehicles)+'</span></div>'+
         '<div class="spec">👥 '+c.seats+T('seats')+' ・ '+T('stock')+c.cnt+T('stock_unit')+'</div>'+
         '<div class="pr2"><b>¥'+(m.p||0).toLocaleString()+'</b><small>'+T('perday')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>';
      }).join('');
