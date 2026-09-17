@@ -34,7 +34,7 @@ td.l{text-align:left}.mut{color:var(--mut)}
 <div class="seg" id="daySeg"><button data-d="7">7日</button><button data-d="30" class="on">30日</button><button data-d="90">90日</button></div>
 </div>
 <div class="card"><h2>🏬 店舗別サマリー（全期間内・店舗選択で切替）</h2><div class="stg" id="byStore"></div>
-<div class="mut" style="font-size:11px;margin-top:8px">※「未選択」=TOPで店舗を選ぶ前の閲覧。店舗別トラッキングは改修後の新規アクセスから記録されます。</div></div>
+<div class="mut" style="font-size:11px;margin-top:8px">※<b>公式予約（CV）は全店・過去分も表示</b>。アクセス（セッション/フロー到達）は店舗別トラッキング改修後の新規から記録＝現在は「未選択」に集約。数日で各店に分かれます。</div></div>
 <div class="cards" id="cards"></div>
 <div class="card"><h2>🎯 予約ファネル（サイト訪問 → 予約フロー到達）</h2><div id="funnel"></div></div>
 <div class="card"><h2>📄 ページ別</h2><table><thead><tr><th>ページ</th><th>セッション</th><th>PV</th><th>クリック</th><th>離脱</th><th>離脱率</th><th>平均滞在</th></tr></thead><tbody id="pgTbl"></tbody></table></div>
@@ -44,6 +44,7 @@ td.l{text-align:left}.mut{color:var(--mut)}
 <div class="card"><h2>📅 日別（直近14日）</h2><table><thead><tr><th>日</th><th>PV</th><th>セッション</th><th>クリック</th></tr></thead><tbody id="dyTbl"></tbody></table></div>
 <script>
 var SB="https://ckrxttbnawkclshczsia.supabase.co",AK="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8",DAYS=30,AREA="";
+var BT_SB="https://ggqugvyskyiblxiycpci.supabase.co",BT_AK="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdncXVndnlza3lpYmx4aXljcGNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxMDc3NjksImV4cCI6MjA5MzY4Mzc2OX0.uNhWcBd_Dl5nzemZDQfJ8mQV6iY73MwystGGpTRPC18";
 var PL={off_top:"TOP",off_flow:"予約フロー",off_deliv:"お届け先検索",off_contact:"お問い合わせ",off_mypage_find:"マイページ検索",off_tkm_airport:"空港送迎",off_bus:"バス時刻表",off_tkm_faq:"FAQ",off_clause:"約款",off_access:"アクセス",off_insurance:"補償",off_transaction:"特商法",off_privacy:"プライバシー",off_vehicles:"車両"};
 var SL={official:"未選択",naha:"🌺那覇",sapporo:"❄️札幌",takamatsu:"🍜高松"};
 function pl(p){return PL[p]||p;}function sl(s){return SL[s]||s;}
@@ -53,8 +54,10 @@ async function load(){
     var b={p_days:DAYS};if(AREA)b.p_area=AREA;
     var r=await fetch(SB+"/rest/v1/rpc/kd_official_stats",{method:"POST",headers:{apikey:AK,Authorization:"Bearer "+AK,"Content-Type":"application/json"},body:JSON.stringify(b)});
     var d=await r.json();var t=d.totals||{};
-    // 店舗別サマリー
-    document.getElementById("byStore").innerHTML=(d.by_store||[]).map(function(r){var rate=r.sessions?Math.round(r.flow_sessions/r.sessions*100):0;return '<div class="st"><div class="sn">'+esc(sl(r.store))+'</div><div class="sb">'+(r.sessions||0)+'</div><div class="sv">セッション ・ '+(r.pv||0)+'PV<br>予約フロー到達 '+(r.flow_sessions||0)+'（'+rate+'%）</div></div>';}).join('')||'<div class="mut">データなし</div>';
+    // 高松CVをBT側から取得して合成
+    try{var br=await fetch(BT_SB+"/rest/v1/rpc/off_cv_tkm",{method:"POST",headers:{apikey:BT_AK,Authorization:"Bearer "+BT_AK,"Content-Type":"application/json"},body:JSON.stringify({p_days:DAYS})});var tc=await br.json();(d.by_store||[]).forEach(function(r){if(r.store==="takamatsu")r.cv=tc;});}catch(e){}
+    // 店舗別サマリー（公式予約CVを主役）
+    document.getElementById("byStore").innerHTML=(d.by_store||[]).map(function(r){var cvr=r.flow_sessions?Math.round((r.cv||0)/r.flow_sessions*100):0;return '<div class="st"><div class="sn">'+esc(sl(r.store))+'</div><div class="sb">'+(r.cv||0)+'<span style="font-size:11px;color:var(--mut)"> 予約</span></div><div class="sv">アクセス '+(r.sessions||0)+'ｾｯｼｮﾝ / ﾌﾛｰ到達 '+(r.flow_sessions||0)+(r.flow_sessions?'（CVR'+cvr+'%）':'')+'</div></div>';}).join('')||'<div class="mut">データなし</div>';
     document.getElementById("cards").innerHTML=
       '<div class="kc"><div class="n">'+(t.sessions||0)+'</div><div class="l">セッション</div></div>'+
       '<div class="kc"><div class="n">'+(t.pv||0)+'</div><div class="l">ページビュー</div></div>'+
