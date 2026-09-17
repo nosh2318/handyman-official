@@ -334,7 +334,7 @@ ctTab('naha'); // 既定=那覇を表示
 window.hdmOnLang=function(){ try{setCar(_ctCur);}catch(e){} try{renderNews();}catch(e){} };
 // 検索フォーム：店舗連動の車クラスchip（実データ）
 function onAreaSel(){
-  var raw=document.getElementById('areaSel').value;var a=raw||'naha';var show=!!raw;
+  var raw=document.getElementById('areaSel').value;var a=raw||'naha';var show=!!raw;if(window.KDT&&raw){KDT.setArea(a);}
   // 那覇=受取方法(空港送迎/デリバリー/来店)を先に選択 / 札幌=デリバリー専門(KEYDROP)
   document.getElementById('methodGrp').style.display=(raw==='naha'||raw==='takamatsu')?'block':'none';
   // 高松＝送迎(空港)・来店のみ（デリバリーなし）／那覇＝3方法
