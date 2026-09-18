@@ -1,0 +1,291 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#00163f">
+<title>代車リクエスト｜HANDYMAN RENTCAR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#002063;--ink:#00163f;--y:#FABE00;--line:#e3e8f1;--mut:#5a6b85}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{overflow-x:hidden}
+body{font-family:"Noto Sans JP",-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;background:#eef2f8;color:#16243f;line-height:1.6}
+img{max-width:100%;display:block}
+.hd{position:sticky;top:0;z-index:20;background:var(--ink);border-bottom:1px solid #1b3a73;display:flex;align-items:center;gap:10px;padding:11px 16px}
+.hd a.logo{display:flex;align-items:center;text-decoration:none}
+.hd a.logo img{height:24px;width:auto}
+.hd b{font-size:16px;font-weight:900;font-style:italic;color:var(--y);letter-spacing:.03em}
+.hd .back{margin-left:auto;font-size:12px;color:var(--y);font-weight:800;text-decoration:none}
+.phead{background:linear-gradient(120deg,var(--ink),var(--navy));padding:18px 16px 14px;text-align:center;border-bottom:3px solid var(--y)}
+.phead .en{font-family:"Arial Black",Impact,sans-serif;font-style:italic;font-size:22px;color:var(--y);letter-spacing:.04em}
+.phead .jp{font-size:11px;color:#b9c6e0;font-weight:800;letter-spacing:.1em;margin-top:2px}
+.wrap{max-width:720px;margin:0 auto;padding:16px 16px 70px}
+.steps{display:flex;gap:6px;padding:14px 0 18px}
+.stp{flex:1 1 0;min-width:0;text-align:center}
+.stp .n{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);color:var(--mut);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;margin:0 auto 5px;background:#fff}
+.stp.on .n{background:var(--y);border-color:var(--y);color:var(--ink)}
+.stp.done .n{background:var(--navy);border-color:var(--navy);color:#fff}
+.stp .l{font-size:10px;color:var(--mut);font-weight:800}
+.stp.on .l{color:var(--navy)}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 8px 24px rgba(0,22,63,.06)}
+.q{font-size:13px;font-weight:900;color:var(--navy);margin:16px 0 7px;display:flex;align-items:center;gap:6px}
+.q:first-child{margin-top:0}
+.q .req{font-size:10px;background:var(--y);color:var(--ink);border-radius:4px;padding:1px 6px;font-weight:900}
+.q .opt{font-size:10px;background:#eef2f8;color:var(--mut);border-radius:4px;padding:1px 6px;font-weight:800}
+select,input,textarea{width:100%;background:#fff;border:2px solid var(--line);border-radius:10px;padding:11px 12px;font-size:15px;font-family:inherit;color:#16243f;outline:none}
+select:focus,input:focus,textarea:focus{border-color:var(--y)}
+textarea{resize:vertical;min-height:64px;line-height:1.6}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chk{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#334155;margin-top:8px;cursor:pointer}
+.chk input{width:auto}
+.cls{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:4px}
+.cl{background:#fff;border:2px solid var(--line);border-radius:12px;padding:11px 10px;cursor:pointer;position:relative;transition:.12s;text-align:center}
+.cl.on{border-color:var(--y);background:#fffbf0}
+.cl .n{font-size:13px;font-weight:900;margin-top:4px}
+.cl .s{font-size:10.5px;color:#7a7f87;margin-top:2px;line-height:1.4}
+.cl .ph{height:52px;display:flex;align-items:center;justify-content:center}
+.cl .ph img{max-height:52px;object-fit:contain}
+.cl .rk{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:var(--y);color:var(--ink);font-size:12px;font-weight:900;display:none;align-items:center;justify-content:center}
+.cl.on .rk{display:flex}
+.hint{font-size:11.5px;color:var(--mut);margin-top:6px;line-height:1.7}
+.err{background:#fff1f1;border:1px solid #f3b4b4;color:#b42318;border-radius:10px;padding:9px 12px;font-size:12.5px;font-weight:700;margin-top:12px;display:none}
+.nav{display:flex;gap:10px;margin-top:18px}
+.nav button{flex:1;height:50px;border:0;border-radius:12px;font-size:15px;font-weight:900;cursor:pointer}
+.nav .prev{background:#eef2f8;color:var(--navy);flex:0 0 40%}
+.nav .next{background:var(--y);color:var(--ink);box-shadow:0 6px 18px rgba(250,190,0,.35)}
+.nav .next:disabled{opacity:.5;box-shadow:none}
+.sumrow{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.sumrow:last-child{border-bottom:0}
+.sumrow .k{color:var(--mut);font-weight:800;flex:none}
+.sumrow .v{text-align:right;font-weight:700}
+.note{background:#fffbf0;border:1px solid var(--y);border-radius:12px;padding:12px 14px;font-size:12px;color:#7a5b00;line-height:1.8;margin-top:14px}
+#delivFrame{width:100%;border:0;display:block;background:#fff;border-radius:12px;min-height:560px}
+.done{text-align:center;padding:26px 6px}
+.done .ic{font-size:48px}
+.done h2{font-size:20px;font-weight:900;color:var(--navy);margin-top:8px}
+.done p{font-size:13px;color:#5a6068;margin-top:10px;line-height:1.9}
+.done a.go{display:inline-block;margin-top:16px;background:var(--y);color:var(--ink);font-weight:900;font-size:15px;padding:14px 26px;border-radius:12px;text-decoration:none;box-shadow:0 6px 18px rgba(250,190,0,.35)}
+.spin{width:26px;height:26px;border:3px solid #ddd;border-top-color:var(--y);border-radius:50%;animation:sp .7s linear infinite;margin:20px auto;display:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="hd">
+  <a class="logo" href="index.html"><img src="official-clone/img/common/img_logo_v2.png" alt="HANDYMAN"></a>
+  <a class="back" href="daisha.html">← 代車TOP</a>
+</div>
+<div class="phead"><div class="en">RESERVATION</div><div class="jp" id="areaLabel">代車のリクエスト</div></div>
+
+<div class="wrap">
+  <div class="steps" id="stepbar">
+    <div class="stp on" data-s="0"><div class="n">1</div><div class="l">条件</div></div>
+    <div class="stp" data-s="1"><div class="n">2</div><div class="l">車両・場所</div></div>
+    <div class="stp" data-s="2"><div class="n">3</div><div class="l">お客様情報</div></div>
+    <div class="stp" data-s="3"><div class="n">4</div><div class="l">確認</div></div>
+  </div>
+
+  <!-- STEP1 条件 -->
+  <div class="card" id="s0">
+    <div class="q">🔧 ご利用の用途 <span class="req">必須</span></div>
+    <select id="use_case">
+      <option value="">選択してください</option>
+      <option value="accident">事故の代車</option>
+      <option value="repair">車検・修理の代車</option>
+      <option value="long">長期のご利用</option>
+      <option value="other">その他</option>
+    </select>
+    <div class="q">📅 貸出（お届け）希望日時</div>
+    <div class="row2"><input type="date" id="start_date"><select id="start_time"><option value="">時間</option></select></div>
+    <div class="q">📅 返却（回収）希望日時</div>
+    <div class="row2"><input type="date" id="end_date"><select id="end_time"><option value="">時間</option></select></div>
+    <label class="chk"><input type="checkbox" id="undated"> 返却日は未定・長期（あとでチャットで相談）</label>
+    <div class="q">📝 期間の補足 <span class="opt">任意</span></div>
+    <textarea id="period_note" placeholder="例：修理完了まで／2〜3週間／未定 など"></textarea>
+    <div class="hint">※ 代車は在庫を確認してご提案します。おおよそのご希望で大丈夫です。次の画面で車両とお届け場所をお選びいただきます。</div>
+    <div class="err" id="e0"></div>
+    <div class="nav"><button class="next" onclick="next(0)">次へ ▶</button></div>
+  </div>
+
+  <!-- STEP2 車両・場所 -->
+  <div class="card" id="s1" style="display:none">
+    <div class="q">🚗 ご希望の車両（タップで第1〜第3希望を順に選択）<span class="req">必須</span></div>
+    <div class="cls" id="clsGrid"></div>
+    <div class="hint" id="clsHint">タップした順に「第1希望→第2希望→第3希望」になります。もう一度タップで解除。</div>
+    <div class="q">📍 お届け・回収の場所 <span class="req">必須</span></div>
+    <div id="delivWrap"><div class="hint">地図でお届け先を指定してください（回収先は既定でお届けと同じ）。</div><iframe id="delivFrame" title="お届け先の指定" scrolling="no"></iframe></div>
+    <div class="err" id="e1"></div>
+    <div class="nav"><button class="prev" onclick="go(0)">◀ 戻る</button><button class="next" onclick="next(1)">次へ ▶</button></div>
+  </div>
+
+  <!-- STEP3 お客様情報 -->
+  <div class="card" id="s2" style="display:none">
+    <div class="q">👤 ご利用区分</div>
+    <select id="cust_type"><option value="individual">個人</option><option value="business">事業者（整備工場・法人など）</option></select>
+    <div class="q" id="companyQ" style="display:none">🏢 会社名・工場名 <span class="opt">任意</span></div>
+    <input type="text" id="company" placeholder="例：〇〇自動車工場" style="display:none">
+    <div class="q">お名前 <span class="req">必須</span></div>
+    <input type="text" id="name" placeholder="山田 太郎">
+    <div class="q">📞 電話番号 <span class="opt">電話 or メール必須</span></div>
+    <input type="tel" id="tel" placeholder="09012345678" inputmode="tel">
+    <div class="q">✉️ メールアドレス <span class="opt">任意</span></div>
+    <input type="email" id="email" placeholder="example@email.com" inputmode="email">
+    <div class="q">📝 ご要望・メモ <span class="opt">任意</span></div>
+    <textarea id="memo" placeholder="喫煙不可希望／チャイルドシート希望 など"></textarea>
+    <div class="hint">※ ご連絡先はご提案・ご連絡のために使用します。送信後、そのままチャットでやり取りできます（ログイン不要）。</div>
+    <div class="err" id="e2"></div>
+    <div class="nav"><button class="prev" onclick="go(1)">◀ 戻る</button><button class="next" onclick="next(2)">確認へ ▶</button></div>
+  </div>
+
+  <!-- STEP4 確認 -->
+  <div class="card" id="s3" style="display:none">
+    <div id="sumBox"></div>
+    <div class="note">これは<b>予約確定ではなく「ご希望」の受付</b>です。担当が在庫を確認し、お出しできる車両と「代車価格」をチャットでご提案します。</div>
+    <div class="spin" id="spin"></div>
+    <div class="err" id="e3"></div>
+    <div class="nav"><button class="prev" onclick="go(2)">◀ 戻る</button><button class="next" id="submitBtn" onclick="submitReq()">この内容でリクエスト ▶</button></div>
+  </div>
+
+  <!-- DONE -->
+  <div class="card" id="sdone" style="display:none">
+    <div class="done">
+      <div class="ic">✅</div>
+      <h2>リクエストを受け付けました</h2>
+      <p>担当が在庫を確認し、お出しできる車両を<b>チャットでご提案</b>します。<br>下のボタンから、そのままチャットでやり取りできます。<br><b>このページのURLは大切に保管してください。</b></p>
+      <a class="go" id="chatLink" href="#">💬 チャットを開く</a>
+      <p style="font-size:11.5px;color:#94a3b8;margin-top:14px">お急ぎの場合はお電話でも承ります<br>📞 050-1724-6197（受付 9:00〜19:00 年中無休）</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const FN="https://ckrxttbnawkclshczsia.supabase.co/functions/v1/daisha-request";
+const ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8";
+const $=id=>document.getElementById(id);
+const P=new URLSearchParams(location.search);
+const AREA=(P.get("area")==="naha")?"naha":"sapporo";        // 地図/表示用
+const STORE=(AREA==="naha")?"nha":"spk";                     // EF store
+const AREAJP=(AREA==="naha")?"那覇・沖縄本島":"札幌市内・近郊";
+$("areaLabel").textContent="代車のリクエスト（"+AREAJP+"）";
+// 時間セレクト（9:00〜19:00 30分）
+(function(){var h='<option value="">時間</option>';for(var t=9*60;t<=19*60;t+=30){var hh=String(Math.floor(t/60)).padStart(2,"0"),mm=String(t%60).padStart(2,"0");h+='<option value="'+hh+':'+mm+'">'+hh+':'+mm+'</option>';}$("start_time").innerHTML=h;$("end_time").innerHTML=h;})();
+// 車両カード
+const CLASSES=[
+  {v:"プレミアムミニバン",s:"アルファード 等／7〜8名",img:"class_A"},
+  {v:"ミニバン",s:"ノア / デリカD5 等／7〜8名",img:"class_B"},
+  {v:"SUV",s:"ハリアー / CX-5 等／5名",img:"class_S"},
+  {v:"コンパクトSUV",s:"ロッキー / CX-3 等／5名",img:"class_C"},
+  {v:"セダン / ハイブリッド",s:"アクセラ / プリウス 等／5名",img:"class_H"},
+  {v:"コンパクト",s:"ソリオ 等／5名",img:"class_F"}
+];
+let ranks=[]; // 選択順に車両v
+(function(){
+  $("clsGrid").innerHTML=CLASSES.map((c,i)=>'<div class="cl" data-v="'+c.v+'" onclick="pickCls('+i+')"><div class="rk"></div><div class="ph"><img src="official-assets/cars/class_'+c.img.split("_")[1]+'.png" alt="" loading="lazy" onerror="this.style.display=\'none\'"></div><div class="n">'+c.v+'</div><div class="s">'+c.s+'</div></div>');
+})();
+function pickCls(i){
+  const v=CLASSES[i].v, idx=ranks.indexOf(v);
+  if(idx>=0) ranks.splice(idx,1);
+  else if(ranks.length<3) ranks.push(v);
+  else return; // 最大3
+  renderRanks();
+}
+function renderRanks(){
+  document.querySelectorAll("#clsGrid .cl").forEach(el=>{
+    const v=el.getAttribute("data-v"), r=ranks.indexOf(v);
+    el.classList.toggle("on",r>=0);
+    el.querySelector(".rk").textContent=r>=0?(r+1):"";
+  });
+}
+// 場所（official-deliv-v2 埋め込み）
+let del=null,col=null,same=true;
+$("delivFrame").src="official-deliv-v2.html?embed=1&area="+AREA+"&cb="+Date.now();
+window.addEventListener("message",function(e){
+  var d=e&&e.data; if(!d||d.type!=="hdmdeliv")return;
+  var f=$("delivFrame"); if(f&&d.height){f.style.height=Math.max(560,Math.min(1400,d.height))+"px";}
+  del=d.del||null; same=d.same!==false; col=same?null:(d.col||null);
+});
+// 未定チェック
+$("undated").addEventListener("change",function(){
+  var off=this.checked;$("end_date").disabled=off;$("end_time").disabled=off;
+  $("end_date").style.opacity=off?.4:1;$("end_time").style.opacity=off?.4:1;
+  if(off){$("end_date").value="";$("end_time").value="";}
+});
+$("cust_type").addEventListener("change",function(){
+  var b=this.value==="business";$("companyQ").style.display=b?"flex":"none";$("company").style.display=b?"block":"none";
+});
+// ステップ制御
+let step=0;
+function go(s){step=s;for(var i=0;i<4;i++)$("s"+i).style.display=i===s?"block":"none";$("sdone").style.display="none";
+  document.querySelectorAll("#stepbar .stp").forEach(el=>{var n=+el.getAttribute("data-s");el.classList.toggle("on",n===s);el.classList.toggle("done",n<s);});
+  window.scrollTo(0,0);}
+function showErr(id,msg){var e=$(id);e.textContent=msg;e.style.display="block";}
+function hideErr(id){$(id).style.display="none";}
+function next(from){
+  hideErr("e"+from);
+  if(from===0){ if(!$("use_case").value)return showErr("e0","ご利用の用途を選択してください"); go(1); }
+  else if(from===1){
+    if(ranks.length===0)return showErr("e1","ご希望の車両を1つ以上お選びください");
+    if(!del||!del.addr)return showErr("e1","お届け場所を地図で指定してください");
+    go(2);
+  }
+  else if(from===2){
+    if(!$("name").value.trim())return showErr("e2","お名前を入力してください");
+    if(!$("tel").value.trim()&&!$("email").value.trim())return showErr("e2","電話番号かメールのいずれかを入力してください");
+    renderSummary(); go(3);
+  }
+}
+const UCJP={accident:"事故の代車",repair:"車検・修理の代車",long:"長期のご利用",other:"その他"};
+function periodText(){
+  if($("undated").checked)return "未定・長期"+($("period_note").value?"（"+$("period_note").value+"）":"");
+  var s=$("start_date").value?($("start_date").value+($("start_time").value?" "+$("start_time").value:"")):"";
+  var e=$("end_date").value?($("end_date").value+($("end_time").value?" "+$("end_time").value:"")):"未定";
+  if(!s)return $("period_note").value||"未定";
+  return s+" 〜 "+e+($("period_note").value?"（"+$("period_note").value+"）":"");
+}
+function renderSummary(){
+  var rows=[
+    ["エリア",AREAJP],
+    ["用途",UCJP[$("use_case").value]||"-"],
+    ["希望期間",periodText()],
+    ["ご希望車両",ranks.map((v,i)=>"第"+(i+1)+"希望："+v).join(" ／ ")||"-"],
+    ["お届け先",del?del.addr:"-"],
+    ["回収先",same?"お届けと同じ":(col?col.addr:"-")],
+    ["ご利用区分",$("cust_type").value==="business"?"事業者"+($("company").value?"（"+$("company").value+"）":""):"個人"],
+    ["お名前",$("name").value.trim()+" 様"],
+    ["ご連絡先",[$("tel").value.trim()?"📞 "+$("tel").value.trim():"",$("email").value.trim()?"✉️ "+$("email").value.trim():""].filter(Boolean).join(" / ")||"-"]
+  ];
+  if($("memo").value.trim())rows.push(["メモ",$("memo").value.trim()]);
+  $("sumBox").innerHTML=rows.map(r=>'<div class="sumrow"><span class="k">'+r[0]+'</span><span class="v">'+String(r[1]).replace(/</g,"&lt;")+'</span></div>').join("");
+}
+let sending=false;
+async function submitReq(){
+  if(sending)return; sending=true; hideErr("e3");
+  $("submitBtn").disabled=true; $("spin").style.display="block";
+  var body={
+    action:"create", brand:"hdm", store:STORE,
+    use_case:$("use_case").value, start_date:$("undated").checked?"":$("start_date").value, end_date:$("undated").checked?"":$("end_date").value,
+    period_note:$("period_note").value.trim(),
+    del_place:del?del.addr:"", col_place:same?"":(col?col.addr:""), same_col:same,
+    cust_type:$("cust_type").value, company:$("company").value.trim(),
+    name:$("name").value.trim(), tel:$("tel").value.trim(), email:$("email").value.trim(),
+    choice1:ranks[0]||"", choice2:ranks[1]||"", choice3:ranks[2]||"", memo:$("memo").value.trim()
+  };
+  try{
+    var r=await fetch(FN,{method:"POST",headers:{apikey:ANON,Authorization:"Bearer "+ANON,"Content-Type":"application/json"},body:JSON.stringify(body)});
+    var j=await r.json();
+    if(j.ok&&j.token){
+      var url="daisha-chat.html?t="+j.token;
+      $("chatLink").href=url;
+      $("s3").style.display="none";
+      document.querySelectorAll("#stepbar .stp").forEach(el=>el.classList.add("done"));
+      $("sdone").style.display="block";
+      window.scrollTo(0,0);
+      // 3秒後に自動でチャットへ
+      setTimeout(function(){location.href=url;},3500);
+    }else{
+      showErr("e3",j.error||"送信に失敗しました。時間をおいて再度お試しください");
+    }
+  }catch(e){ showErr("e3","通信に失敗しました。電波の良い場所で再度お試しください"); }
+  sending=false; $("submitBtn").disabled=false; $("spin").style.display="none";
+}
+</script>
+</body>
+</html>
