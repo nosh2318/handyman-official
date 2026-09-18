@@ -290,8 +290,8 @@ var STORE={
 var BT_URL='https://ggqugvyskyiblxiycpci.supabase.co';
 var BT_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdncXVndnlza3lpYmx4aXljcGNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxMDc3NjksImV4cCI6MjA5MzY4Mzc2OX0.uNhWcBd_Dl5nzemZDQfJ8mQV6iY73MwystGGpTRPC18';
 // BTクラス → 表示ラベル / 画像キー(既存official-assets)
-var TKM_MAP={A:{l:'プレミアムミニバン',v:'アルファード / ヴェルファイア',img:'A',p:15000},C:{l:'ミニバン',v:'ヴォクシー / ノア',img:'B',p:11000},D:{l:'SUV',v:'ハリアー',img:'S',p:9000},E:{l:'セダン / ハイブリッド',v:'プリウス',img:'H',p:7500},F:{l:'コンパクトSUV',v:'ヤリスクロス / ライズ',img:'C',p:6500},G:{l:'コンパクト',v:'ヤリス / ヴィッツ / アクア',img:'F',p:5500},H:{l:'コンパクトハイトワゴン',v:'ルーミー / タンク / ソリオ',img:'F',p:5500}};
-var TKM_ORDER=['A','C','D','E','F','G','H'];
+var TKM_MAP={A:{l:'プレミアムミニバン',v:'アルファード / ヴェルファイア',img:'A',p:15000},C:{l:'ミニバン',v:'ヴォクシー / ノア',img:'B',p:11000},D:{l:'SUV',v:'ハリアー',img:'S',p:9000},E:{l:'セダン / ハイブリッド',v:'プリウス',img:'H',p:7500},F:{l:'コンパクトSUV',v:'ヤリスクロス / ライズ',img:'C',p:6500},G:{l:'コンパクト',v:'ヤリス / ヴィッツ / アクア',img:'F',p:5500},H:{l:'コンパクトハイトワゴン',v:'ルーミー / タンク / ソリオ',img:'F',p:5500},I:{l:'軽ハイトワゴン',v:'タント / N-BOX',img:'F',p:4500},J:{l:'軽・コンパクト',v:'ハスラー / パッソ',img:'F',p:4500},K:{l:'コンパクトワゴン',v:'シエンタ',img:'B',p:6500}};
+var TKM_ORDER=['A','C','D','E','F','G','H','I','J','K'];
 function tkmFallback(T){var TC=(window.hdmTerm||function(x){return x;});var st=STORE.takamatsu;document.getElementById('cagrid').innerHTML=st.order.map(function(k){var c=st.cls[k];return '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\'takamatsu\')"><div class="pic">'+carImg(k,'takamatsu')+'</div><div class="bd"><div class="nm2"><span class="clsbadge">'+TC(c.l)+'</span><span class="nmtx">'+TC(c.v)+'</span></div><div class="spec">👥 '+String(c.s).replace(/名/,T('seats'))+'</div><div class="pr2"><small>'+T('price_on_search')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>';}).join('');}
 function loadTakamatsuLive(T){
   var grid=document.getElementById('cagrid');grid.innerHTML='<div style="padding:20px;color:var(--mut);font-size:13px">🚙 本番在庫を読み込み中…</div>';
