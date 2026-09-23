@@ -326,7 +326,12 @@ function loadTakamatsuLive(T){
      }).join('');
    }).catch(function(){tkmFallback(T);});
 }
+window.__PRICEMASTER=window.__PRICEMASTER||{};
+function _areaToStore(a){return a==='sapporo'?'spk':(a==='naha'?'nha':(a==='takamatsu'?'tkm':''));}
+// カーラインナップ表示価格＝マスターの「安い日金額」→無ければ基本料金→無ければSTORE初期値
+function masterPrice(a,k){var pm=window.__PRICEMASTER[_areaToStore(a)];if(pm&&pm[k]){if(pm[k].a)return pm[k].a;if(pm[k].base)return pm[k].base;}return null;} // 0/未設定はSTORE初期値へフォールバック(¥0表示防止)
 function setCar(a){
+  window.__CARAREA=a;
   // 店舗未選択(空)なら案内のみ表示。選択時はその店舗の実車種を表示
   var sel=(a==='naha'||a==='sapporo'||a==='takamatsu');
   ['canote','cagrid','camore'].forEach(function(id){document.getElementById(id).style.display=sel?'':'none';});
@@ -338,7 +343,7 @@ function setCar(a){
   document.getElementById('cagrid').innerHTML=st.order.map(function(k){var c=st.cls[k];return (
     '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\''+a+'\')"><div class="pic">'+carImg(k,a)+'</div>'+
     '<div class="bd"><div class="nm2"><span class="clsbadge">'+TC(c.l)+'</span><span class="nmtx">'+TC(c.v)+'</span></div><div class="spec">👥 '+String(c.s).replace(/名/,T('seats'))+'</div>'+
-    '<div class="pr2"><b>¥'+c.p.toLocaleString()+'</b><small>'+T('perday')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>');
+    '<div class="pr2"><b>¥'+((masterPrice(a,k)!=null?masterPrice(a,k):c.p)).toLocaleString()+'〜</b><small>'+T('perday')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>');
   }).join('');
 }
 // CAR TYPEの車をタップ→その店舗を選択し検索フォーム(日程入力)へ誘導（予約フローは日程が必須のため）
@@ -410,7 +415,7 @@ function doSearch(){
   window.__BOOKUNTIL={};
   var MAIN_URL='https://ckrxttbnawkclshczsia.supabase.co',MAIN_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8';
   function applyMaxBook(){var a=(document.getElementById('areaSel')||{}).value||'';var st=a==='sapporo'?'spk':(a==='takamatsu'?'tkm':(a==='naha'?'nha':''));var bk=window.__BOOKUNTIL[st]||'';if(pdEl)pdEl.max=bk||'';if(rdEl)rdEl.max=bk||'';}
-  function pull(url,key,tbl,map){fetch(url+'/rest/v1/'+tbl+'?key=eq.hdm_official_price&select=value',{headers:{apikey:key,Authorization:'Bearer '+key}}).then(function(r){return r.ok?r.json():null;}).then(function(d){if(!d||!d[0])return;var o;try{o=JSON.parse(d[0].value);}catch(e){return;}Object.keys(map).forEach(function(st){var bu=(o[st]||{}).book_until;if(bu)window.__BOOKUNTIL[st]=bu;});applyMaxBook();}).catch(function(){});}
+  function pull(url,key,tbl,map){fetch(url+'/rest/v1/'+tbl+'?key=eq.hdm_official_price&select=value',{headers:{apikey:key,Authorization:'Bearer '+key}}).then(function(r){return r.ok?r.json():null;}).then(function(d){if(!d||!d[0])return;var o;try{o=JSON.parse(d[0].value);}catch(e){return;}Object.keys(map).forEach(function(st){var bu=(o[st]||{}).book_until;if(bu)window.__BOOKUNTIL[st]=bu;if(o[st]&&o[st].price)window.__PRICEMASTER[st]=o[st].price;});applyMaxBook();if(window.__CARAREA&&_areaToStore(window.__CARAREA)&&window.__PRICEMASTER[_areaToStore(window.__CARAREA)])setCar(window.__CARAREA);}).catch(function(){});}
   pull(MAIN_URL,MAIN_ANON,'app_settings',{nha:1,spk:1});
   pull(BT_URL,BT_ANON,'bt_app_settings',{tkm:1});
   var asel=document.getElementById('areaSel');if(asel)asel.addEventListener('change',applyMaxBook);
