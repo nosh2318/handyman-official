@@ -40,17 +40,17 @@ nav a:hover{background:rgba(255,255,255,.05)}
 .hslide{position:absolute;inset:0;background-position:center center;background-size:cover;opacity:0;transition:opacity 1.2s ease}
 .hslide.on{opacity:1}
 /* PC=横長 / スマホ=縦型 で出し分け */
-.hs1{background-image:url(official-assets/hero.jpg)}
-.hs2{background-image:url(official-assets/hero3.jpg)}
-.hs3{background-image:url(official-assets/hero2.jpg)}
-.hs4{background-image:url(official-assets/hero4.jpg)}
-.hs5{background-image:url(official-assets/hero5.jpg)}
+.hs1{background-image:url(official-assets/hero.jpg);background-image:image-set(url(official-assets/hero.webp) type("image/webp"),url(official-assets/hero.jpg) type("image/jpeg"))}
+.hs2{background-image:url(official-assets/hero3.jpg);background-image:image-set(url(official-assets/hero3.webp) type("image/webp"),url(official-assets/hero3.jpg) type("image/jpeg"))}
+.hs3{background-image:url(official-assets/hero2.jpg);background-image:image-set(url(official-assets/hero2.webp) type("image/webp"),url(official-assets/hero2.jpg) type("image/jpeg"))}
+.hs4{background-image:url(official-assets/hero4.jpg);background-image:image-set(url(official-assets/hero4.webp) type("image/webp"),url(official-assets/hero4.jpg) type("image/jpeg"))}
+.hs5{background-image:url(official-assets/hero5.jpg);background-image:image-set(url(official-assets/hero5.webp) type("image/webp"),url(official-assets/hero5.jpg) type("image/jpeg"))}
 @media(max-width:820px){
- .hs1{background-image:url(official-assets/hv1.jpg)}
- .hs2{background-image:url(official-assets/hv2.jpg)}
- .hs3{background-image:url(official-assets/hv3.jpg)}
- .hs4{background-image:url(official-assets/hv4.jpg)}
- .hs5{background-image:url(official-assets/hv5.jpg)}
+ .hs1{background-image:url(official-assets/hv1.jpg);background-image:image-set(url(official-assets/hv1.webp) type("image/webp"),url(official-assets/hv1.jpg) type("image/jpeg"))}
+ .hs2{background-image:url(official-assets/hv2.jpg);background-image:image-set(url(official-assets/hv2.webp) type("image/webp"),url(official-assets/hv2.jpg) type("image/jpeg"))}
+ .hs3{background-image:url(official-assets/hv3.jpg);background-image:image-set(url(official-assets/hv3.webp) type("image/webp"),url(official-assets/hv3.jpg) type("image/jpeg"))}
+ .hs4{background-image:url(official-assets/hv4.jpg);background-image:image-set(url(official-assets/hv4.webp) type("image/webp"),url(official-assets/hv4.jpg) type("image/jpeg"))}
+ .hs5{background-image:url(official-assets/hv5.jpg);background-image:image-set(url(official-assets/hv5.webp) type("image/webp"),url(official-assets/hv5.jpg) type("image/jpeg"))}
 }
 .heroMask{position:absolute;inset:0;background:var(--navy);clip-path:polygon(0 0,46% 0,28% 100%,0 100%);z-index:1}
 .heroLine{position:absolute;inset:0;background:var(--y);clip-path:polygon(46% 0,47.8% 0,29.8% 100%,28% 100%);z-index:2}
