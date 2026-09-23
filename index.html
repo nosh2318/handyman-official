@@ -322,7 +322,7 @@ function loadTakamatsuLive(T){
        return '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\'takamatsu\')"><div class="pic">'+tkmImg+'</div>'+
         '<div class="bd"><div class="nm2"><span class="clsbadge">'+TC(m.l)+'</span><span class="nmtx">'+TC(m.v||c.vehicles)+'</span></div>'+
         '<div class="spec">👥 '+c.seats+T('seats')+' ・ '+T('stock')+c.cnt+T('stock_unit')+'</div>'+
-        '<div class="pr2"><b>¥'+((masterPrice('takamatsu',k)!=null?masterPrice('takamatsu',k):(m.p||0)).toLocaleString())+'〜</b><small>'+T('perday')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>';
+        '<div class="pr2"><b>¥'+((masterPrice('takamatsu',k)!=null?masterPrice('takamatsu',k):(m.p||0)).toLocaleString())+'</b><small>'+T('perday')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>';
      }).join('');
    }).catch(function(){tkmFallback(T);});
 }
@@ -343,7 +343,7 @@ function setCar(a){
   document.getElementById('cagrid').innerHTML=st.order.map(function(k){var c=st.cls[k];return (
     '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\''+a+'\')"><div class="pic">'+carImg(k,a)+'</div>'+
     '<div class="bd"><div class="nm2"><span class="clsbadge">'+TC(c.l)+'</span><span class="nmtx">'+TC(c.v)+'</span></div><div class="spec">👥 '+String(c.s).replace(/名/,T('seats'))+'</div>'+
-    '<div class="pr2"><b>¥'+((masterPrice(a,k)!=null?masterPrice(a,k):c.p)).toLocaleString()+'〜</b><small>'+T('perday')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>');
+    '<div class="pr2"><b>¥'+((masterPrice(a,k)!=null?masterPrice(a,k):c.p)).toLocaleString()+'</b><small>'+T('perday')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>');
   }).join('');
 }
 // CAR TYPEの車をタップ→その店舗を選択し検索フォーム(日程入力)へ誘導（予約フローは日程が必須のため）
