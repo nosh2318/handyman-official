@@ -241,8 +241,12 @@ function renderCta(){var ok=!!loc.del&&(same||!!loc.col);var btn=document.getEle
 function esc(s){return (s||'').replace(/[<>&]/g,'');}
 
 /* 検索サジェスト＝キー不要・Nominatim(日本語)優先→Photon(英語)→GSI フォールバック・エリア中心にバイアス。日本語の施設/駅/住所候補を出す */
-function _dedupPreds(a){var seen={},o=[];(a||[]).forEach(function(it){if(!it||!it.main)return;var k=it.main+'@'+((+it.lat||0).toFixed(4))+','+((+it.lng||0).toFixed(4));if(!seen[k]){seen[k]=1;o.push(it);}});return o;}
-function searchChain(q,cb){nomiS(q,function(items){if(items&&items.length){cb(_dedupPreds(items));}else{photonS(q,function(p){cb(_dedupPreds(p));});}});}
+function _dedupPreds(a){var seen={},o=[];(a||[]).forEach(function(it){if(!it||!it.main)return;var k=((+it.lat||0).toFixed(3))+','+((+it.lng||0).toFixed(3));if(!seen[k]){seen[k]=1;o.push(it);}});return o;} // 座標(約110m)で重複除去＝同一地点の日本語(先)/英語(後)重複を除き日本語を優先
+function searchChain(q,cb){var res={n:undefined,p:undefined},fired=false;
+  function _fin(){if(fired)return;if(res.n!==undefined&&res.p!==undefined){fired=true;cb(_dedupPreds((res.n||[]).concat(res.p||[])));}}
+  nomiS(q,function(a){res.n=a||[];_fin();});      // 日本語(施設/駅/住所)を優先
+  photonS(q,function(a){res.p=a||[];_fin();});     // カバレッジ補完(部分名等)
+  setTimeout(function(){if(!fired){fired=true;cb(_dedupPreds((res.n||[]).concat(res.p||[])));}},2200);} // 片方遅延でも2.2秒で出す
 function photonS(q,cb){
   fetch('https://photon.komoot.io/api/?q='+encodeURIComponent(q)+'&lat='+CENTER[0]+'&lon='+CENTER[1]+(BBOX?('&bbox='+BBOX):'')+'&limit=8') // ★bbox=エリア範囲に限定→「JAL」等の短い語が世界中の同名地でなく地元候補(ホテルJALシティ等)を返す
    .then(function(r){return r.json();}).then(function(d){
