@@ -258,7 +258,7 @@ function gsiS(q,cb){
      if(!items.length){cb([]);return;}cb(items);
    }).catch(function(){cb([]);});
 }
-function cb([]){
+function nomiS(q,cb){
   fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&limit=8&accept-language=ja&countrycodes=jp'+(BBOX?('&viewbox='+BBOX+'&bounded=1'):''),{headers:{'Accept':'application/json'}})
    .then(function(r){return r.json();}).then(function(res){
      cb((res||[]).filter(function(r){return dist(CENTER[0],CENTER[1],+r.lat,+r.lon)<=60;}).map(function(r){var dn=r.display_name||'';var parts=dn.split(',').map(function(s){return s.trim();}).filter(Boolean).filter(function(s){return !/振興局|地方$|^日本$/.test(s)&&!/^\d{3}-?\d{0,4}$/.test(s);});return {main:parts.slice(0,2).join(' '),sub:parts.slice(2,4).join(' '),addr:parts.join(' '),lat:+r.lat,lng:+r.lon};}));
