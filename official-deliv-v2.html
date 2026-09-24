@@ -239,8 +239,9 @@ function renderCta(){var ok=!!loc.del&&(same||!!loc.col);var btn=document.getEle
   postState();}
 function esc(s){return (s||'').replace(/[<>&]/g,'');}
 
-/* 検索サジェスト＝KEYDROP方式（キー不要・Photon→GSI国土地理院→Nominatim 自動フォールバック・エリア中心にバイアス） */
-function searchChain(q,cb){photonS(q,cb);}
+/* 検索サジェスト＝キー不要・Nominatim(日本語)優先→Photon(英語)→GSI フォールバック・エリア中心にバイアス。日本語の施設/駅/住所候補を出す */
+function _dedupPreds(a){var seen={},o=[];(a||[]).forEach(function(it){if(!it||!it.main)return;var k=it.main+'@'+((+it.lat||0).toFixed(4))+','+((+it.lng||0).toFixed(4));if(!seen[k]){seen[k]=1;o.push(it);}});return o;}
+function searchChain(q,cb){nomiS(q,function(items){if(items&&items.length){cb(_dedupPreds(items));}else{photonS(q,function(p){cb(_dedupPreds(p));});}});}
 function photonS(q,cb){
   fetch('https://photon.komoot.io/api/?q='+encodeURIComponent(q)+'&lat='+CENTER[0]+'&lon='+CENTER[1]+(BBOX?('&bbox='+BBOX):'')+'&limit=8') // ★bbox=エリア範囲に限定→「JAL」等の短い語が世界中の同名地でなく地元候補(ホテルJALシティ等)を返す
    .then(function(r){return r.json();}).then(function(d){
@@ -252,15 +253,15 @@ function photonS(q,cb){
 function gsiS(q,cb){
   fetch('https://msearch.gsi.go.jp/address-search/AddressSearch?q='+encodeURIComponent(q))
    .then(function(r){return r.json();}).then(function(arr){
-     if(!Array.isArray(arr)||!arr.length){nomiS(q,cb);return;}
+     if(!Array.isArray(arr)||!arr.length){cb([]);return;}
      var items=arr.slice(0,7).map(function(r){var c=r.geometry&&r.geometry.coordinates;var t=(r.properties&&r.properties.title)||'';return (c&&t)?{main:t,sub:'',addr:t,lat:c[1],lng:c[0]}:null;}).filter(Boolean);
-     if(!items.length){nomiS(q,cb);return;}cb(items);
-   }).catch(function(){nomiS(q,cb);});
+     if(!items.length){cb([]);return;}cb(items);
+   }).catch(function(){cb([]);});
 }
-function nomiS(q,cb){
-  fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&limit=6&accept-language=ja&countrycodes=jp',{headers:{'Accept':'application/json'}})
+function cb([]){
+  fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&limit=8&accept-language=ja&countrycodes=jp'+(BBOX?('&viewbox='+BBOX+'&bounded=1'):''),{headers:{'Accept':'application/json'}})
    .then(function(r){return r.json();}).then(function(res){
-     cb((res||[]).filter(function(r){return dist(CENTER[0],CENTER[1],+r.lat,+r.lon)<=60;}).map(function(r){var dn=r.display_name||'';var parts=dn.split(',').map(function(s){return s.trim();}).filter(Boolean);return {main:parts.slice(0,2).join(' '),sub:parts.slice(2,4).join(' '),addr:dn,lat:+r.lat,lng:+r.lon};}));
+     cb((res||[]).filter(function(r){return dist(CENTER[0],CENTER[1],+r.lat,+r.lon)<=60;}).map(function(r){var dn=r.display_name||'';var parts=dn.split(',').map(function(s){return s.trim();}).filter(Boolean).filter(function(s){return !/振興局|地方$|^日本$/.test(s)&&!/^\d{3}-?\d{0,4}$/.test(s);});return {main:parts.slice(0,2).join(' '),sub:parts.slice(2,4).join(' '),addr:parts.join(' '),lat:+r.lat,lng:+r.lon};}));
    }).catch(function(){cb([]);});
 }
 function renderSugg(which){var q=(document.getElementById(which===2?'q2':'q').value||'').trim();var box=document.getElementById(which===2?'sugg2':'sugg');
