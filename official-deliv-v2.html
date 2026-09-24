@@ -33,6 +33,7 @@ header .b{font-weight:900;font-size:15px}header .step{margin-left:auto;backgroun
 .sugg .it .si{font-size:18px;flex:0 0 auto;width:22px;text-align:center}
 .sugg .it .st{font-size:14px;font-weight:700;color:#0a1f44;line-height:1.35}
 .sugg .it .ss{font-size:11px;color:#8090ac}
+.sugg .it.dirin{background:#fffdf3;border-top:1px dashed #e5c765}.sugg .it.dirin .si{color:#c99a1e}.sugg .it.dirin:hover{background:#fff7dd}
 .sugg .head{font-size:11px;font-weight:800;color:#8090ac;padding:9px 14px 4px;background:#fafbfe}
 /* チップ */
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
@@ -267,9 +268,10 @@ function nomiS(q,cb){
 function renderSugg(which){var q=(document.getElementById(which===2?'q2':'q').value||'').trim();var box=document.getElementById(which===2?'sugg2':'sugg');
   if(!q){box.classList.remove('on');return;}
   clearTimeout(predTimer[which]);predTimer[which]=setTimeout(function(){searchChain(q,function(items){lastPreds[which]=items;var PT=window.hdmPT||function(x){return x;};
-    if(!items||!items.length){box.innerHTML='<div class="head" style="color:#8090ac;padding:11px 14px">'+PT('no_result')+'</div>';box.classList.add('on');return;}
-    box.innerHTML=items.slice(0,7).map(function(it,i){return '<div class="it" data-i="'+i+'"><span class="si">📍</span><div><div class="st">'+esc(it.main)+'</div><div class="ss">'+esc(it.sub||'')+'</div></div></div>';}).join('');
-    box.querySelectorAll('.it').forEach(function(el){el.onclick=function(){pickItem(items[+el.getAttribute('data-i')],which);};});
+    var _dir='<div class="it dirin" onclick="directCommit('+which+')"><span class="si">📝</span><div><div class="st">「'+esc(q)+'」で確定</div><div class="ss">見つからない住所も、地図のピン位置にお届けします</div></div></div>';
+    if(!items||!items.length){box.innerHTML=_dir;box.classList.add('on');return;}
+    box.innerHTML=items.slice(0,7).map(function(it,i){return '<div class="it" data-i="'+i+'"><span class="si">📍</span><div><div class="st">'+esc(it.main)+'</div><div class="ss">'+esc(it.sub||'')+'</div></div></div>';}).join('')+_dir;
+    box.querySelectorAll('.it[data-i]').forEach(function(el){el.onclick=function(){pickItem(items[+el.getAttribute('data-i')],which);};});
     box.classList.add('on');
   });},350);
 }
@@ -283,7 +285,13 @@ function submitSearch(which){var inp=document.getElementById(which===2?'q2':'q')
   if(!q)return;
   var items=lastPreds[which];
   if(items&&items.length){pickItem(items[0],which);return;}
-  searchChain(q,function(it){if(it&&it[0])pickItem(it[0],which);});
+  searchChain(q,function(it){if(it&&it[0]){pickItem(it[0],which);}else{directCommit(which);}});
+}
+// ダイレクト入力＝検索でヒットしない住所/建物名でも、入力文字をそのまま採用し「地図のピン(中心)位置」にお届け。ピンの逆ジオ住所でエリア判定も通す。
+function directCommit(which){var inp=document.getElementById(which===2?'q2':'q');var q=(inp.value||'').trim();if(!q)return;
+  document.getElementById(which===2?'sugg2':'sugg').classList.remove('on');
+  var mid=which===2?'map2':'map';var c=maps[mid]&&maps[mid].getCenter();if(!c)return;
+  reverseGeo(c.lat,c.lng,function(jp){var extra=(jp&&jp.indexOf(q)<0&&!/^-?\d+\.\d+/.test(jp))?(' / '+jp):'';commit(which,q,q+extra,c.lat,c.lng,null);});
 }
 function clearQ(which){document.getElementById(which===2?'q2':'q').value='';document.getElementById(which===2?'sugg2':'sugg').classList.remove('on');document.getElementById(which===2?'clr2':'clr').style.display='none';}
 function toggleSame(){same=!same;document.getElementById('sameSw').classList.toggle('off',!same);document.getElementById('retbody').classList.toggle('on',!same);
