@@ -194,7 +194,7 @@ function renderList(){
     });
     html+='</table></div></div>';
   }
-  html+='<div style="text-align:center;margin-top:8px;"><button class="btn s" onclick="logout()">ログアウト</button></div>';
+  html+='<div style="text-align:center;margin-top:8px;font-size:11px;color:#9aa0a8">🔓 ログイン不要ページ（公式サイト クーポン管理）</div>';
   app.innerHTML=html;
 }
 
@@ -257,8 +257,7 @@ async function delCoupon(id,code){
 // ---- 起動：保存済みトークンがあれば自動ログイン ----
 (function(){
   try{var c=document.getElementById('storeCtx');if(c){c.innerHTML=(NEW_STORE==='spk'?'🏪 <b>札幌</b> のクーポンを作成・表示中（新規は既定で札幌）':NEW_STORE==='nha'?'🏝 <b>那覇</b> のクーポンを作成・表示中（新規は既定で那覇）':NEW_STORE==='tkm'?'🍜 <b>高松</b> のクーポンを作成・表示中（新規は既定で高松）':'🌐 全店モード（新規は既定で全店）')+' ／ 対象店舗は作成時に変更できます';}}catch(e){}
-  try{ var t=localStorage.getItem('occ_tok'); var e=localStorage.getItem('occ_email'); if(t){TOKEN=t;EMAIL=e;who.textContent=e||'';loadCoupons();return;} }catch(e){}
-  renderLogin();
+  loadCoupons();  // ログイン不要（anonキーで直接・official_couponsはanon RLS許可）
 })();
 </script>
 </body>
