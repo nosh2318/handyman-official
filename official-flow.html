@@ -810,7 +810,19 @@ async function payWithCard(){
     var res=await fetch(_payUrl,{method:'POST',headers:{'apikey':_payKey,'Authorization':'Bearer '+_payKey,'Content-Type':'application/json'},body:JSON.stringify(payload)});
     var data=await res.json().catch(function(){return {};});
     if(!res.ok||!data.ok){if(errEl){errEl.style.display='block';errEl.textContent=(data&&data.error)||T('pc_pay_fail');}reEnable();return;}
-    state._resId=data.reservationId;step='done';applyStep();
+    state._resId=data.reservationId;
+    // ★GTM/GA4 コンバージョン計測（予約完了）＋拡張コンバージョン用のユーザーデータ
+    try{
+      var _dys=(typeof dys!=='undefined'&&dys)?dys:1;
+      var _tot=(typeof data.total==='number')?data.total:(function(){try{return baseSum()+((insPrice[state.ins]||0)+optTotal())*_dys;}catch(e){return null;}})();
+      window.dataLayer=window.dataLayer||[];
+      window.dataLayer.push({ecommerce:null});
+      window.dataLayer.push({event:'purchase',store:area,store_name:SHOP,
+        user_data:{email_address:(payload.mail||'').trim().toLowerCase(),phone_number:(payload.tel||'').replace(/[^0-9+]/g,'')},
+        ecommerce:{transaction_id:state._resId,value:_tot,currency:'JPY',
+          items:[{item_id:state.cls,item_name:(c.v||state.cls),item_category:SHOP,quantity:1,price:_tot}]}});
+    }catch(e){}
+    step='done';applyStep();
   }catch(e){if(errEl){errEl.style.display='block';errEl.textContent=T('pc_net_fail');}reEnable();}
 }
 function goBack(){var i=ORD.indexOf(step);if(i>0){step=ORD[i-1];applyStep();}}
