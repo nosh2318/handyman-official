@@ -305,11 +305,16 @@ function submitSearch(which){var inp=document.getElementById(which===2?'q2':'q')
   if(items&&items.length){pickItem(items[0],which);return;}
   searchChain(q,function(it){if(it&&it[0]){pickItem(it[0],which);}else{directCommit(which);}});
 }
-// ダイレクト入力＝検索でヒットしない住所/建物名でも、入力文字をそのまま採用し「地図のピン(中心)位置」にお届け。ピンの逆ジオ住所でエリア判定も通す。
+// ダイレクト入力確定＝入力地名をまず検索(ジオコーディング)し、ヒットすればその座標へピン移動＝違和感なし。表示名は入力文字を優先、住所は座標の日本語逆ジオ。
+// 見つからない住所/建物名のときだけ「地図のピン(中心)位置」にお届け(従来フォールバック)。
 function directCommit(which){var inp=document.getElementById(which===2?'q2':'q');var q=(inp.value||'').trim();if(!q)return;
   document.getElementById(which===2?'sugg2':'sugg').classList.remove('on');
-  var mid=which===2?'map2':'map';var c=maps[mid]&&maps[mid].getCenter();if(!c)return;
-  reverseGeo(c.lat,c.lng,function(jp){var extra=(jp&&jp.indexOf(q)<0&&!/^-?\d+\.\d+/.test(jp))?(' / '+jp):'';commit(which,q,q+extra,c.lat,c.lng,null);});
+  var mid=which===2?'map2':'map';
+  function pinPos(){var c=maps[mid]&&maps[mid].getCenter();if(!c)return;reverseGeo(c.lat,c.lng,function(jp){var extra=(jp&&jp.indexOf(q)<0&&!/^-?\d+\.\d+/.test(jp))?(' / '+jp):'';commit(which,q,q+extra,c.lat,c.lng,null);});}
+  function useHit(it){reverseGeo(it.lat,it.lng,function(jp){commit(which,q,jp||it.addr||q,it.lat,it.lng,null);});} // 座標→ピン移動、表示名は入力文字(q)を維持
+  var pre=lastPreds[which];
+  if(pre&&pre.length&&pre[0].lat!=null){useHit(pre[0]);return;}
+  searchChain(q,function(items){if(items&&items[0]&&items[0].lat!=null){useHit(items[0]);}else{pinPos();}});
 }
 function clearQ(which){document.getElementById(which===2?'q2':'q').value='';document.getElementById(which===2?'sugg2':'sugg').classList.remove('on');document.getElementById(which===2?'clr2':'clr').style.display='none';}
 function toggleSame(){same=!same;document.getElementById('sameSw').classList.toggle('off',!same);document.getElementById('retbody').classList.toggle('on',!same);
