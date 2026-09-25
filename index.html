@@ -40,6 +40,11 @@ nav.open{display:flex}
 nav a{color:#dfe7f5;text-decoration:none;font-size:14px;font-weight:800;padding:14px 22px;border-bottom:1px solid rgba(255,255,255,.07)}
 nav a:last-child{border-bottom:0}
 nav a:hover{background:rgba(255,255,255,.05)}
+body.navlock{overflow:hidden}
+.navbk{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:19;display:none}
+body.navlock .navbk{display:block}
+.navclose{display:none;align-self:flex-end;margin:2px 12px 4px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;border:0;font-size:20px;line-height:1;cursor:pointer}
+nav.open .navclose{display:inline-flex;align-items:center;justify-content:center}
 @media(max-width:480px){.logoFull{display:none!important}.logoShort{display:block!important}}
 /* hero */
 .hero{position:relative;overflow:hidden;background:var(--ink);min-height:440px}
@@ -216,6 +221,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span id="hdmlang-slot" style="margin-left:10px"></span>
   <button class="ham" onclick="toggleMenu(event)" aria-label="menu"><span></span><span></span><span></span></button>
   <nav id="nav" onclick="if(event.target.tagName==='A')closeMenu()">
+    <button class="navclose" onclick="closeMenu()" aria-label="閉じる">✕</button>
     <a href="official-mypage-find.html" data-i18n="mn_resv_check" style="color:#f2b600;font-weight:800">🔑 予約確認</a>
     <a href="https://plump-cap-ebe.notion.site/_-_-298c8329c12680858251f1755e436e72" target="_blank" rel="noopener" data-i18n="mn_guide_nha">ご利用方法（沖縄那覇店）</a>
     <a href="https://plump-cap-ebe.notion.site/User-Guide-2a1c8329c12681729aebf8c3b3ea4466" target="_blank" rel="noopener" data-i18n="mn_guide_spk">ご利用方法（札幌店）</a>
@@ -232,6 +238,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a href="official-contact.html" data-i18n="mn_contact">お問い合わせ</a>
     <a href="official-bus.html" data-i18n="mn_bus">那覇空港店 空港送迎バス時刻表</a>
   </nav>
+  <div class="navbk" onclick="closeMenu()"></div>
 </div></header>
 
 <!-- HERO -->
@@ -299,8 +306,8 @@ document.querySelectorAll('.chips').forEach(function(g){g.addEventListener('clic
   chk();
 })();
 // ハンバーガーメニュー（スマホ）
-function toggleMenu(e){if(e){e.stopPropagation();}var n=document.getElementById('nav');if(n)n.classList.toggle('open');}
-function closeMenu(){var n=document.getElementById('nav');if(n)n.classList.remove('open');}
+function toggleMenu(e){if(e){e.stopPropagation();}var n=document.getElementById('nav');if(n){var op=n.classList.toggle('open');document.body.classList.toggle('navlock',op);}}
+function closeMenu(){var n=document.getElementById('nav');if(n)n.classList.remove('open');document.body.classList.remove('navlock');}
 document.addEventListener('click',function(e){if(!e.target.closest('header'))closeMenu();});
 // ヒーロー スライドショー（クロスフェード）
 (function(){var s=document.querySelectorAll('.hslide');if(s.length<2)return;var i=0;setInterval(function(){s[i].classList.remove('on');i=(i+1)%s.length;s[i].classList.add('on');},5000);})();
