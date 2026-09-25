@@ -211,22 +211,21 @@ footer a{color:var(--mut);text-decoration:none;margin:0 8px;white-space:nowrap;d
 ]}
 </script>
 <style id="mockOverride">
-/* ▼実写モック：実写4枚＋バナー5枚を混在（自動ローテーション9枚） */
-.hslide{background-image:none!important;background-position:center center!important}
+/* ▼バナー5枚のみ・文字を切らずPC/スマホ同一枠で全体表示（ヒーローの紺マスク＋キャッチコピーは非表示） */
+.heroMask,.heroLine,.heroIn,.ginz,.circle{display:none!important}
+.hero{min-height:0!important;background:var(--navy)!important;overflow:hidden!important}
+.heroImg{position:relative!important;inset:auto!important;height:auto!important;width:100%!important;max-width:1080px;margin:0 auto!important;aspect-ratio:7/5!important;background:var(--navy)!important}
+.hslide{background-image:none!important;background-size:contain!important;background-repeat:no-repeat!important;background-position:center center!important;background-color:var(--navy)!important}
 .hs1{background-image:url(official-assets/mock/banner-rentsmart.jpg)!important}
-.hs2{background-image:url(official-assets/mock/real-sign.jpg)!important}
-.hs3{background-image:url(official-assets/mock/banner-aerial.jpg)!important}
-.hs4{background-image:url(official-assets/mock/real-ocean.jpg)!important}
-.hs5{background-image:url(official-assets/mock/banner-line1.jpg)!important}
-.hs6{background-image:url(official-assets/mock/real-susukino.jpg)!important}
-.hs7{background-image:url(official-assets/mock/banner-multilang.jpg)!important}
-.hs8{background-image:url(official-assets/mock/real-parking.jpg)!important}
-.hs9{background-image:url(official-assets/mock/banner-line2.jpg)!important}
+.hs2{background-image:url(official-assets/mock/banner-aerial.jpg)!important}
+.hs3{background-image:url(official-assets/mock/banner-line1.jpg)!important}
+.hs4{background-image:url(official-assets/mock/banner-multilang.jpg)!important}
+.hs5{background-image:url(official-assets/mock/banner-line2.jpg)!important}
 #mockRibbon{position:fixed;top:0;left:0;z-index:99999;background:#e11d48;color:#fff;font-size:12px;font-weight:800;padding:5px 12px;border-bottom-right-radius:10px;box-shadow:0 3px 10px rgba(0,0,0,.3);font-family:sans-serif}
 </style>
 </head>
 <body>
-<div id="mockRibbon">🖼 モック：実写4枚＋バナー5枚 混在（本番未反映・確認用）</div>
+<div id="mockRibbon">🖼 モック：バナー5枚のみ・全体表示（本番未反映・確認用）</div>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PP2XDZQ4"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -265,10 +264,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="hslide hs3"></div>
     <div class="hslide hs4"></div>
     <div class="hslide hs5"></div>
-    <div class="hslide hs6"></div>
-    <div class="hslide hs7"></div>
-    <div class="hslide hs8"></div>
-    <div class="hslide hs9"></div>
   </div>
   <div class="heroMask"></div>
   <div class="heroLine"></div>
