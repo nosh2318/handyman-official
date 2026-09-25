@@ -375,6 +375,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- ===== STEP5：確認・決済 ===== -->
   <div id="stepConfirm" style="display:none">
     <div class="sec"><h2 data-i18n="confirm_head">📋 ご予約内容の確認</h2><div class="card" id="confirmBox"></div></div>
+    <div class="sec"><h2 data-i18n="coupon_head">🎟 クーポン</h2><div class="card"><div style="display:flex;gap:8px;align-items:center"><input id="couponInput" autocomplete="off" style="flex:1;height:46px;border:2px solid #d8e0ee;border-radius:10px;padding:0 12px;font-size:14px;text-transform:uppercase;font-family:inherit" data-i18n-ph="cp_ph"><button type="button" onclick="applyCoupon()" data-i18n="cp_apply" style="background:var(--y);color:#1a1a1a;border:0;border-radius:10px;padding:0 20px;height:46px;font-weight:900;cursor:pointer;font-family:inherit">適用</button></div><div id="couponMsg" style="font-size:12.5px;font-weight:800;margin-top:9px"></div><div id="couponHint" data-i18n="cp_hint" style="font-size:11px;color:#5a6b85;margin-top:6px">※ お持ちのクーポンコードを入力してください。</div></div></div>
     <div class="sec"><h2 data-i18n="terms_head">📄 貸渡約款</h2><div class="card termsagree" id="termsAgreeCard">
       <div class="termsnote" data-i18n="terms_read">ご予約前に貸渡約款を必ずお読みください（下記をスクロールしてご確認いただけます）。</div>
       <div class="termsbox" id="clauseBox"><div class="loading">貸渡約款を読み込み中…</div></div>
@@ -426,6 +427,24 @@ var P=new URLSearchParams(location.search);
 var area=P.get('area')||'naha';
 var method=P.get('method')||'delivery';
 function T(k){return (window.hdmT?window.hdmT(k):k);}
+/* ===== 🎟 クーポン（KEYDROP方式・official_check_coupon で検証、割引後の合計を表示。確定はofficial-pay EFがredeem） ===== */
+var couponDiscount=0,couponCode='';
+function couponStore(){return area==='sapporo'?'spk':area==='takamatsu'?'tkm':'nha';}
+function couponSubtotal(){try{var d=daysCount();return baseSum()+((insPrice[state.ins]||0)+optTotal())*d;}catch(e){return 0;}}
+function cpMsg(color,txt){var m=document.getElementById('couponMsg');if(m){m.style.color=color;m.textContent=txt;}}
+function cpRefresh(){if(couponDiscount>0)cpMsg('#0e9f50',T('cp_ok2').replace('{amt}','¥'+couponDiscount.toLocaleString()));}
+function applyCoupon(){
+  var el=document.getElementById('couponInput');var code=((el&&el.value)||'').trim().toUpperCase();
+  if(!code){couponDiscount=0;couponCode='';cpMsg('','');try{if(step==='confirm')renderConfirm();}catch(e){}return;}
+  var sub=couponSubtotal();var email=((document.getElementById('fEmail')||{}).value||'').trim();
+  cpMsg('#5a6b85','…');
+  fetch(SUPABASE_URL+'/rest/v1/rpc/official_check_coupon',{method:'POST',headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({p_code:code,p_store:couponStore(),p_amount:sub,p_email:email||null})})
+   .then(function(r){return r.json();}).then(function(d){
+     if(d&&d.ok){couponDiscount=Math.max(0,Math.round(Number(d.discount||0)));couponCode=code;cpMsg('#0e9f50',T('cp_ok2').replace('{amt}','¥'+couponDiscount.toLocaleString()));}
+     else{couponDiscount=0;couponCode='';cpMsg('#c0392b',T('cp_ng'));}
+     try{if(step==='confirm')renderConfirm();}catch(e){}
+   }).catch(function(){couponDiscount=0;couponCode='';cpMsg('#c0392b',T('cp_ng'));try{if(step==='confirm')renderConfirm();}catch(e){}});
+}
 if(typeof window.hdmTerm!=='function')window.hdmTerm=function(s){return s==null?s:String(s);}; // i18n.js読込前の初期描画で落ちない安全スタブ（読込後に本体で上書き）
 var MKEY={delivery:'del',airport:'air',store:'store'};
 function toggleMenu(e){if(e){e.stopPropagation();}var n=document.getElementById('nav');if(n){var op=n.classList.toggle('open');document.body.classList.toggle('navlock',op);}}
@@ -791,6 +810,7 @@ async function payWithCard(){
   try{
     var c=CLS[state.cls]||{v:''};
     var payload={token:token,store:(area==='sapporo'?'spk':'nha'),
+      coupon:couponCode||'',
       vehicleClass:state.cls,vehicleModel:c.v||'',
       lend_date:pD,return_date:rD,lend_time:pT,return_time:rT,
       name:(document.getElementById('fName')||{}).value||'',
@@ -859,7 +879,7 @@ function renderConfirm(){
   var c=CLS[state.cls]||{l:'',v:'',p:0};var dys=daysCount();
   var optLines=[];if(optQ.child>0)optLines.push(T('opt_child')+T('cf_x')+optQ.child);if(optQ.junior>0)optLines.push(T('opt_junior')+T('cf_x')+optQ.junior);
   var insName={basic:T('ins_basic'),cdw:T('ins_cdw'),noc:T('ins_noc')}[state.ins];
-  var baseSumT=baseSum();var total=baseSumT+((insPrice[state.ins]||0)+optTotal())*dys;
+  var baseSumT=baseSum();var _subtotal=baseSumT+((insPrice[state.ins]||0)+optTotal())*dys;var _cdisc=(couponDiscount>0)?Math.min(couponDiscount,_subtotal):0;var total=_subtotal-_cdisc;
   var nm=(document.getElementById('fName')||{}).value||'';var kn=(document.getElementById('fKana')||{}).value||'';
   var ph=(document.getElementById('fPhone')||{}).value||'';var em=(document.getElementById('fEmail')||{}).value||'';
   var drv=document.getElementById('fDriverDiff').checked?((document.getElementById('dName')||{}).value||''):'';
@@ -888,6 +908,7 @@ function renderConfirm(){
       var s=row(T('cf_base'),'¥'+baseT.toLocaleString()+' <small style="color:#8090ac">（'+(_mixB?(dys+T('cf_days')):('¥'+c.p.toLocaleString()+' × '+dys+T('cf_days')))+'）</small>');
       if(optT>0)s+=row(T('cf_optfee'),'¥'+optT.toLocaleString()+' <small style="color:#8090ac">（'+seatBits.join('・')+' × '+dys+T('cf_days')+'）</small>');
       s+=row(T('cf_insfee'),(insT>0?('¥'+insT.toLocaleString()):'¥0')+' <small style="color:#8090ac">（'+insName+(insT>0?(' ¥'+(insPrice[state.ins]||0).toLocaleString()+' × '+dys+T('cf_days')):'')+'）</small>');
+      if(_cdisc>0)s+=row(T('cf_coupon'),'<span style="color:#0e9f50;font-weight:800">−¥'+_cdisc.toLocaleString()+'</span>　'+couponCode);
       s+=row(T('cf_total'),'<b style="font-size:17px">¥'+total.toLocaleString()+'</b>');
       return s;
     })();
@@ -911,7 +932,7 @@ function renderDone(){
 })();
 renderV();calc();applyStep();fetchAvail();loadPriceMaster();
 // 言語切替時：動的生成部を再描画
-window.hdmOnLang=function(){try{renderMethod();}catch(e){}try{renderV();}catch(e){}try{applyStep();}catch(e){}try{if(step==='confirm'){renderConfirm();renderClause();}}catch(e){}try{if(step==='done')renderDone();}catch(e){}};
+window.hdmOnLang=function(){try{renderMethod();}catch(e){}try{renderV();}catch(e){}try{applyStep();}catch(e){}try{if(step==='confirm'){renderConfirm();renderClause();cpRefresh();}}catch(e){}try{if(step==='done')renderDone();}catch(e){}};
 </script>
 <script src="official-i18n.js"></script>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_flow",area:(new URLSearchParams(location.search).get("area")||"naha")});</script>
