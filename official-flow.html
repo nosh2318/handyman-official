@@ -837,7 +837,7 @@ async function payWithCard(){
       var _tot=(typeof data.total==='number')?data.total:(function(){try{return baseSum()+((insPrice[state.ins]||0)+optTotal())*_dys;}catch(e){return null;}})();
       window.dataLayer=window.dataLayer||[];
       window.dataLayer.push({ecommerce:null});
-      window.dataLayer.push({event:'purchase',store:area,store_name:SHOP,
+      window.dataLayer.push({event:'purchase',store_location:SHOP,store:area,store_name:SHOP,
         user_data:{email_address:(payload.mail||'').trim().toLowerCase(),phone_number:(payload.tel||'').replace(/[^0-9+]/g,'')},
         ecommerce:{transaction_id:state._resId,value:_tot,currency:'JPY',
           items:[{item_id:state.cls,item_name:(c.v||state.cls),item_category:SHOP,quantity:1,price:_tot}]}});
