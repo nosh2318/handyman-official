@@ -93,7 +93,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
 (function(){
   var P={
-    ja:{},
+    ja:{
+      mg_back:'← トップへ戻る',
+      mg_title:'マイページの使い方',
+      mg_lead:'ご予約後にお送りするメールの「マイページ」から、ご出発前のお手続きがすべてスマホで完結します。アプリのインストールは不要です。',
+      mg_can_t:'マイページでできること',
+      mg_f1t:'ご予約内容の確認',mg_f1d:'車両・日時・料金・お支払い状況などをいつでも確認できます。',
+      mg_f2t:'お届け・回収の場所／時間のご連絡',mg_f2d:'地図でお届け先を指定。お迎え・回収のご希望時間もご連絡いただけます。',
+      mg_f3t:'運転免許証のご登録',mg_f3d:'運転される方 全員分を、スマホで撮影して送信するだけ。当日の受付がスムーズです。',
+      mg_f4t:'貸渡約款のご確認・ご署名',mg_f4d:'事前に約款をご確認・ご署名いただけます（当日の署名が不要になります）。',
+      mg_f5t:'車両の傷チェック',mg_f5d:'ご出発前に車両の状態を写真で確認。安心してご出発いただけます。',
+      mg_f6t:'変更・キャンセルのご依頼',mg_f6d:'場所・時間の変更やキャンセルのご依頼もマイページから承ります。',
+      mg_use_t:'使い方は3ステップ',
+      mg_s1t:'ご予約後のメールを開く',mg_s1d:'ご予約が確定すると、メールに「マイページ」のURLが届きます。タップして開くだけ（ログイン不要）。',
+      mg_s2t:'必要事項をご登録',mg_s2d:'免許証のご登録・お届け場所／時間のご連絡・約款のご署名をお済ませください。',
+      mg_s3t:'当日はそのままご出発',mg_s3d:'事前手続きが済んでいれば、当日はお車を受け取ってすぐに出発できます。',
+      mg_demo_h:'👀 マイページのデモを見る',mg_demo_p:'実際のマイページをサンプルデータでご覧いただけます（ご予約前でもお試しできます）。',mg_demo_b:'デモを開く ▶',
+      mg_note:'※ デモはサンプル表示です。実際のご予約内容は反映されません。マイページのURLはお客様ごとに固有で、ご予約後のメールでお届けします。公式LINEにご登録いただくと、お迎え・傷チェック・前日/返却リマインドなどの通知もLINEで受け取れます。',
+      mg_cta:'🚗 車を予約する'
+    },
     en:{
       mg_back:"← Back to top",
       mg_title:"How to Use My Page",
@@ -188,7 +206,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function apply(){var L=(window.hdmLang?window.hdmLang():'ja');var d=P[L]||P.ja;
     document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(d[k]!=null)el.innerHTML=d[k];});}
   var prev=window.hdmOnLang;window.hdmOnLang=function(L){try{apply();}catch(e){}if(typeof prev==='function')try{prev(L);}catch(e){}};
-  if(window.hdmLang)apply();else document.addEventListener('DOMContentLoaded',apply);
+  if(window.hdmLang)apply();document.addEventListener('DOMContentLoaded',apply);setTimeout(apply,80);
 })();
 </script>
 </body></html>
