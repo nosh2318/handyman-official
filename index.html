@@ -425,7 +425,7 @@ var GALLERY={
 function renderGallery(area){
   var g=document.getElementById('ggrid');if(!g)return;var arr=GALLERY[area]||[];
   if(!arr.length){g.innerHTML='<div class="gempty">📷 このエリアの実写は準備中です（近日公開）</div>';return;}
-  g.innerHTML=arr.map(function(x){return '<div class="gcard" onclick="openLB(\''+x.s+'\')"><img src="'+x.s+'" alt="" loading="lazy">'+(x.c?'<div class="gcap">'+x.c+'</div>':'')+'</div>';}).join('');
+  g.innerHTML=arr.map(function(x){return '<div class="gcard" onclick="openLB(\''+x.s+'\')"><img src="'+x.s+'" alt="" loading="lazy" decoding="async">'+(x.c?'<div class="gcap">'+x.c+'</div>':'')+'</div>';}).join('');
 }
 (function(){var t=document.getElementById('gtabs');if(!t)return;t.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;[].forEach.call(t.querySelectorAll('button'),function(x){x.classList.toggle('on',x===b);});renderGallery(b.getAttribute('data-g'));});renderGallery('nha');})();
 function openLB(src){var lb=document.getElementById('glb');if(!lb)return;lb.querySelector('img').src=src;lb.classList.add('on');}
