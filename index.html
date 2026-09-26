@@ -36,7 +36,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(10,20,40,.92);backdrop-f
 .brand{font-weight:900;font-style:italic;color:var(--y);font-size:19px;letter-spacing:.03em}
 .brand small{color:#fff;font-size:11px;font-style:normal;font-weight:700;margin-left:6px}
 .ham{display:flex;flex-direction:column;gap:4px;background:none;border:0;cursor:pointer;padding:8px}.ham span{width:24px;height:2.5px;background:#fff;border-radius:2px;transition:.2s}
-nav{position:absolute;top:100%;right:18px;min-width:min(340px,92vw);background:rgba(10,20,40,.98);display:none;flex-direction:column;align-items:stretch;gap:0;padding:6px 0 8px;border:1px solid var(--line);border-radius:0 0 14px 14px;box-shadow:0 16px 34px rgba(0,0,0,.42)}
+nav{position:absolute;top:100%;right:18px;min-width:min(340px,92vw);background:rgba(10,20,40,.98);display:none;flex-direction:column;align-items:stretch;gap:0;padding:6px 0 8px;border:1px solid var(--line);border-radius:0 0 14px 14px;box-shadow:0 16px 34px rgba(0,0,0,.42);max-height:calc(100dvh - 62px);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 nav.open{display:flex}
 nav a{color:#dfe7f5;text-decoration:none;font-size:14px;font-weight:800;padding:14px 22px;border-bottom:1px solid rgba(255,255,255,.07)}
 nav a:last-child{border-bottom:0}
