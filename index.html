@@ -452,8 +452,9 @@ function doSearch(){
 function offCpParam(){return window._offerCoupon?('&cp='+encodeURIComponent(window._offerCoupon)):'';}
 /* ===== 🎁 お得オファー（注目クーポンWELCOMEを読み、TOPバー＋離脱ポップに反映。クリックで日程選択へ／予約フローで自動適用） ===== */
 var OFFER_CODE='WELCOME';window._offerCoupon='';window._offerAmt='';
+var OFF_SB='https://ckrxttbnawkclshczsia.supabase.co',OFF_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8';
 (function(){try{
-  fetch(SB_URL+'/rest/v1/official_coupons?code=eq.'+OFFER_CODE+'&active=eq.true&select=code,discount_type,discount_value',{headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY}})
+  fetch(OFF_SB+'/rest/v1/official_coupons?code=eq.'+OFFER_CODE+'&active=eq.true&select=code,discount_type,discount_value',{headers:{apikey:OFF_KEY,Authorization:'Bearer '+OFF_KEY}})
    .then(function(r){return r.ok?r.json():[];}).then(function(a){
      if(!a||!a.length)return;var c=a[0];window._offerCoupon=c.code;
      window._offerAmt=(c.discount_type==='percent')?(Number(c.discount_value)+'% OFF'):('¥'+Number(c.discount_value).toLocaleString()+' OFF');
