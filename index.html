@@ -232,6 +232,23 @@ section{padding:52px 0}
 .camore a{display:inline-block;color:var(--y);border:2px solid var(--y);border-radius:999px;padding:11px 26px;font-size:13px;font-weight:900;text-decoration:none}
 /* news */
 .news{background:#f6f8fc}
+/* GALLERY エリアの実写 */
+.gallery{background:#eef2f8}
+.gtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.gtabs button{padding:9px 16px;border:1.5px solid #cdd8ea;background:#fff;color:#0a1f44;font-weight:800;font-size:13px;border-radius:999px;cursor:pointer}
+.gtabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.glead{color:#5a6b85;font-size:12px;font-weight:700;margin:-8px 0 16px}
+.ggrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:720px){.ggrid{grid-template-columns:repeat(2,1fr);gap:8px}}
+.gcard{position:relative;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:#dde5f0;cursor:pointer;box-shadow:0 2px 8px rgba(0,10,40,.08)}
+.gcard img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.gcard:hover img{transform:scale(1.05)}
+.gcard .gcap{position:absolute;left:0;right:0;bottom:0;padding:9px 11px;background:linear-gradient(transparent,rgba(0,10,40,.72));color:#fff;font-size:11.5px;font-weight:700}
+.gempty{grid-column:1/-1;text-align:center;padding:38px 20px;color:#7d8ba0;font-size:13px;font-weight:700;background:#fff;border:1.5px dashed #cdd8ea;border-radius:14px}
+.glb{position:fixed;inset:0;background:rgba(0,8,24,.88);z-index:60;display:none;align-items:center;justify-content:center;padding:20px}
+.glb.on{display:flex}
+.glb img{max-width:96vw;max-height:90vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.glb .gclose{position:absolute;top:14px;right:18px;color:#fff;font-size:32px;line-height:1;cursor:pointer;background:none;border:0}
 .nlist{max-width:1080px;margin:0 auto}
 .nrow{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid #e3e8f1}
 .nrow:first-child{border-top:1px solid #e3e8f1}
@@ -367,6 +384,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="camore" id="camore" style="display:none"></div>
 </section>
 
+<!-- GALLERY エリアの実写 -->
+<section class="gallery" id="gallery"><div class="wrap">
+  <div class="shead"><div class="en cap">GALLERY</div><div class="jp">エリアのリアル ── 現地の空気を、そのまま</div></div>
+  <div class="gtabs" id="gtabs">
+    <button data-g="nha" class="on">🌺 那覇（沖縄）</button>
+    <button data-g="spk">❄️ 札幌（北海道）</button>
+    <button data-g="tkm">🍜 高松（香川）</button>
+  </div>
+  <div class="ggrid" id="ggrid"></div>
+</div></section>
+
+<div class="glb" id="glb" onclick="if(event.target===this)closeLB()"><button class="gclose" onclick="closeLB()" aria-label="閉じる">×</button><img src="" alt=""></div>
+
 <!-- NEWS 運営からのお知らせ -->
 <section class="news" id="news"><div class="wrap"><div class="shead"><div class="en cap">NEWS</div><div class="jp" data-i18n="news_jp">運営からのお知らせ</div></div>
   <div class="nlist" id="nlist"></div>
@@ -386,6 +416,20 @@ document.querySelectorAll('.chips').forEach(function(g){g.addEventListener('clic
 function toggleMenu(e){if(e){e.stopPropagation();}var n=document.getElementById('nav');if(n){var op=n.classList.toggle('open');document.body.classList.toggle('navlock',op);}}
 function closeMenu(){var n=document.getElementById('nav');if(n)n.classList.remove('open');document.body.classList.remove('navlock');}
 document.addEventListener('click',function(e){if(!e.target.closest('header'))closeMenu();});
+// GALLERY エリアの実写（写真が届いたら各配列にファイル名を追記するだけ）
+var GALLERY={
+  nha:[{s:'official-assets/hero.jpg',c:'沖縄の海沿いをドライブ'},{s:'official-assets/hero3.jpg',c:'コバルトブルーの海岸線へ'}],
+  spk:[],
+  tkm:[]
+};
+function renderGallery(area){
+  var g=document.getElementById('ggrid');if(!g)return;var arr=GALLERY[area]||[];
+  if(!arr.length){g.innerHTML='<div class="gempty">📷 このエリアの実写は準備中です（近日公開）</div>';return;}
+  g.innerHTML=arr.map(function(x){return '<div class="gcard" onclick="openLB(\''+x.s+'\')"><img src="'+x.s+'" alt="" loading="lazy">'+(x.c?'<div class="gcap">'+x.c+'</div>':'')+'</div>';}).join('');
+}
+(function(){var t=document.getElementById('gtabs');if(!t)return;t.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;[].forEach.call(t.querySelectorAll('button'),function(x){x.classList.toggle('on',x===b);});renderGallery(b.getAttribute('data-g'));});renderGallery('nha');})();
+function openLB(src){var lb=document.getElementById('glb');if(!lb)return;lb.querySelector('img').src=src;lb.classList.add('on');}
+function closeLB(){var lb=document.getElementById('glb');if(lb)lb.classList.remove('on');}
 // ヒーロー スライドショー（クロスフェード）
 (function(){var s=document.querySelectorAll('.hslide');
   // キービジュアルごとにキャッチコピーも切替（多言語はdata-i18nを差し替え＝言語変更にも追従）
