@@ -429,7 +429,7 @@ var method=P.get('method')||'delivery';
 function T(k){return (window.hdmT?window.hdmT(k):k);}
 /* ===== 🎟 クーポン（KEYDROP方式・official_check_coupon で検証、割引後の合計を表示。確定はofficial-pay EFがredeem） ===== */
 var couponDiscount=0,couponCode='';
-var _pendCp=(P.get('cp')||'').trim();try{if(!_pendCp)_pendCp=(localStorage.getItem('hdm_coupon')||'').trim();}catch(e){}
+var _pendCp=(P.get('cp')||'').trim();  // ?cp=（広告リンク等の明示指定）のみ自動入力。通常はお客様がクーポン欄に入力して適用
 var _cpAuto=false;
 function couponStore(){return area==='sapporo'?'spk':area==='takamatsu'?'tkm':'nha';}
 function couponSubtotal(){try{var d=daysCount();return baseSum()+((insPrice[state.ins]||0)+optTotal())*d;}catch(e){return 0;}}
