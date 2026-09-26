@@ -125,6 +125,33 @@ nav.open .navclose{display:inline-flex;align-items:center;justify-content:center
 #methodChips.pulse{animation:methodPulse 1.15s ease-in-out 5}
 #methodChips .chip{display:flex;align-items:center;justify-content:center;text-align:center;padding:7px 3px;font-size:11px;line-height:1.22;min-height:48px;word-break:keep-all}
 .sbtn{grid-column:1/-1;height:52px;background:var(--y);color:#10203f;border:0;border-radius:11px;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 6px 18px rgba(250,190,0,.35)}
+/* 🎁 お得オファー（TOP常設バー＋離脱ポップ）紺×金・上品なシマー */
+.offbar{max-width:1080px;margin:14px auto 0;padding:0 18px}
+.offbar a{display:flex;align-items:center;gap:12px;text-decoration:none;background:linear-gradient(100deg,#06214f,#0a2e80 55%,#06214f);border:1px solid rgba(250,190,0,.5);border-radius:14px;padding:12px 18px;position:relative;overflow:hidden;box-shadow:0 6px 20px rgba(0,16,48,.18)}
+.offbar .oico{font-size:20px;flex:0 0 auto;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
+.offbar .otxt{color:#fff;font-weight:800;font-size:14px;letter-spacing:.02em;line-height:1.35}
+.offbar .otxt b{color:var(--y);font-size:16px;margin-left:3px}
+.offbar .osub{color:#bfe3ff;opacity:.85;font-size:11px;font-weight:700}
+.offbar .ogo{margin-left:auto;color:#06214f;background:var(--y);font-weight:900;font-size:12px;border-radius:999px;padding:6px 14px;white-space:nowrap;flex:0 0 auto}
+.offbar a::after{content:"";position:absolute;top:0;left:-60%;width:38%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.26),transparent);transform:skewX(-18deg);animation:oshim 5s ease-in-out infinite;pointer-events:none}
+@keyframes oshim{0%,62%{left:-60%}82%,100%{left:135%}}
+@media(max-width:560px){.offbar .osub{display:none}.offbar a{padding:11px 14px;gap:9px}.offbar .otxt{font-size:13px}.offbar .otxt b{font-size:15px}.offbar .ogo{padding:6px 11px;font-size:11px}}
+.offpop{position:fixed;inset:0;z-index:9998;background:rgba(2,10,28,.62);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:20px}
+.offpop.on{display:flex}
+.offcard{width:min(400px,94vw);background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(0,10,40,.42);animation:offup .42s cubic-bezier(.2,.9,.3,1.15)}
+@keyframes offup{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:none}}
+.offcard .oh{background:linear-gradient(120deg,#06214f,#0a2e80);color:#fff;text-align:center;padding:24px 20px 20px;position:relative;overflow:hidden}
+.offcard .oh::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% -10%,rgba(250,190,0,.22),transparent 55%)}
+.offcard .oh>*{position:relative;z-index:1}
+.offcard .obadge{display:inline-block;background:var(--y);color:#06214f;font-weight:900;font-size:11px;border-radius:999px;padding:4px 12px;letter-spacing:.05em;margin-bottom:12px}
+.offcard .obig{font-size:32px;font-weight:900;color:var(--y);line-height:1.05;text-shadow:0 2px 10px rgba(0,0,0,.25)}
+.offcard .obig small{font-size:15px;color:#fff;font-weight:800;margin-left:4px}
+.offcard .olead{font-size:12.5px;color:#dfe7f5;margin-top:10px;font-weight:700}
+.offcard .ob{padding:18px 20px 20px;text-align:center}
+.offcard .ocode{font-size:12px;color:#5a6b85;font-weight:700;margin-bottom:13px}
+.offcard .ocode b{color:#06214f;font-size:14px;letter-spacing:.12em;background:#f1f5fb;border:1px dashed #b9c6dd;border-radius:8px;padding:3px 11px;margin-left:5px}
+.offcard .obtn{display:block;width:100%;background:var(--y);color:#06214f;font-weight:900;font-size:15px;border:0;border-radius:12px;padding:15px;cursor:pointer;text-decoration:none;box-shadow:0 6px 16px rgba(250,190,0,.4)}
+.offcard .oclose{display:block;width:100%;background:none;border:0;color:#8090ac;font-size:12px;font-weight:700;padding:13px 0 2px;cursor:pointer}
 /* section */
 section{padding:52px 0}
 .shead{margin-bottom:24px}
@@ -257,6 +284,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="heroIn">
     <div class="heroCopy"><h1 data-i18n="hero_copy">旅は、目的地に着く前から<br>始まっている。</h1></div>
   </div>
+  <!-- 🎁 お得オファーバー（注目クーポンが有効な時だけ表示） -->
+  <div class="offbar" id="offBar" style="display:none"><a href="#search" onclick="offClaim();return false;"><span class="oico">🎁</span><span><span class="otxt" id="offBarTxt"></span><br><span class="osub" data-i18n="off_sub">ご予約画面でクーポンを自動適用</span></span><span class="ogo" data-i18n="off_go">今すぐ予約 ▶</span></a></div>
   <!-- 検索フォーム -->
   <div class="search" id="search"><div class="searchIn"><div class="sgrid">
     <div class="sgrp"><h4 data-i18n="s_store">📍 店舗を選択</h4><div class="ff" style="grid-template-columns:1fr"><select id="areaSel" onchange="onAreaSel()"><option value="" data-i18n-opt="s_store_ph">店舗を選択</option><option value="naha" data-i18n-opt="s_naha">那覇空港店（沖縄）</option><option value="sapporo" data-i18n-opt="s_sapporo">札幌店（北海道）</option><option value="takamatsu" data-i18n-opt="s_takamatsu">高松空港店（香川）</option></select></div></div>
@@ -414,12 +443,40 @@ function doSearch(){
   if(_bk&&(pd>_bk||rd>_bk)){var e3=document.getElementById(pd>_bk?'pickDate':'retDate');e3.classList.add('need');e3.focus();alert('ご予約は '+_bk+' までとなります。それ以前の日程をお選びください。');return;}
   var dt='&pd='+encodeURIComponent(pd)+'&pt='+encodeURIComponent(pt)+'&rd='+encodeURIComponent(rd)+'&rt='+encodeURIComponent(rt);
   if(a==='sapporo'){ // 札幌=KEYDROP仕様を完全コピー(公式サイト内・デリバリー専門)
-    location.href='official-flow.html?area=sapporo&method=delivery'+dt;return;
+    location.href='official-flow.html?area=sapporo&method=delivery'+dt+offCpParam();return;
   }
   // 那覇・高松=受取方法つきフロー
   var m='delivery',mc=document.querySelector('#methodChips .chip.on');if(mc)m=mc.getAttribute('data-m');
-  location.href='official-flow.html?area='+a+'&method='+m+dt;
+  location.href='official-flow.html?area='+a+'&method='+m+dt+offCpParam();
 }
+function offCpParam(){return window._offerCoupon?('&cp='+encodeURIComponent(window._offerCoupon)):'';}
+/* ===== 🎁 お得オファー（注目クーポンWELCOMEを読み、TOPバー＋離脱ポップに反映。クリックで日程選択へ／予約フローで自動適用） ===== */
+var OFFER_CODE='WELCOME';window._offerCoupon='';window._offerAmt='';
+(function(){try{
+  fetch(SB_URL+'/rest/v1/official_coupons?code=eq.'+OFFER_CODE+'&active=eq.true&select=code,discount_type,discount_value',{headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY}})
+   .then(function(r){return r.ok?r.json():[];}).then(function(a){
+     if(!a||!a.length)return;var c=a[0];window._offerCoupon=c.code;
+     window._offerAmt=(c.discount_type==='percent')?(Number(c.discount_value)+'% OFF'):('¥'+Number(c.discount_value).toLocaleString()+' OFF');
+     offRender();var bar=document.getElementById('offBar');if(bar)bar.style.display='block';offArmExit();
+   }).catch(function(){});
+}catch(e){}})();
+function offRender(){var amt=window._offerAmt||'';
+  var t=document.getElementById('offBarTxt');if(t)t.innerHTML=(window.hdmT?window.hdmT('off_bar_pre'):'初回ネット予約')+' <b>'+amt+'</b>';
+  var big=document.getElementById('offPopBig');if(big)big.innerHTML=amt.replace('OFF','<small>OFF</small>');
+  var cd=document.getElementById('offPopCode');if(cd)cd.innerHTML=(window.hdmT?window.hdmT('off_code'):'クーポンコード ')+'<b>'+(window._offerCoupon||'')+'</b>';}
+function offClaim(){try{localStorage.setItem('hdm_coupon',window._offerCoupon||'');}catch(e){}offPopClose();
+  var el=document.getElementById('search');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  offToast(window.hdmT?window.hdmT('off_toast'):'クーポンを適用しました。日程を選んでご予約へお進みください。');}
+function offToast(msg){var d=document.createElement('div');d.textContent=msg;d.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#06214f;color:#fff;font-weight:800;font-size:13px;padding:12px 18px;border-radius:12px;z-index:99999;box-shadow:0 10px 30px rgba(0,10,40,.35);max-width:90vw;text-align:center';document.body.appendChild(d);setTimeout(function(){d.style.transition='opacity .5s';d.style.opacity='0';setTimeout(function(){if(d.parentNode)d.remove();},500);},3200);}
+function offPopClose(){var p=document.getElementById('offPop');if(p)p.classList.remove('on');}
+function offPopOpen(){try{if(sessionStorage.getItem('hdm_offpop'))return;}catch(e){}var p=document.getElementById('offPop');if(!p||!window._offerCoupon)return;offRender();p.classList.add('on');try{sessionStorage.setItem('hdm_offpop','1');}catch(e){}}
+function offArmExit(){
+  document.addEventListener('mouseout',function(e){if(e.clientY<=0&&!e.relatedTarget)offPopOpen();});
+  var scrolled=false;window.addEventListener('scroll',function(){if(window.scrollY>320)scrolled=true;},{passive:true});
+  setTimeout(function(){if(scrolled)offPopOpen();},20000);
+  window.addEventListener('pagehide',function(){});
+}
+if(typeof window.hdmOnLang==='function'){var _pl=window.hdmOnLang;window.hdmOnLang=function(){try{_pl();}catch(e){}try{offRender();}catch(e){}};}else{window.hdmOnLang=function(){try{offRender();}catch(e){}};}
 // 時間ドロップダウンを生成（8:00〜20:00・30分刻み）
 (function(){var opts='';for(var h=9;h<=19;h++){for(var m=0;m<60;m+=30){if(h===19&&m>0)break;var t=('0'+h).slice(-2)+':'+('0'+m).slice(-2);opts+='<option value="'+t+'">'+t+'</option>';}}document.querySelectorAll('.timeSel').forEach(function(s){s.insertAdjacentHTML('beforeend',opts);});})();
 // 出発/返却の日付を「最短予約日＝2日後」で初期表示（空欄時）＋それ以前は選択不可。店舗選択後も維持
@@ -477,4 +534,6 @@ renderNews();
 </script>
 <script src="official-i18n.js"></script>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_top",area:"official"});</script>
+<!-- 🎁 離脱防止ポップ（初回訪問・離脱時に1回） -->
+<div class="offpop" id="offPop" onclick="if(event.target===this)offPopClose()"><div class="offcard"><div class="oh"><span class="obadge" data-i18n="off_badge">初回ネット予約 限定</span><div class="obig" id="offPopBig"></div><div class="olead" data-i18n="off_lead">クーポンは予約画面で自動適用されます</div></div><div class="ob"><div class="ocode" id="offPopCode"></div><a class="obtn" href="#search" onclick="offClaim();return false;" data-i18n="off_btn">クーポンを使って予約する</a><button class="oclose" onclick="offPopClose()" data-i18n="off_later">あとで</button></div></div></div>
 </body></html>

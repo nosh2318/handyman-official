@@ -429,6 +429,8 @@ var method=P.get('method')||'delivery';
 function T(k){return (window.hdmT?window.hdmT(k):k);}
 /* ===== 🎟 クーポン（KEYDROP方式・official_check_coupon で検証、割引後の合計を表示。確定はofficial-pay EFがredeem） ===== */
 var couponDiscount=0,couponCode='';
+var _pendCp=(P.get('cp')||'').trim();try{if(!_pendCp)_pendCp=(localStorage.getItem('hdm_coupon')||'').trim();}catch(e){}
+var _cpAuto=false;
 function couponStore(){return area==='sapporo'?'spk':area==='takamatsu'?'tkm':'nha';}
 function couponSubtotal(){try{var d=daysCount();return baseSum()+((insPrice[state.ins]||0)+optTotal())*d;}catch(e){return 0;}}
 function cpMsg(color,txt){var m=document.getElementById('couponMsg');if(m){m.style.color=color;m.textContent=txt;}}
@@ -748,7 +750,9 @@ function applyStep(){
   var lbl={select:T('cta_options'),options:T('cta_customer'),customer:T('cta_confirm'),confirm:T('cta_pay'),payment:T('cta_done')};
   var btn=document.getElementById('ctaBtn');btn.textContent=lbl[step]||'';
   // 確認画面：貸渡約款を実際に表示し、同意しないと「お支払いに進む」を押せない(KEYDROP方式)
-  if(step==='confirm'){loadClause();var _ck=document.getElementById('agreeTerms');btn.disabled=!(_ck&&_ck.checked);}
+  if(step==='confirm'){loadClause();
+    if(_pendCp&&!_cpAuto&&!couponCode){_cpAuto=true;var _ci=document.getElementById('couponInput');if(_ci){_ci.value=_pendCp;try{applyCoupon();}catch(e){}}}
+    var _ck=document.getElementById('agreeTerms');btn.disabled=!(_ck&&_ck.checked);}
   else if(step==='payment'){btn.disabled=false;requestAnimationFrame(function(){initSquareCard();});}
   else{btn.disabled=false;}
   document.querySelector('.cta').style.display=(step==='done')?'none':'flex';
