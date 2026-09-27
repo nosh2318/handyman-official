@@ -32,6 +32,12 @@ img{max-width:100%;display:block}
 .wrap{max-width:1080px;margin:0 auto;padding:0 18px}
 /* header */
 header{position:sticky;top:0;z-index:20;background:rgba(10,20,40,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topmp{display:flex;align-items:center;justify-content:center;gap:9px;background:linear-gradient(90deg,#0a2e80,#062150);color:#fff;text-decoration:none;font-size:13px;font-weight:800;padding:11px 14px;text-align:center;line-height:1.45}
+.topmp .tmi{font-size:16px;flex:none}
+.topmp b{color:var(--y)}
+.topmp .tmt{color:#c8d3ea;font-weight:700}
+.topmp .tmg{color:var(--y);font-weight:900;flex:none}
+@media(max-width:480px){.topmp{font-size:12px;gap:7px}.topmp .tmt{display:block;font-size:11px}}
 .hin{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 18px;position:relative}
 .brand{font-weight:900;font-style:italic;color:var(--y);font-size:19px;letter-spacing:.03em}
 .brand small{color:#fff;font-size:11px;font-style:normal;font-weight:700;margin-left:6px}
@@ -327,6 +333,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </nav>
   <div class="navbk" onclick="closeMenu()"></div>
 </div></header>
+
+<!-- マイページ導線（最上部） -->
+<a href="official-mypage-guide.html" class="topmp"><span class="tmi">📱</span><span><b data-i18n="topmp_a">マイページの使い方</b> <span class="tmt" data-i18n="topmp_b">ご予約後はスマホで完結・デモを見る</span></span><span class="tmg">→</span></a>
 
 <!-- HERO -->
 <div class="hero" id="top">
