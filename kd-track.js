@@ -75,11 +75,27 @@
     send('exit', PAGE, { dwell_ms: dwell });
   }
 
+  // ★多地域サイト：エリアを全イベントの次元として持つ。URL ?area → sessionStorage → 既定 common。
+  //   'official'/空 は非エリア扱い(旧ハードコードを自動で正す)。real region は保存して以後のページへ継承。
+  function normArea(a){ a=(a||'').toLowerCase().trim();
+    if(a==='naha'||a==='nha') return 'naha';
+    if(a==='sapporo'||a==='spk'||a==='sap'||a==='札幌') return 'sapporo';
+    if(a==='takamatsu'||a==='tkm'||a==='tak'||a==='高松') return 'takamatsu';
+    return ''; }
+  function resolveArea(optArea){ try{
+    var fromUrl=normArea(new URLSearchParams(location.search).get('area'));
+    if(fromUrl){ try{sessionStorage.setItem('kd_area',fromUrl);}catch(e){} return fromUrl; }
+    var fromOpt=normArea(optArea);
+    if(fromOpt){ try{sessionStorage.setItem('kd_area',fromOpt);}catch(e){} return fromOpt; }
+    var stored=''; try{stored=sessionStorage.getItem('kd_area')||'';}catch(e){}
+    return normArea(stored) || 'common';
+  }catch(e){ return 'common'; } }
+
   window.KDT={
     init:function(opts){ try{
       opts=opts||{};
       PAGE=opts.page || (document.body&&document.body.getAttribute('data-kd-page')) || (location.pathname.split('/').pop()||'top').replace(/\.html$/,'') || 'top';
-      AREA=(opts.area!=null?opts.area:(document.body&&document.body.getAttribute('data-kd-area')))||'';
+      AREA=resolveArea(opts.area!=null?opts.area:(document.body&&document.body.getAttribute('data-kd-area')));
       send('pv', PAGE);
       document.addEventListener('click', onClick, true);
       window.addEventListener('pagehide', onExit);
@@ -87,6 +103,6 @@
     }catch(e){} },
     step:function(name,no){ send('step', name, (no!=null?{step_no:no}:null)); },
     event:function(kind,target,extra){ send(kind,target,extra); },
-    setArea:function(a){ AREA=a||''; }
+    setArea:function(a){ AREA=normArea(a)||'common'; if(normArea(a)){ try{sessionStorage.setItem('kd_area',normArea(a));}catch(e){} } }
   };
 })();
