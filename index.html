@@ -82,6 +82,9 @@ nav.open .navclose{display:inline-flex;align-items:center;justify-content:center
 @media(min-width:1180px){.ginz{font-size:360px}}
 .heroIn{position:relative;z-index:3;max-width:1180px;margin:0 auto;padding:40px 18px;min-height:460px;display:flex;align-items:center}
 .heroCopy h1{font-size:30px;font-weight:900;line-height:1.45;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+.heroSub{margin:14px 0 0;font-size:15px;font-weight:800;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.55);line-height:1.6}
+.heroCta{display:inline-flex;align-items:center;gap:8px;margin-top:18px;background:var(--y);color:#10203f;font-weight:900;font-size:17px;padding:14px 26px;border-radius:999px;text-decoration:none;box-shadow:0 8px 22px rgba(0,10,40,.35);animation:ctaPls 2.4s ease-in-out infinite}
+@keyframes ctaPls{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 .circle{position:absolute;right:6%;bottom:96px;width:96px;height:96px;z-index:4;animation:spin 14s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .circle svg{width:100%;height:100%}
@@ -99,6 +102,8 @@ nav.open .navclose{display:inline-flex;align-items:center;justify-content:center
  .heroIn{z-index:4;padding:var(--hero-photo-h) 24px 0;min-height:var(--hero-mobile-h);height:var(--hero-mobile-h);align-items:center}
  .heroCopy{width:min(86%,340px)}
  .heroCopy h1{font-size:clamp(20px,5.5vw,24px);line-height:1.5;text-shadow:none}
+ .heroSub{font-size:13px;margin-top:10px}
+ .heroCta{font-size:15px;padding:12px 22px;margin-top:14px}
  .circle{width:64px;height:64px;right:6%;top:24px;bottom:auto}
 }
 @media(max-width:390px){
@@ -344,7 +349,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="heroLine"></div>
   <div class="ginz">HDM</div>
   <div class="heroIn">
-    <div class="heroCopy"><h1 data-i18n="hero_copy">走り出せば、<br>そこが旅の始まり。</h1></div>
+    <div class="heroCopy"><h1 data-i18n="hero_copy">走り出せば、<br>そこが旅の始まり。</h1>
+      <p class="heroSub" data-i18n="hero_sub">那覇・高松＝空港無料送迎／札幌＝ホテルまでデリバリー</p>
+      <a href="#search" id="heroCta" class="heroCta" onclick="heroToSearch();return false;" data-i18n="hero_cta">🚗 空車・料金を見る</a></div>
   </div>
   <!-- 🎁 お得オファーバー（注目クーポンが有効な時だけ表示） -->
   <div class="offbar" id="offBar" style="display:none"><a href="#search" onclick="offClaim();return false;"><span class="oico">🎁</span><span><span class="otxt" id="offBarTxt"></span><br><span class="osub" data-i18n="off_sub">ご予約画面でクーポンを自動適用</span></span><span class="ogo" data-i18n="off_go">今すぐ予約 ▶</span></a></div>
@@ -509,6 +516,7 @@ ctTab('naha'); // 既定=那覇を表示
 // 言語切替時にJS生成部（CAR TYPE / NEWS）を再描画
 window.hdmOnLang=function(){ try{setCar(_ctCur);}catch(e){} try{renderNews();}catch(e){} };
 // 検索フォーム：店舗連動の車クラスchip（実データ）
+function heroToSearch(){var s=document.getElementById('search');if(s)s.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){var a=document.getElementById('areaSel');if(a)a.focus();},480);}
 function onAreaSel(){
   var raw=document.getElementById('areaSel').value;var a=raw||'naha';var show=!!raw;if(window.KDT&&raw){KDT.setArea(a);}
   // 那覇=受取方法(空港送迎/デリバリー/来店)を先に選択 / 札幌=デリバリー専門(KEYDROP)
