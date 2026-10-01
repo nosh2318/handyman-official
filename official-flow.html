@@ -776,10 +776,13 @@ var SQUARE_LOCATION_ID='L8N7J9RKPN3WH';
 // 高松(BUDDICA BT project)決済ルーティング
 var BT_PAY_URL='https://ggqugvyskyiblxiycpci.supabase.co';
 var BT_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdncXVndnlza3lpYmx4aXljcGNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxMDc3NjksImV4cCI6MjA5MzY4Mzc2OX0.uNhWcBd_Dl5nzemZDQfJ8mQV6iY73MwystGGpTRPC18';
-var sqPayments=null,sqCard=null,_sqTries=0,_sqInitting=false,_sqQueued=false;
+var sqPayments=null,sqCard=null,_sqTries=0,_sqVisTries=0,_sqInitting=false,_sqQueued=false;
 async function initSquareCard(){
   var container=document.getElementById('card-container');if(!container)return;
   if(!window.Square){if(_sqTries++<25){setTimeout(initSquareCard,300);}else{container.innerHTML='<div style="font-size:12px;color:#c0392b;padding:8px">'+T('pc_sdk_err')+'</div>';}return;}
+  // ★決済パネルが実際に表示される(高さ>0)まで待ってからattach。高さ0の瞬間にattachするとSquareのiframeが潰れてカード入力欄が出ない(モバイル/表示直後のレース対策)。最大約6秒待って無理なら通常処理。
+  if((container.offsetParent===null||container.offsetHeight===0)&&_sqVisTries++<40){setTimeout(initSquareCard,150);return;}
+  _sqVisTries=0;
   if(_sqInitting){_sqQueued=true;return;}
   _sqInitting=true;_sqTries=0;
   try{
