@@ -97,10 +97,11 @@ nav.open .navclose{display:inline-flex;align-items:center;justify-content:center
  .hs1{background-position:center 65%}
  .hs3{background-position:center 65%}
  /* PC版の「ネイビー面＋黄色の斜め境界」を縦画面向けに積み直す */
- .heroLine{display:block;inset:calc(var(--hero-photo-h) - 22px) 0 auto;height:calc(var(--hero-mobile-h) - var(--hero-photo-h) + 22px);background:var(--y);clip-path:polygon(0 22px,61% 22px,69% 0,100% 0,100% 100%,0 100%);z-index:1}
- .heroMask{inset:calc(var(--hero-photo-h) - 15px) 0 auto;height:calc(var(--hero-mobile-h) - var(--hero-photo-h) + 15px);background:var(--navy);clip-path:polygon(0 15px,61% 15px,69% 0,100% 0,100% 100%,0 100%);z-index:2}
+ /* 紺＋黄ラインは写真直下から“下端まで”伸ばす＝中身が増えてもはみ出さない */
+ .heroLine{display:block;inset:calc(var(--hero-photo-h) - 22px) 0 0 0;height:auto;background:var(--y);clip-path:polygon(0 22px,61% 22px,69% 0,100% 0,100% 100%,0 100%);z-index:1}
+ .heroMask{inset:calc(var(--hero-photo-h) - 15px) 0 0 0;height:auto;background:var(--navy);clip-path:polygon(0 15px,61% 15px,69% 0,100% 0,100% 100%,0 100%);z-index:2}
  .ginz{left:-4%;top:calc(var(--hero-photo-h) + 12px);bottom:auto;font-size:42vw;line-height:.76;opacity:.14;z-index:3}
- .heroIn{z-index:4;padding:var(--hero-photo-h) 24px 0;min-height:var(--hero-mobile-h);height:var(--hero-mobile-h);align-items:center}
+ .heroIn{z-index:4;padding:calc(var(--hero-photo-h) + 34px) 24px 28px;min-height:var(--hero-mobile-h);height:auto;align-items:flex-start}
  .heroCopy{width:min(86%,340px)}
  .heroCopy h1{font-size:clamp(20px,5.5vw,24px);line-height:1.5;text-shadow:none}
  .heroSub{font-size:13px;margin-top:10px;line-height:1.75}
@@ -109,8 +110,8 @@ nav.open .navclose{display:inline-flex;align-items:center;justify-content:center
  .circle{width:64px;height:64px;right:6%;top:24px;bottom:auto}
 }
 @media(max-width:390px){
- .hero{--hero-mobile-h:585px;--hero-photo-h:395px}
- .heroIn{padding:var(--hero-photo-h) 20px 0}
+ .hero{--hero-mobile-h:585px;--hero-photo-h:380px}
+ .heroIn{padding:calc(var(--hero-photo-h) + 30px) 20px 26px}
  .heroCopy h1{font-size:20px}
 }
 /* search */
@@ -169,22 +170,25 @@ nav.open .navclose{display:inline-flex;align-items:center;justify-content:center
 .offbar .otxtwrap{display:flex;flex-direction:column;min-width:0}
 .offbar .otxt{color:#fff;font-weight:800;font-size:14px;letter-spacing:.02em;line-height:1.3}
 .offbar .otxt b{color:var(--y);font-size:16px;margin-left:3px}
+.offbar .ocpn{display:none}
 .offbar .osub{color:#bfe3ff;opacity:.85;font-size:11px;font-weight:700;line-height:1.3}
 .offbar .ogo{margin-left:auto;color:#06214f;background:var(--y);font-weight:900;font-size:12px;border-radius:999px;padding:6px 14px;white-space:nowrap;flex:0 0 auto}
 .offbar a::after{content:"";position:absolute;top:0;left:-60%;width:38%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.26),transparent);transform:skewX(-18deg);animation:oshim 5s ease-in-out infinite;pointer-events:none}
 @keyframes oshim{0%,62%{left:-60%}82%,100%{left:135%}}
 /* モバイル：主CTAとクーポンを均等2カラムで横並び・1行に収める */
 @media(max-width:560px){
- .heroActions{gap:8px;flex-wrap:nowrap;align-items:stretch}
- .heroCta{flex:1.3 1 0;min-width:0;font-size:14px;padding:12px 8px;white-space:nowrap}
- .offbar{flex:1.15 1 0;min-width:0}
- .offbar a{gap:6px;padding:10px 8px;justify-content:center;overflow:visible}
- .offbar .oico{font-size:16px}
+ .heroActions{gap:8px;flex-wrap:nowrap;align-items:stretch;justify-content:stretch}
+ .heroCta{flex:1 1 0;min-width:0;font-size:13.5px;padding:12px 6px;white-space:nowrap}
+ .offbar{flex:1 1 0;min-width:0}
+ .offbar a{gap:7px;padding:8px 6px;justify-content:center}
+ .offbar .oico{font-size:18px}
  .offbar .osub{display:none}
  .offbar .ogo{display:none}
  .offbar .opre{display:none}
- .offbar .otxt{font-size:12px;white-space:nowrap}
- .offbar .otxt b{font-size:14px;margin-left:0}
+ .offbar .otxtwrap{line-height:1.05}
+ .offbar .ocpn{display:block;font-size:9.5px;font-weight:800;color:#bfe3ff;letter-spacing:.06em}
+ .offbar .otxt{font-size:11px;white-space:nowrap}
+ .offbar .otxt b{font-size:15px;margin-left:0}
  .offbar a::after{display:none}
 }
 .offpop{position:fixed;inset:0;z-index:9998;background:rgba(2,10,28,.62);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:20px}
@@ -370,7 +374,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- 🚗 主CTA ＋ 🎁 お得オファー（横並び。クーポンは有効な時だけ表示） -->
       <div class="heroActions">
         <a href="#search" id="heroCta" class="heroCta" onclick="heroToSearch();return false;" data-i18n="hero_cta">🚗 空車・料金を見る</a>
-        <div class="offbar" id="offBar" style="display:none"><a href="#search" onclick="offClaim();return false;"><span class="oico">🎁</span><span class="otxtwrap"><span class="otxt" id="offBarTxt"></span><span class="osub" data-i18n="off_sub">ご予約画面でクーポンを自動適用</span></span><span class="ogo" data-i18n="off_go">今すぐ予約 ▶</span></a></div>
+        <div class="offbar" id="offBar" style="display:none"><a href="#search" onclick="offClaim();return false;"><span class="oico">🎫</span><span class="otxtwrap"><span class="ocpn" data-i18n="cpn_label">クーポン</span><span class="otxt" id="offBarTxt"></span><span class="osub" data-i18n="off_sub">ご予約画面でクーポンを自動適用</span></span><span class="ogo" data-i18n="off_go">今すぐ予約 ▶</span></a></div>
       </div>
     </div>
   </div>
@@ -383,7 +387,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="sgrp full" id="spkMsg" style="display:none"><div style="background:#0a1f44;border:1px solid var(--line);border-radius:10px;padding:11px 14px;font-size:12px;color:#dfe7f5" data-i18n="spk_msg"><b style="color:var(--y)">❄️ 札幌はデリバリー専門</b>　お届け先を地図で指定して予約します。「検索する」で予約画面へ進みます。</div></div>
     <div class="sgrp full" id="availMsg" style="display:none"><div style="font-size:11.5px;color:var(--mut)" data-i18n="avail_msg">🚙 ご利用日程に提供できる空車を次の画面にすべて表示します。</div></div>
     <button class="sbtn" onclick="doSearch()" data-i18n="s_btn">空車を検索する</button>
-    <a href="official-mypage-guide.html" style="grid-column:1/-1;display:block;text-align:center;margin-top:2px;padding:11px 12px;background:#eef3fb;border:1.5px solid #c7d6f0;border-radius:11px;color:#0a2e80;font-size:13px;font-weight:800;text-decoration:none" data-i18n="mp_guide_btn">📱 ご予約後の流れ・マイページの使い方（デモあり）→</a>
   </div></div></div>
 </div>
 
