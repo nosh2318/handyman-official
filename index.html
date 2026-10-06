@@ -399,21 +399,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="stores" id="stores"><div class="wrap">
   <div class="sttitle">どちらの店舗をご利用ですか？<small>受け取り方法と最安料金をチェック</small></div>
   <div class="stgrid">
-    <div class="stcard" onclick="pickCarType('naha')">
+    <div class="stcard" onclick="goStoreCars('naha')">
       <div class="sthead nh">🌺 那覇空港店 <span>沖縄</span></div>
       <div class="stfeat">無料送迎・ホテル配送・来店</div>
       <div class="stprice">コンパクト <b>¥2,700</b> <small>〜 / 24時間</small></div>
       <div class="strev">Google ★4.7（154件）</div>
       <div class="stbtn">那覇の空車・料金を見る ▶</div>
     </div>
-    <div class="stcard" onclick="pickCarType('sapporo')">
+    <div class="stcard" onclick="goStoreCars('sapporo')">
       <div class="sthead sp">❄️ 札幌店 <span>北海道</span></div>
       <div class="stfeat">ホテル・自宅までお届け／回収（来店不要）</div>
       <div class="stprice">コンパクト <b>¥4,500</b> <small>〜 / 24時間</small></div>
       <div class="strev">Google ★5.0（28件）</div>
       <div class="stbtn">札幌の空車・料金を見る ▶</div>
     </div>
-    <div class="stcard" onclick="pickCarType('takamatsu')">
+    <div class="stcard" onclick="goStoreCars('takamatsu')">
       <div class="sthead tk">🍜 高松空港店 <span>香川</span></div>
       <div class="stfeat">無料送迎・来店</div>
       <div class="stprice">軽 <b>¥3,400</b> <small>〜 / 24時間</small></div>
@@ -631,6 +631,8 @@ function setCar(a){
 }
 // CAR TYPEの車をタップ→その店舗を選択し検索フォーム(日程入力)へ誘導（予約フローは日程が必須のため）
 function pickCarType(a){try{var sel=document.getElementById('areaSel');if(sel){sel.value=a;onAreaSel();}}catch(e){}var s=document.getElementById('search');if(s)s.scrollIntoView({behavior:'smooth',block:'start'});}
+// 店舗カード→その店の「取扱車種・料金」(#cars・ライブ料金)へ。検索の店舗も合わせる。
+function goStoreCars(a){try{if(typeof ctTab==='function')ctTab(a);}catch(e){}try{var sel=document.getElementById('areaSel');if(sel){sel.value=a;onAreaSel();}}catch(e){}var el=document.getElementById('cars');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
 // CAR TYPE 店舗タブ切替（検索フォームと独立して直接ブラウズ可）
 var _ctCur='naha';
 function ctTab(a){_ctCur=a;document.querySelectorAll('#cttabs .cttab').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-a')===a);});setCar(a);}
