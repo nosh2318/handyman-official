@@ -387,35 +387,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="sgrp full" id="methodGrp" style="display:none"><h4 data-i18n="s_method">🚗 受取方法を選択</h4><div class="chips" id="methodChips"><span class="chip" data-m="airport" data-i18n="m_airport">無料送迎（空港/駅）</span><span class="chip on" data-m="delivery" data-i18n="m_delivery">デリバリー</span><span class="chip" data-m="store" data-i18n="m_store">来店</span></div></div>
     <div class="sgrp full" id="spkMsg" style="display:none"><div style="background:#0a1f44;border:1px solid var(--line);border-radius:10px;padding:11px 14px;font-size:12px;color:#dfe7f5" data-i18n="spk_msg"><b style="color:var(--y)">❄️ 札幌はデリバリー専門</b>　お届け先を地図で指定して予約します。「検索する」で予約画面へ進みます。</div></div>
     <div class="sgrp full" id="availMsg" style="display:none"><div style="font-size:11.5px;color:var(--mut)" data-i18n="avail_msg">🚙 ご利用日程に提供できる空車を次の画面にすべて表示します。</div></div>
-    <div class="sgrp full"><div class="stepsbar">予約は <b>3ステップ・約60秒</b>　①店舗と日時 → ②車種・補償 → ③お客様情報で完了</div></div>
+    <div class="sgrp full"><div class="stepsbar" data-i18n="steps_bar">予約は <b>3ステップ・約60秒</b>　①店舗と日時 → ②車種・補償 → ③お客様情報で完了</div></div>
     <button class="sbtn" onclick="doSearch()" data-i18n="s_btn">空車と料金を検索する</button>
   </div></div></div>
 </div>
 
 <!-- 店舗選択カード（受取方法＋最安料金＝予約前に迷いをなくす） -->
 <section class="stores" id="stores"><div class="wrap">
-  <div class="sttitle">どちらの店舗をご利用ですか？<small>受け取り方法と最安料金をチェック</small></div>
+  <div class="sttitle" data-i18n="st_title">どちらの店舗をご利用ですか？<small>受け取り方法と最安料金をチェック</small></div>
   <div class="stgrid">
     <div class="stcard" onclick="goStoreCars('naha')">
-      <div class="sthead nh">🌺 那覇空港店 <span>沖縄</span></div>
-      <div class="stfeat">無料送迎・ホテル配送・来店</div>
-      <div class="stprice">コンパクト <b>¥2,700</b> <small>〜 / 24時間</small></div>
-      <div class="strev">Google ★4.7（154件）</div>
-      <div class="stbtn">那覇の空車・料金を見る ▶</div>
+      <div class="sthead nh" data-i18n="st_head_naha">🌺 那覇空港店 <span>沖縄</span></div>
+      <div class="stfeat" data-i18n="st_feat_naha">無料送迎・ホテル配送・来店</div>
+      <div class="stprice" data-i18n="st_price_naha">コンパクト <b>¥2,700</b> <small>〜 / 24時間</small></div>
+      <div class="strev" data-i18n="st_rev_naha">Google ★4.7（154件）</div>
+      <div class="stbtn" data-i18n="st_btn_naha">那覇の空車・料金を見る ▶</div>
     </div>
     <div class="stcard" onclick="goStoreCars('sapporo')">
-      <div class="sthead sp">❄️ 札幌店 <span>北海道</span></div>
-      <div class="stfeat">ホテル・自宅までお届け／回収（来店不要）</div>
-      <div class="stprice">コンパクト <b>¥4,500</b> <small>〜 / 24時間</small></div>
-      <div class="strev">Google ★5.0（28件）</div>
-      <div class="stbtn">札幌の空車・料金を見る ▶</div>
+      <div class="sthead sp" data-i18n="st_head_spk">❄️ 札幌店 <span>北海道</span></div>
+      <div class="stfeat" data-i18n="st_feat_spk">ホテル・自宅までお届け／回収（来店不要）</div>
+      <div class="stprice" data-i18n="st_price_spk">コンパクト <b>¥4,500</b> <small>〜 / 24時間</small></div>
+      <div class="strev" data-i18n="st_rev_spk">Google ★5.0（28件）</div>
+      <div class="stbtn" data-i18n="st_btn_spk">札幌の空車・料金を見る ▶</div>
     </div>
     <div class="stcard" onclick="goStoreCars('takamatsu')">
-      <div class="sthead tk">🍜 高松空港店 <span>香川</span></div>
-      <div class="stfeat">無料送迎・来店</div>
-      <div class="stprice">軽 <b>¥3,400</b> <small>〜 / 24時間</small></div>
-      <div class="strev stnew">2026.8 開店</div>
-      <div class="stbtn">高松の空車・料金を見る ▶</div>
+      <div class="sthead tk" data-i18n="st_head_tkm">🍜 高松空港店 <span>香川</span></div>
+      <div class="stfeat" data-i18n="st_feat_tkm">無料送迎・来店</div>
+      <div class="stprice" data-i18n="st_price_tkm">軽 <b>¥3,400</b> <small>〜 / 24時間</small></div>
+      <div class="strev stnew" data-i18n="st_rev_tkm">2026.8 開店</div>
+      <div class="stbtn" data-i18n="st_btn_tkm">高松の空車・料金を見る ▶</div>
     </div>
   </div>
 </div></section>
@@ -484,23 +484,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- お客様の声（Google クチコミ・実レビュー） -->
 <section class="voices" id="voices"><div class="wrap">
-  <div class="shead"><div class="en cap">REVIEWS</div><div class="jp">お客様の声（Google クチコミ）</div></div>
+  <div class="shead"><div class="en cap">REVIEWS</div><div class="jp" data-i18n="rev_jp">お客様の声（Google クチコミ）</div></div>
   <div class="vrate">
-    <span class="vbadge"><b>🌺 那覇空港店</b> <span class="vstars">★★★★★</span> <b>4.7</b> <span class="vcount">（154件）</span></span>
-    <span class="vbadge"><b>❄️ 札幌店</b> <span class="vstars">★★★★★</span> <b>5.0</b> <span class="vcount">（28件）</span></span>
+    <span class="vbadge" data-i18n="rev_badge_naha"><b>🌺 那覇空港店</b> <span class="vstars">★★★★★</span> <b>4.7</b> <span class="vcount">（154件）</span></span>
+    <span class="vbadge" data-i18n="rev_badge_spk"><b>❄️ 札幌店</b> <span class="vstars">★★★★★</span> <b>5.0</b> <span class="vcount">（28件）</span></span>
     <span class="vsrc">on Google</span>
   </div>
   <div class="vgrid">
-    <article class="vcard"><div class="vtop"><span class="vname">シラカワ さん</span><span class="vtag nh">🌺 那覇</span></div><div class="vstars">★★★★★</div><p class="vtext">沖縄でレンタカー借りるならもうココ一択って位、対応が素晴らしかったです。</p></article>
-    <article class="vcard"><div class="vtop"><span class="vname">にのにの さん</span><span class="vtag nh">🌺 那覇</span></div><div class="vstars">★★★★★</div><p class="vtext">お値段が安く不安でしたが、空港の無料送迎もスタッフも車のクオリティも全て丁寧で、最高でした！</p></article>
-    <article class="vcard"><div class="vtop"><span class="vname">Jennifer T.</span><span class="vtag nh">🌺 那覇</span></div><div class="vstars">★★★★★</div><p class="vtext">Amazing car rental experience. Communication was prompt and excellent through the LINE app.</p></article>
-    <article class="vcard"><div class="vtop"><span class="vname">真欧 さん</span><span class="vtag sp">❄️ 札幌</span></div><div class="vstars">★★★★★</div><p class="vtext">デリバリーは本当に満足。行きはホテルまで届けてくれ、返却も前倒しに即対応。迷っている旅行者は本当にここ一択です。</p></article>
-    <article class="vcard"><div class="vtop"><span class="vname">Yuta さん</span><span class="vtag sp">❄️ 札幌</span></div><div class="vstars">★★★★★</div><p class="vtext">デリバリーは想像以上に便利。ホテルまで時間通りに来てくれ、手続きもスムーズで出発が早い。返却の回収も助かりました。</p></article>
-    <article class="vcard"><div class="vtop"><span class="vname">埼玉 さん</span><span class="vtag sp">❄️ 札幌</span></div><div class="vstars">★★★★★</div><p class="vtext">希望の場所まで配車してくれて最高。手続きはネット・LINEで完結、電話不要。料金も他社より安めでした。</p></article>
+    <article class="vcard"><div class="vtop"><span class="vname">シラカワ さん</span><span class="vtag nh" data-i18n="rev_tag_naha">🌺 那覇</span></div><div class="vstars">★★★★★</div><p class="vtext">沖縄でレンタカー借りるならもうココ一択って位、対応が素晴らしかったです。</p></article>
+    <article class="vcard"><div class="vtop"><span class="vname">にのにの さん</span><span class="vtag nh" data-i18n="rev_tag_naha">🌺 那覇</span></div><div class="vstars">★★★★★</div><p class="vtext">お値段が安く不安でしたが、空港の無料送迎もスタッフも車のクオリティも全て丁寧で、最高でした！</p></article>
+    <article class="vcard"><div class="vtop"><span class="vname">Jennifer T.</span><span class="vtag nh" data-i18n="rev_tag_naha">🌺 那覇</span></div><div class="vstars">★★★★★</div><p class="vtext">Amazing car rental experience. Communication was prompt and excellent through the LINE app.</p></article>
+    <article class="vcard"><div class="vtop"><span class="vname">真欧 さん</span><span class="vtag sp" data-i18n="rev_tag_spk">❄️ 札幌</span></div><div class="vstars">★★★★★</div><p class="vtext">デリバリーは本当に満足。行きはホテルまで届けてくれ、返却も前倒しに即対応。迷っている旅行者は本当にここ一択です。</p></article>
+    <article class="vcard"><div class="vtop"><span class="vname">Yuta さん</span><span class="vtag sp" data-i18n="rev_tag_spk">❄️ 札幌</span></div><div class="vstars">★★★★★</div><p class="vtext">デリバリーは想像以上に便利。ホテルまで時間通りに来てくれ、手続きもスムーズで出発が早い。返却の回収も助かりました。</p></article>
+    <article class="vcard"><div class="vtop"><span class="vname">埼玉 さん</span><span class="vtag sp" data-i18n="rev_tag_spk">❄️ 札幌</span></div><div class="vstars">★★★★★</div><p class="vtext">希望の場所まで配車してくれて最高。手続きはネット・LINEで完結、電話不要。料金も他社より安めでした。</p></article>
   </div>
   <div class="vmore">
-    <a class="vlink" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC%20HANDYMAN%20%E9%82%A3%E8%A6%87%E7%A9%BA%E6%B8%AF%E5%BA%97" target="_blank" rel="noopener">🌺 那覇のクチコミをGoogleで見る ▶</a>
-    <a class="vlink" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC%20HANDYMAN%20%E6%9C%AD%E5%B9%8C%E5%BA%97" target="_blank" rel="noopener">❄️ 札幌のクチコミをGoogleで見る ▶</a>
+    <a class="vlink" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC%20HANDYMAN%20%E9%82%A3%E8%A6%87%E7%A9%BA%E6%B8%AF%E5%BA%97" target="_blank" rel="noopener" data-i18n="rev_more_naha">🌺 那覇のクチコミをGoogleで見る ▶</a>
+    <a class="vlink" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC%20HANDYMAN%20%E6%9C%AD%E5%B9%8C%E5%BA%97" target="_blank" rel="noopener" data-i18n="rev_more_spk">❄️ 札幌のクチコミをGoogleで見る ▶</a>
   </div>
 </div></section>
 <style>
@@ -756,7 +756,7 @@ function renderNews(){var el=document.getElementById('nlist');if(!el)return;var 
 renderNews();
 // 起動時：エリア未選択なので車のタイプは非表示のまま
 </script>
-<script src="official-i18n.js?v=10062050"></script>
+<script src="official-i18n.js?v=10070650"></script>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_top",area:"official"});</script>
 <!-- 🎁 離脱防止ポップ（初回訪問・離脱時に1回） -->
 <div class="offpop" id="offPop" onclick="if(event.target===this)offPopClose()"><div class="offcard"><div class="oh"><span class="obadge" data-i18n="off_badge">初回ネット予約 限定</span><div class="obig" id="offPopBig"></div><div class="olead" data-i18n="off_lead">クーポンは予約画面で自動適用されます</div></div><div class="ob"><div class="ocode" id="offPopCode"></div><a class="obtn" href="#search" onclick="offClaim();return false;" data-i18n="off_btn">クーポンを使って予約する</a><button class="oclose" onclick="offPopClose()" data-i18n="off_later">あとで</button></div></div></div>
