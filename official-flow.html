@@ -754,6 +754,8 @@ function applyStep(){
   if(step==='options')renderChosen();
   if(step==='confirm')renderConfirm();
   if(step==='done')renderDone();
+  // 予約フロー ステップ別計測（どの段階で離脱するか特定）→ kd_events(kind=step)
+  try{if(window.KDT&&KDT.step)KDT.step(step,cur+1);}catch(e){}
   window.scrollTo(0,0);
 }
 function goNext(){
