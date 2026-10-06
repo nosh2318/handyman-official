@@ -389,9 +389,61 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="sgrp full" id="methodGrp" style="display:none"><h4 data-i18n="s_method">🚗 受取方法を選択</h4><div class="chips" id="methodChips"><span class="chip" data-m="airport" data-i18n="m_airport">無料送迎（空港/駅）</span><span class="chip on" data-m="delivery" data-i18n="m_delivery">デリバリー</span><span class="chip" data-m="store" data-i18n="m_store">来店</span></div></div>
     <div class="sgrp full" id="spkMsg" style="display:none"><div style="background:#0a1f44;border:1px solid var(--line);border-radius:10px;padding:11px 14px;font-size:12px;color:#dfe7f5" data-i18n="spk_msg"><b style="color:var(--y)">❄️ 札幌はデリバリー専門</b>　お届け先を地図で指定して予約します。「検索する」で予約画面へ進みます。</div></div>
     <div class="sgrp full" id="availMsg" style="display:none"><div style="font-size:11.5px;color:var(--mut)" data-i18n="avail_msg">🚙 ご利用日程に提供できる空車を次の画面にすべて表示します。</div></div>
-    <button class="sbtn" onclick="doSearch()" data-i18n="s_btn">空車を検索する</button>
+    <div class="sgrp full"><div class="stepsbar">予約は <b>3ステップ・約60秒</b>　①店舗と日時 → ②車種・補償 → ③お客様情報で完了</div></div>
+    <button class="sbtn" onclick="doSearch()" data-i18n="s_btn">空車と料金を検索する</button>
+    <div class="sgrp full"><div class="srchnote">🔒 検索だけなら予約は確定しません。料金は選んだ日時・店舗に応じて表示されます。</div></div>
   </div></div></div>
 </div>
+
+<!-- 店舗選択カード（受取方法＋最安料金＝予約前に迷いをなくす） -->
+<section class="stores" id="stores"><div class="wrap">
+  <div class="sttitle">どちらの店舗をご利用ですか？<small>受け取り方法と最安料金をチェック</small></div>
+  <div class="stgrid">
+    <div class="stcard" onclick="pickCarType('naha')">
+      <div class="sthead nh">🌺 那覇空港店 <span>沖縄</span></div>
+      <div class="stfeat">無料送迎・ホテル配送・来店</div>
+      <div class="stprice">コンパクト <b>¥2,700</b> <small>〜 / 24時間</small></div>
+      <div class="strev">Google ★4.7（154件）</div>
+      <div class="stbtn">那覇の空車・料金を見る ▶</div>
+    </div>
+    <div class="stcard" onclick="pickCarType('sapporo')">
+      <div class="sthead sp">❄️ 札幌店 <span>北海道</span></div>
+      <div class="stfeat">ホテル・自宅までお届け／回収（来店不要）</div>
+      <div class="stprice">コンパクト <b>¥4,500</b> <small>〜 / 24時間</small></div>
+      <div class="strev">Google ★5.0（28件）</div>
+      <div class="stbtn">札幌の空車・料金を見る ▶</div>
+    </div>
+    <div class="stcard" onclick="pickCarType('takamatsu')">
+      <div class="sthead tk">🍜 高松空港店 <span>香川</span></div>
+      <div class="stfeat">無料送迎・来店</div>
+      <div class="stprice">軽 <b>¥3,400</b> <small>〜 / 24時間</small></div>
+      <div class="strev stnew">2026.8 開店</div>
+      <div class="stbtn">高松の空車・料金を見る ▶</div>
+    </div>
+  </div>
+  <div class="stnote">💡 <b>那覇空港・高松空港では条例により空港内で直接お渡しできません。</b>無料送迎で営業所へご案内、または対象ホテルへお届けします。<br>表示は最安料金（税込）。実際の料金は予約日時・店舗・車種により変動し、追加料金（免責補償・NOC・チャイルドシート・延長等）は予約確認画面ですべて表示されます。</div>
+</div></section>
+<style>
+.stores{padding:26px 16px 10px;background:#fff}
+.stores .wrap{max-width:1080px;margin:0 auto}
+.sttitle{text-align:center;font-size:19px;font-weight:900;color:#0a1f44;margin-bottom:16px}
+.sttitle small{display:block;font-size:12px;font-weight:700;color:#64748b;margin-top:4px}
+.stgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stcard{border:1.5px solid #e3e8f1;border-radius:16px;padding:16px 16px 14px;cursor:pointer;background:#fff;box-shadow:0 3px 12px rgba(10,30,80,.06);transition:.15s;display:flex;flex-direction:column}
+.stcard:hover{box-shadow:0 8px 22px rgba(10,30,80,.15);transform:translateY(-2px);border-color:#c7d2e0}
+.sthead{font-size:17px;font-weight:900;color:#0a1f44;display:flex;align-items:baseline;gap:7px}
+.sthead span{font-size:11px;font-weight:800;color:#fff;border-radius:999px;padding:2px 9px}
+.sthead.nh span{background:#be123c}.sthead.sp span{background:#1d4ed8}.sthead.tk span{background:#0d9488}
+.stfeat{font-size:12.5px;font-weight:700;color:#334155;margin:9px 0 10px;line-height:1.5}
+.stprice{font-size:13px;color:#5a6b85}.stprice b{font-size:24px;font-weight:900;color:#0a1f44;margin:0 2px}.stprice small{font-size:11px;color:#64748b}
+.strev{font-size:11.5px;font-weight:800;color:#b45309;margin-top:6px}.strev.stnew{color:#0d9488}
+.stbtn{margin-top:12px;text-align:center;background:var(--y);color:#10203f;font-weight:900;font-size:13.5px;padding:11px;border-radius:10px}
+.stnote{font-size:11.5px;line-height:1.7;color:#5a6b85;background:#f8fafc;border:1px solid #eef2f8;border-radius:12px;padding:12px 14px;margin-top:14px}
+@media(max-width:768px){.stgrid{grid-template-columns:1fr}.sttitle{font-size:17px}}
+.stepsbar{font-size:12px;font-weight:700;color:#0a1f44;background:#fff7e0;border:1px solid #f3dca0;border-radius:10px;padding:9px 12px;line-height:1.6}
+.stepsbar b{color:#b45309}
+.srchnote{font-size:11.5px;color:#5a6b85;text-align:center;margin-top:2px}
+</style>
 
 <!-- 代車バナー -->
 <!-- 代車のお届け＝レンタカーとは別カテゴリ（事故・車検・修理向け）→ ティール系で区別 -->
@@ -710,4 +762,14 @@ renderNews();
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_top",area:"official"});</script>
 <!-- 🎁 離脱防止ポップ（初回訪問・離脱時に1回） -->
 <div class="offpop" id="offPop" onclick="if(event.target===this)offPopClose()"><div class="offcard"><div class="oh"><span class="obadge" data-i18n="off_badge">初回ネット予約 限定</span><div class="obig" id="offPopBig"></div><div class="olead" data-i18n="off_lead">クーポンは予約画面で自動適用されます</div></div><div class="ob"><div class="ocode" id="offPopCode"></div><a class="obtn" href="#search" onclick="offClaim();return false;" data-i18n="off_btn">クーポンを使って予約する</a><button class="oclose" onclick="offPopClose()" data-i18n="off_later">あとで</button></div></div></div>
+<!-- スマホ固定CTA（最重要ボタン1つに統一） -->
+<div class="mbcta"><a href="#search" onclick="heroToSearch();return false;">🚗 空車と料金を検索する</a></div>
+<style>
+.mbcta{display:none}
+@media(max-width:768px){
+  .mbcta{display:block;position:fixed;left:0;right:0;bottom:0;z-index:95;background:rgba(255,255,255,.97);border-top:1px solid #e3e8f1;padding:8px 12px;padding-bottom:calc(8px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px rgba(10,30,80,.14)}
+  .mbcta a{display:block;text-align:center;background:var(--y);color:#10203f;font-weight:900;font-size:15px;padding:13px;border-radius:12px;text-decoration:none}
+  body{padding-bottom:70px}
+}
+</style>
 </body></html>
