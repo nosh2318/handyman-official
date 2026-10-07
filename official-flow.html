@@ -718,8 +718,8 @@ function baseSum(){
   if(!pD||!rD)return baseP;
   var s=new Date(pD),e=new Date(rD),t=0,g=0;
   while(s<=e&&g<400){var ym=s.getFullYear()+'-'+('0'+(s.getMonth()+1)).slice(-2),k=ym+'-'+('0'+s.getDate()).slice(-2);
-    var mc=(M[ym]||{})[cl]||{},a2=(mc.a!=null?+mc.a:aP),b2=(mc.b!=null?+mc.b:(mc.a!=null?+mc.a:bP));
-    t+=H[k]?b2:(L[k]?a2:baseP);   // 高い日→b／安い日→a／未登録→基本
+    var mc=(M[ym]||{})[cl]||{},a2=(mc.a!=null?+mc.a:aP),b2=(mc.b!=null?+mc.b:(mc.a!=null?+mc.a:bP)),base2=(mc.base!=null?+mc.base:baseP);
+    t+=H[k]?b2:(L[k]?a2:base2);   // 高い日→b／安い日→a／未登録→月別base→基準base
     s.setDate(s.getDate()+1);g++;}
   return t;
 }
