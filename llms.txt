@@ -29,7 +29,6 @@
 - 口コミ: Google ★5.0（28件）
 - 手続き: ネット予約後、マイページと公式LINE（@149ahjll）で免許証登録・お届け先確認まで完結
 - 丘珠空港（札幌市東区）: 空港までお届け・回収（無料）
-- 新千歳空港: 空港構内での受け渡しは条例により不可。JR快速エアポートで札幌駅まで約40分→市内のホテル等で受け取り
 - 札幌でホテルまで届けてくれるレンタカーを探している人、冬の北海道で4WDの車を借りたい人、空港の送迎待ちを避けたい人に向く
 - 所在地: 北海道札幌市中央区北5条西11丁目15-4 BYYARD札幌
 - 営業時間: 9:00-19:00（年中無休）
@@ -51,7 +50,6 @@
 ## 主要ページ
 - トップ / オンライン予約: https://rent-handyman.com/
 - 札幌（デリバリーレンタカー）: https://rent-handyman.com/sapporo-delivery.html
-- 新千歳空港から札幌のホテルでレンタカーを受け取る方法: https://rent-handyman.com/sapporo-new-chitose-airport.html
 - 冬の札幌レンタカーガイド（4WD・スタッドレス）: https://rent-handyman.com/sapporo-winter-rentacar.html
 - 札幌発ドライブコース: https://rent-handyman.com/sapporo-drive-course.html
 - 丘珠空港でレンタカー（空港までお届け）: https://rent-handyman.com/sapporo-okadama-airport.html
