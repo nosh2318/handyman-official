@@ -171,7 +171,7 @@ const FN="https://ckrxttbnawkclshczsia.supabase.co/functions/v1/daisha-request";
 const ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8";
 const $=id=>document.getElementById(id);
 const P=new URLSearchParams(location.search);
-const AREA=(P.get("area")==="naha")?"naha":"sapporo";        // 地図/表示用
+const AREA="sapporo";  // 代車は札幌のみ（2026-10-09）        // 地図/表示用
 const STORE=(AREA==="naha")?"nha":"spk";                     // EF store
 const AREAJP=(AREA==="naha")?"那覇・沖縄本島":"札幌市内";
 $("areaLabel").textContent="代車のリクエスト（"+AREAJP+"）";
