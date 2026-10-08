@@ -40,6 +40,15 @@ header .back:hover{background:rgba(255,255,255,.06)}
 .demobtn:hover{filter:brightness(1.05)}
 .note{font-size:11.5px;color:var(--mut);line-height:1.8;background:#fff;border:1px solid #e2e8f2;border-radius:12px;padding:13px 15px}
 .cta{display:block;text-align:center;margin:20px auto 0;max-width:420px;background:var(--y);color:#10203f;border-radius:12px;padding:15px;font-size:15px;font-weight:900;text-decoration:none}
+.wrap{max-width:560px}
+.flow{counter-reset:st}
+.pstep{margin:0 0 26px}
+.pstep .ph{display:flex;align-items:center;gap:10px;margin:0 2px 10px}
+.pstep .ph::before{counter-increment:st;content:counter(st);flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center}
+.pstep .pt{font-size:16px;font-weight:900;color:#0a1f44}
+.shot{background:#fff;border:1px solid #dfe6f1;border-radius:18px;padding:8px;box-shadow:0 6px 20px rgba(10,30,80,.08)}
+.shot img{display:block;width:100%;height:auto;border-radius:12px}
+.pstep .pc{font-size:13px;color:#3d4d6a;margin:9px 4px 0;line-height:1.6;font-weight:700}
 </style></head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -54,38 +63,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="hero">
   <div class="en">MY PAGE</div>
   <h1 data-i18n="mg_title">マイページの使い方</h1>
-  <p data-i18n="mg_lead">ご予約後にお送りするメールの「マイページ」から、ご出発前のお手続きがすべてスマホで完結します。アプリのインストールは不要です。</p>
+  <p data-i18n="mg_lead">ご予約後のメールのURLを開くだけ。アプリもログインも不要です。</p>
 </div>
 
 <div class="wrap">
-  <div class="sec-t"><span>📋</span><span data-i18n="mg_can_t">マイページでできること</span></div>
-  <div class="card">
-    <div class="feat"><div class="fi">📋</div><div><div class="ft" data-i18n="mg_f1t">ご予約内容の確認</div><div class="fd" data-i18n="mg_f1d">車両・日時・料金・お支払い状況などをいつでも確認できます。</div></div></div>
-    <div class="feat"><div class="fi">📍</div><div><div class="ft" data-i18n="mg_f2t">お届け・回収の場所／時間のご連絡</div><div class="fd" data-i18n="mg_f2d">地図でお届け先を指定。お迎え・回収のご希望時間もご連絡いただけます。</div></div></div>
-    <div class="feat"><div class="fi">🪪</div><div><div class="ft" data-i18n="mg_f3t">運転免許証のご登録</div><div class="fd" data-i18n="mg_f3d">運転される方 全員分を、スマホで撮影して送信するだけ。当日の受付がスムーズです。</div></div></div>
-    <div class="feat"><div class="fi">✍️</div><div><div class="ft" data-i18n="mg_f4t">貸渡約款のご確認・ご署名</div><div class="fd" data-i18n="mg_f4d">事前に約款をご確認・ご署名いただけます（当日の署名が不要になります）。</div></div></div>
-    <div class="feat"><div class="fi">🚗</div><div><div class="ft" data-i18n="mg_f5t">車両の傷チェック</div><div class="fd" data-i18n="mg_f5d">ご出発前に車両の状態を写真で確認。安心してご出発いただけます。</div></div></div>
-    <div class="feat"><div class="fi">🔁</div><div><div class="ft" data-i18n="mg_f6t">変更・キャンセルのご依頼</div><div class="fd" data-i18n="mg_f6d">場所・時間の変更やキャンセルのご依頼もマイページから承ります。</div></div></div>
-  </div>
-
-  <div class="sec-t"><span>🧭</span><span data-i18n="mg_use_t">使い方は3ステップ</span></div>
-  <div class="steps">
-    <div class="step"><div class="stt" data-i18n="mg_s1t">ご予約後のメールを開く</div><div class="std" data-i18n="mg_s1d">ご予約が確定すると、メールに「マイページ」のURLが届きます。タップして開くだけ（ログイン不要）。</div></div>
-    <div class="step"><div class="stt" data-i18n="mg_s2t">必要事項をご登録</div><div class="std" data-i18n="mg_s2d">免許証のご登録・お届け場所／時間のご連絡・約款のご署名をお済ませください。</div></div>
-    <div class="step"><div class="stt" data-i18n="mg_s3t">当日はそのままご出発</div><div class="std" data-i18n="mg_s3d">事前手続きが済んでいれば、当日はお車を受け取ってすぐに出発できます。</div></div>
+  <div class="flow">
+    <div class="pstep"><div class="ph"><span class="pt" data-i18n="mg_p1t">メールのURLから開く</span></div><div class="shot"><img src="official-assets/mypage/mp_1.webp" width="640" height="542" alt="マイページのトップ画面" loading="lazy"></div><div class="pc" data-i18n="mg_p1c">お客様専用のページです。ご出発までの日数も表示されます。</div></div>
+    <div class="pstep"><div class="ph"><span class="pt" data-i18n="mg_p2t">ご予約内容を確認</span></div><div class="shot"><img src="official-assets/mypage/mp_2.webp" width="640" height="757" alt="ご予約内容の画面" loading="lazy"></div><div class="pc" data-i18n="mg_p2c">車両・日時・補償をいつでも確認。変更の依頼もここから。</div></div>
+    <div class="pstep"><div class="ph"><span class="pt" data-i18n="mg_p3t">お届け・回収の場所と時間</span></div><div class="shot"><img src="official-assets/mypage/mp_3.webp" width="640" height="711" alt="お届け・回収の画面" loading="lazy"></div><div class="pc" data-i18n="mg_p3c">場所や時間の変更は「変更」ボタンから依頼できます。</div></div>
+    <div class="pstep"><div class="ph"><span class="pt" data-i18n="mg_p4t">免許証を登録</span></div><div class="shot"><img src="official-assets/mypage/mp_4.webp" width="640" height="1075" alt="免許証アップロードの画面" loading="lazy"></div><div class="pc" data-i18n="mg_p4c">スマホで撮って送るだけ。当日の受付がスムーズです。</div></div>
+    <div class="pstep"><div class="ph"><span class="pt" data-i18n="mg_p5t">当日は車の位置が見える</span></div><div class="shot"><img src="official-assets/mypage/mp_5.webp" width="640" height="958" alt="当日のリアルタイム追跡の画面" loading="lazy"></div><div class="pc" data-i18n="mg_p5c">お届け・回収に向かう車が、いまどこにいるか地図で分かります。</div></div>
+    <div class="pstep"><div class="ph"><span class="pt" data-i18n="mg_p6t">返却の準備ができたら</span></div><div class="shot"><img src="official-assets/mypage/mp_6.webp" width="640" height="361" alt="返却の準備ができたらの画面" loading="lazy"></div><div class="pc" data-i18n="mg_p6c">ボタンを押すと、早めの回収をお願いできます。</div></div>
   </div>
 
   <div class="demobox">
-    <div class="dh" data-i18n="mg_demo_h">👀 マイページのデモを見る</div>
-    <div class="dp" data-i18n="mg_demo_p">実際のマイページをサンプルデータでご覧いただけます（店舗ごとに仕様が少し異なります）。</div>
+    <div class="dh" data-i18n="mg_demo_h">👀 実際の画面を触ってみる</div>
     <div class="demobtns">
       <a class="demobtn" href="https://nosh2318.github.io/naha-project/my-nha.html?demo=1" target="_blank" rel="noopener">🌺 那覇 Naha</a>
       <a class="demobtn" href="https://nosh2318.github.io/spk-task/my.html?demo=1" target="_blank" rel="noopener">❄️ 札幌 Sapporo</a>
       <a class="demobtn" href="https://nosh2318.github.io/spk-task/my-tkm.html?demo=1" target="_blank" rel="noopener">🍜 高松 Takamatsu</a>
     </div>
   </div>
-
-  <div class="note" data-i18n="mg_note">※ デモはサンプル表示です。実際のご予約内容は反映されません。マイページのURLはお客様ごとに固有で、ご予約後のメールでお届けします。公式LINEにご登録いただくと、お迎え・傷チェック・前日/返却リマインドなどの通知もLINEで受け取れます。</div>
 
   <a class="cta" href="index.html#search" data-i18n="mg_cta">🚗 車を予約する</a>
 </div>
@@ -94,115 +92,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
 (function(){
   var P={
-    ja:{
-      mg_back:'← トップへ戻る',
-      mg_title:'マイページの使い方',
-      mg_lead:'ご予約後にお送りするメールの「マイページ」から、ご出発前のお手続きがすべてスマホで完結します。アプリのインストールは不要です。',
-      mg_can_t:'マイページでできること',
-      mg_f1t:'ご予約内容の確認',mg_f1d:'車両・日時・料金・お支払い状況などをいつでも確認できます。',
-      mg_f2t:'お届け・回収の場所／時間のご連絡',mg_f2d:'地図でお届け先を指定。お迎え・回収のご希望時間もご連絡いただけます。',
-      mg_f3t:'運転免許証のご登録',mg_f3d:'運転される方 全員分を、スマホで撮影して送信するだけ。当日の受付がスムーズです。',
-      mg_f4t:'貸渡約款のご確認・ご署名',mg_f4d:'事前に約款をご確認・ご署名いただけます（当日の署名が不要になります）。',
-      mg_f5t:'車両の傷チェック',mg_f5d:'ご出発前に車両の状態を写真で確認。安心してご出発いただけます。',
-      mg_f6t:'変更・キャンセルのご依頼',mg_f6d:'場所・時間の変更やキャンセルのご依頼もマイページから承ります。',
-      mg_use_t:'使い方は3ステップ',
-      mg_s1t:'ご予約後のメールを開く',mg_s1d:'ご予約が確定すると、メールに「マイページ」のURLが届きます。タップして開くだけ（ログイン不要）。',
-      mg_s2t:'必要事項をご登録',mg_s2d:'免許証のご登録・お届け場所／時間のご連絡・約款のご署名をお済ませください。',
-      mg_s3t:'当日はそのままご出発',mg_s3d:'事前手続きが済んでいれば、当日はお車を受け取ってすぐに出発できます。',
-      mg_demo_h:'👀 マイページのデモを見る',mg_demo_p:'実際のマイページをサンプルデータでご覧いただけます（ご予約前でもお試しできます）。',mg_demo_b:'デモを開く ▶',
-      mg_note:'※ デモはサンプル表示です。実際のご予約内容は反映されません。マイページのURLはお客様ごとに固有で、ご予約後のメールでお届けします。公式LINEにご登録いただくと、お迎え・傷チェック・前日/返却リマインドなどの通知もLINEで受け取れます。',
-      mg_cta:'🚗 車を予約する'
-    },
-    en:{
-      mg_back:"← Back to top",
-      mg_title:"How to Use My Page",
-      mg_lead:"From the “My Page” link in the email we send after your reservation, you can complete all pre-departure steps on your phone. No app installation required.",
-      mg_can_t:"What you can do on My Page",
-      mg_f1t:"Check your reservation",
-      mg_f1d:"View your vehicle, dates, price and payment status anytime.",
-      mg_f2t:"Tell us your delivery / return place & time",
-      mg_f2d:"Pin your delivery spot on the map, and let us know your preferred pick-up / return time.",
-      mg_f3t:"Register driver's licenses",
-      mg_f3d:"Just photograph and send licenses for every driver — check-in on the day is quicker.",
-      mg_f4t:"Review & sign the rental terms",
-      mg_f4d:"Review and sign the rental agreement in advance (no signing needed on the day).",
-      mg_f5t:"Vehicle damage check",
-      mg_f5d:"Check the vehicle's condition with photos before departure for peace of mind.",
-      mg_f6t:"Request changes / cancellation",
-      mg_f6d:"Request changes to place/time or a cancellation right from My Page.",
-      mg_use_t:"3 easy steps",
-      mg_s1t:"Open the email after booking",
-      mg_s1d:"Once your reservation is confirmed, you'll get a “My Page” URL by email. Just tap to open — no login needed.",
-      mg_s2t:"Complete the required items",
-      mg_s2d:"Register your license, tell us the delivery place/time, and sign the terms.",
-      mg_s3t:"Just drive off on the day",
-      mg_s3d:"With the steps done in advance, simply pick up the car and go on the day.",
-      mg_demo_h:"👀 See a My Page demo",
-      mg_demo_p:"View the actual My Page with sample data — try it even before booking.",
-      mg_demo_b:"Open demo ▶",
-      mg_note:"* The demo shows sample data and does not reflect a real reservation. Your My Page URL is unique to you and delivered by email after booking. Register on our official LINE to also receive pick-up, damage-check and day-before/return reminders via LINE.",
-      mg_cta:"🚗 Book a Car"
-    },
-    zh:{
-      mg_back:"← 返回首頁",
-      mg_title:"個人專頁使用方法",
-      mg_lead:"預約後我們寄送的電子郵件中的「個人專頁」，可用手機完成出發前的所有手續。無需安裝App。",
-      mg_can_t:"個人專頁能做的事",
-      mg_f1t:"確認預約內容",
-      mg_f1d:"隨時確認車輛・日期時間・費用・付款狀態等。",
-      mg_f2t:"告知送車／回收的地點・時間",
-      mg_f2d:"於地圖指定送車地點，並可告知希望的接車・回收時間。",
-      mg_f3t:"登錄駕照",
-      mg_f3d:"駕駛人全員份，用手機拍照傳送即可。當天報到更順暢。",
-      mg_f4t:"確認・簽署租車契約",
-      mg_f4d:"可事先確認・簽署租車約款（當天免簽名）。",
-      mg_f5t:"車輛刮痕檢查",
-      mg_f5d:"出發前以照片確認車況，安心出發。",
-      mg_f6t:"申請變更・取消",
-      mg_f6d:"地點・時間的變更或取消申請，亦可從個人專頁辦理。",
-      mg_use_t:"使用僅需3步驟",
-      mg_s1t:"開啟預約後的郵件",
-      mg_s1d:"預約確定後，郵件會附上「個人專頁」的URL。點擊開啟即可（無需登入）。",
-      mg_s2t:"登錄必要事項",
-      mg_s2d:"請完成駕照登錄・送車地點／時間告知・約款簽署。",
-      mg_s3t:"當天即可直接出發",
-      mg_s3d:"事前手續完成後，當天領車即可立即出發。",
-      mg_demo_h:"👀 觀看個人專頁示範",
-      mg_demo_p:"可用範例資料查看實際的個人專頁（預約前也能試用）。",
-      mg_demo_b:"開啟示範 ▶",
-      mg_note:"※ 示範為範例顯示，不會反映實際預約內容。個人專頁URL為每位客人專屬，於預約後以郵件寄送。登錄官方LINE後，接車・刮痕檢查・前一日/歸還提醒等通知也可透過LINE接收。",
-      mg_cta:"🚗 預約車輛"
-    },
-    ko:{
-      mg_back:"← 첫 화면으로",
-      mg_title:"마이페이지 사용법",
-      mg_lead:"예약 후 보내드리는 메일의 「마이페이지」에서 출발 전 절차를 모두 스마트폰으로 완료할 수 있습니다. 앱 설치가 필요 없습니다.",
-      mg_can_t:"마이페이지에서 할 수 있는 것",
-      mg_f1t:"예약 내용 확인",
-      mg_f1d:"차량·일시·요금·결제 상태 등을 언제든지 확인할 수 있습니다.",
-      mg_f2t:"배달·회수 장소/시간 연락",
-      mg_f2d:"지도에서 배달지를 지정하고, 픽업·회수 희망 시간도 알려주실 수 있습니다.",
-      mg_f3t:"운전면허증 등록",
-      mg_f3d:"운전하시는 분 전원분을 스마트폰으로 촬영해 보내기만 하면 됩니다. 당일 접수가 빨라집니다.",
-      mg_f4t:"대여 약관 확인·서명",
-      mg_f4d:"사전에 약관을 확인·서명하실 수 있습니다(당일 서명 불필요).",
-      mg_f5t:"차량 흠집 체크",
-      mg_f5d:"출발 전 차량 상태를 사진으로 확인해 안심하고 출발하실 수 있습니다.",
-      mg_f6t:"변경·취소 요청",
-      mg_f6d:"장소·시간 변경이나 취소 요청도 마이페이지에서 접수합니다.",
-      mg_use_t:"사용법은 3단계",
-      mg_s1t:"예약 후 메일 열기",
-      mg_s1d:"예약이 확정되면 메일로 「마이페이지」 URL이 도착합니다. 탭해서 열기만 하면 됩니다(로그인 불필요).",
-      mg_s2t:"필요 사항 등록",
-      mg_s2d:"면허증 등록·배달 장소/시간 연락·약관 서명을 완료해 주세요.",
-      mg_s3t:"당일은 그대로 출발",
-      mg_s3d:"사전 절차가 끝나 있으면 당일은 차를 받아 바로 출발할 수 있습니다.",
-      mg_demo_h:"👀 마이페이지 데모 보기",
-      mg_demo_p:"실제 마이페이지를 샘플 데이터로 보실 수 있습니다(예약 전에도 체험 가능).",
-      mg_demo_b:"데모 열기 ▶",
-      mg_note:"※ 데모는 샘플 표시이며 실제 예약 내용은 반영되지 않습니다. 마이페이지 URL은 고객별 고유하며 예약 후 메일로 보내드립니다. 공식 LINE에 등록하시면 픽업·흠집 체크·전날/반납 리마인드 등 알림도 LINE으로 받으실 수 있습니다.",
-      mg_cta:"🚗 차량 예약하기"
-    }
+    ja:{mg_back:'← トップへ戻る',mg_title:'マイページの使い方',mg_lead:'ご予約後のメールのURLを開くだけ。アプリもログインも不要です。',
+      mg_p1t:'メールのURLから開く',mg_p1c:'お客様専用のページです。ご出発までの日数も表示されます。',
+      mg_p2t:'ご予約内容を確認',mg_p2c:'車両・日時・補償をいつでも確認。変更の依頼もここから。',
+      mg_p3t:'お届け・回収の場所と時間',mg_p3c:'場所や時間の変更は「変更」ボタンから依頼できます。',
+      mg_p4t:'免許証を登録',mg_p4c:'スマホで撮って送るだけ。当日の受付がスムーズです。',
+      mg_p5t:'当日は車の位置が見える',mg_p5c:'お届け・回収に向かう車が、いまどこにいるか地図で分かります。',
+      mg_p6t:'返却の準備ができたら',mg_p6c:'ボタンを押すと、早めの回収をお願いできます。',
+      mg_demo_h:'👀 実際の画面を触ってみる',mg_cta:'🚗 車を予約する'},
+    en:{mg_back:'← Back to top',mg_title:'How to Use My Page',mg_lead:'Just open the link in your booking email. No app or login needed.',
+      mg_p1t:'Open the link in your email',mg_p1c:'Your own page, with a countdown to departure.',
+      mg_p2t:'Check your booking',mg_p2c:'Car, dates and coverage anytime. Request changes here too.',
+      mg_p3t:'Delivery & pickup place and time',mg_p3c:'Request a change with the “変更” button.',
+      mg_p4t:'Register your licence',mg_p4c:'Just take a photo and send it. Faster check-in on the day.',
+      mg_p5t:'See the car on the map',mg_p5c:'Track the car on its way to deliver or collect.',
+      mg_p6t:'Ready to return?',mg_p6c:'Tap the button to ask for an earlier pickup.',
+      mg_demo_h:'👀 Try the real screen',mg_cta:'🚗 Book a Car'},
+    zh:{mg_back:'← 返回首頁',mg_title:'個人專頁使用方法',mg_lead:'只要開啟預約郵件中的網址。無需App或登入。',
+      mg_p1t:'從郵件網址開啟',mg_p1c:'您的專屬頁面，並顯示距出發的天數。',
+      mg_p2t:'確認預約內容',mg_p2c:'隨時確認車輛・日期・保障，也可在此申請變更。',
+      mg_p3t:'送車・回收的地點與時間',mg_p3c:'可用「変更」按鈕申請變更。',
+      mg_p4t:'登錄駕照',mg_p4c:'用手機拍照傳送即可，當天手續更順暢。',
+      mg_p5t:'當天可看到車輛位置',mg_p5c:'在地圖上確認送車・回收的車輛目前位置。',
+      mg_p6t:'準備好歸還時',mg_p6c:'按下按鈕即可申請提早回收。',
+      mg_demo_h:'👀 實際操作畫面',mg_cta:'🚗 預約車輛'},
+    ko:{mg_back:'← 첫 화면으로',mg_title:'마이페이지 사용법',mg_lead:'예약 메일의 URL을 열기만 하면 됩니다. 앱·로그인 불필요.',
+      mg_p1t:'메일의 URL로 열기',mg_p1c:'고객 전용 페이지로, 출발까지 남은 일수도 표시됩니다.',
+      mg_p2t:'예약 내용 확인',mg_p2c:'차량·일시·보장을 언제든 확인. 변경 요청도 여기서.',
+      mg_p3t:'배달·회수 장소와 시간',mg_p3c:'「変更」 버튼으로 변경을 요청할 수 있습니다.',
+      mg_p4t:'면허증 등록',mg_p4c:'스마트폰으로 찍어 보내기만 하면 됩니다.',
+      mg_p5t:'당일 차량 위치 확인',mg_p5c:'배달·회수 차량이 지금 어디 있는지 지도로 확인.',
+      mg_p6t:'반납 준비가 되면',mg_p6c:'버튼을 누르면 조기 회수를 요청할 수 있습니다.',
+      mg_demo_h:'👀 실제 화면 체험하기',mg_cta:'🚗 차량 예약하기'}
   };
   function apply(){var L=(window.hdmLang?window.hdmLang():'ja');var d=P[L]||P.ja;
     document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(d[k]!=null)el.innerHTML=d[k];});}
