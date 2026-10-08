@@ -65,6 +65,11 @@
   .fleet div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 4px;text-align:center;font-size:11.5px;font-weight:800;line-height:1.35}
   .fleet img{width:100%;height:46px;object-fit:contain;display:block;margin-bottom:4px}
   .fleet small{display:block;font-size:10px;color:#7a7f87;font-weight:600}
+  .fleet .wp{display:flex;justify-content:center;align-items:baseline;gap:3px;font-size:10px;color:#5a6068;font-weight:700;margin-top:3px}
+  .fleet .wp i{font-style:normal;font-size:9.5px;color:#7a7f87}
+  .fleet .wp b{font-size:13px;color:#00163f}
+  .fleet .wp+.wp{margin-top:0}
+  .pnote{font-size:11px;color:#7a7f87;margin-top:8px;line-height:1.6}
   .faq{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
   .faq details{border-bottom:1px solid var(--line)}
   .faq details:last-child{border-bottom:0}
@@ -170,15 +175,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <div class="sec">
-  <h2>用意している車（一例）</h2>
+  <h2>車種と代車価格の目安（1週間）</h2>
   <div class="fleet">
-    <div><img src="official-assets/cars/class_F.webp" alt="" loading="lazy">コンパクト<small>ソリオ 等</small></div>
-    <div><img src="official-assets/cars/class_H.webp" alt="" loading="lazy">セダン/HV<small>プリウス 等</small></div>
-    <div><img src="official-assets/cars/class_C.webp" alt="" loading="lazy">小型SUV<small>ロッキー 等</small></div>
-    <div><img src="official-assets/cars/class_S.webp" alt="" loading="lazy">SUV<small>ハリアー 等</small></div>
-    <div><img src="official-assets/cars/class_B.webp" alt="" loading="lazy">ミニバン<small>ノア 等</small></div>
-    <div><img src="official-assets/cars/class_A.webp" alt="" loading="lazy">高級ミニバン<small>アルファード 等</small></div>
+    <div data-c="F"><img src="official-assets/cars/class_F.webp" alt="" loading="lazy">コンパクト<small>ソリオ 等</small><span class="wp"><i>札幌</i><b class="ps">30,800</b>円</span><span class="wp"><i>那覇</i><b class="pn">15,100</b>円</span></div>
+    <div data-c="H"><img src="official-assets/cars/class_H.webp" alt="" loading="lazy">セダン/HV<small>プリウス 等</small><span class="wp"><i>札幌</i><b class="ps">36,400</b>円</span><span class="wp"><i>那覇</i><b class="pn">16,800</b>円</span></div>
+    <div data-c="C"><img src="official-assets/cars/class_C.webp" alt="" loading="lazy">小型SUV<small>ロッキー 等</small><span class="wp"><i>札幌</i><b class="ps">36,400</b>円</span><span class="wp"><i>那覇</i><b class="pn">25,200</b>円</span></div>
+    <div data-c="S"><img src="official-assets/cars/class_S.webp" alt="" loading="lazy">SUV<small>ハリアー 等</small><span class="wp"><i>札幌</i><b class="ps">42,000</b>円</span><span class="wp"><i>那覇</i><b class="pn">28,000</b>円</span></div>
+    <div data-c="B"><img src="official-assets/cars/class_B.webp" alt="" loading="lazy">ミニバン<small>ノア 等</small><span class="wp"><i>札幌</i><b class="ps">56,000</b>円</span><span class="wp"><i>那覇</i><b class="pn">30,800</b>円</span></div>
+    <div data-c="A"><img src="official-assets/cars/class_A.webp" alt="" loading="lazy">高級ミニバン<small>アルファード 等</small><span class="wp"><i>札幌</i><b class="ps">70,000</b>円</span><span class="wp"><i>那覇</i><b class="pn">39,200</b>円</span></div>
   </div>
+  <p class="pnote">通常料金（基本料金）から代車割引<span id="discPct">20</span>%を引いた7日間の目安です。お届け・回収込み。日程・在庫により変わるため、正式な金額はチャットでご案内します。</p>
 </div>
 
 <div class="sec">
@@ -233,6 +239,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   var f=$("dzForm"),bar=$("dzBar");
   if("IntersectionObserver" in window){new IntersectionObserver(function(es){bar.classList.toggle("show",!es[0].isIntersecting&&es[0].boundingClientRect.top<0)}).observe(f);}
   $("dzBarBtn").addEventListener("click",function(){var y=f.getBoundingClientRect().top+scrollY-60;scrollTo({top:y,behavior:"smooth"})});
+})();
+
+(function(){
+  // 料金コントローラー(hdm_official_price)の基本料金 × 代車割引(get_discount) で7日間の目安を更新（取得できなければ静的値のまま）
+  var U="https://ckrxttbnawkclshczsia.supabase.co",K="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8";
+  var H={apikey:K,Authorization:"Bearer "+K};
+  var pP=fetch(U+"/rest/v1/app_settings?key=eq.hdm_official_price&select=value",{headers:H}).then(function(r){return r.ok?r.json():null}).then(function(d){return d&&d[0]?JSON.parse(d[0].value):null}).catch(function(){return null});
+  var pD=fetch(U+"/functions/v1/daisha-request",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},H),body:JSON.stringify({action:"get_discount"})}).then(function(r){return r.ok?r.json():null}).catch(function(){return null});
+  Promise.all([pP,pD]).then(function(x){
+    var m=x[0],dc=x[1];if(!m)return;
+    function disc(st,c){var o=dc&&dc[st];if(!o)return 20;var v=o.byClass&&o.byClass[c];return +(v!=null?v:(o.default!=null?o.default:20));}
+    function wk(st,c){var p=m[st]&&m[st].price&&m[st].price[c];var b=p&&+(p.base||p.a||0);if(!b)return null;return Math.round(b*7*(100-disc(st,c))/100/100)*100;}
+    document.querySelectorAll(".fleet [data-c]").forEach(function(el){var c=el.getAttribute("data-c");
+      var a=wk("spk",c),b=wk("nha",c);if(a)el.querySelector(".ps").textContent=a.toLocaleString();if(b)el.querySelector(".pn").textContent=b.toLocaleString();});
+    var d0=disc("spk","F");if(d0)document.getElementById("discPct").textContent=d0;
+  });
 })();
 </script>
 </body>
