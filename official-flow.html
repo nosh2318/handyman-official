@@ -2,7 +2,7 @@
 <!-- Google Tag Manager --><script src="gtm.js"></script><!-- End Google Tag Manager -->
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>ご予約（那覇）｜ HANDYMAN RENTCAR</title>
+<title>ご予約｜ HANDYMAN RENTCAR</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -461,6 +461,7 @@ var STA=STORE[area==='sapporo'?'sapporo':(area==='takamatsu'?'takamatsu':'naha')
 var CLS=STA.cls;
 var ORDER=STA.order;
 var SHOP=(area==='sapporo')?'札幌店':(area==='takamatsu')?'高松空港店':'那覇空港店';
+try{document.title='ご予約（'+({sapporo:'札幌',takamatsu:'高松'}[area]||'那覇')+'）｜ HANDYMAN RENTCAR';}catch(e){}
 if(area==='sapporo')method='delivery'; // 札幌=デリバリー専門(KEYDROP)
 var METHOD={delivery:{t:'🚗 デリバリー（お届け）',label:'お届け先'},airport:{t:'✈️ 無料送迎（空港/駅）',label:'送迎場所'},store:{t:'🏠 来店',label:'来店店舗'}};
 var insPrice={basic:0,cdw:1100,noc:1650};
@@ -638,7 +639,7 @@ function renderV(){
   var visible=ORDER.filter(function(k){return classAvail(k);});
   document.getElementById('vgrid').innerHTML=ORDER.map(function(k){var c=CLS[k];var av=classAvail(k);return (
     '<div class="vc'+(state.cls===k?' on':'')+(av?'':' soldout')+'" data-k="'+k+'"><div class="pic">'+carImg(k)+'<span class="clschip">'+window.hdmTerm(c.l)+'</span>'+(c.az?'<span class="azukari">'+T('azukari')+'</span>':'')+(av?'<span class="check">✓</span>':'<span class="soldbadge">'+T('fl_full')+'</span>')+'</div>'+
-    '<div class="bd"><div class="nm">'+window.hdmTerm(c.v)+'</div><div class="pr"><b>¥'+c.p.toLocaleString()+'</b><small>'+T('perday')+'</small></div><div class="sp">👥 '+String(c.s).replace(/名/,T('seats'))+'</div>'+
+    '<div class="bd"><div class="nm">'+window.hdmTerm(c.v)+'</div><div class="pr"><b>¥'+dayPrice(k).toLocaleString()+'</b><small>'+T('perday')+'</small></div><div class="sp">👥 '+String(c.s).replace(/名/,T('seats'))+'</div>'+
     '<div class="vbtns">'+(av?'<button class="vpick" onclick="decideV(\''+k+'\')">'+(state.cls===k?T('fl_decided'):T('fl_decide'))+'</button>':'<div class="soldmsg">'+T('fl_nostock')+'</div>')+
     '<button class="vdetail" onclick="openDetail(\''+k+'\')">'+T('fl_detail')+'</button></div></div></div>');
   }).join('');
@@ -654,7 +655,7 @@ function openDetail(k){var c=CLS[k];if(!c)return;
   document.getElementById('dPic').innerHTML=carImg(k)+'<span class="dclschip">'+window.hdmTerm(c.l)+'</span>'+(c.az?'<span class="azukari" style="position:absolute;top:10px;right:54px">'+T('azukari')+'</span>':'')+'<button class="dclose" onclick="closeDetail()">×</button>';
   document.getElementById('dBody').innerHTML='<h3>'+window.hdmTerm(c.l)+'</h3><div class="dv">'+window.hdmTerm(c.v)+'</div>'+
     '<div class="drow"><span class="lb">'+T('dt_seats')+'</span><span class="vl">👥 '+String(c.s).replace(/名/,T('seats'))+'</span></div>'+
-    '<div class="drow dprice"><span class="lb">'+T('dt_price')+'</span><span class="vl"><b>¥'+c.p.toLocaleString()+'</b> '+T('perday')+'</span></div>'+
+    '<div class="drow dprice"><span class="lb">'+T('dt_price')+'</span><span class="vl"><b>¥'+dayPrice(k).toLocaleString()+'</b> '+T('perday')+'</span></div>'+
     '<div class="drow"><span class="lb">'+T('dt_equip')+'</span><span class="vl" style="flex:1"><div class="dtags">'+STA.equip.map(function(e){return '<span class="dtag">'+window.hdmTerm(e)+'</span>';}).join('')+'</div></span></div>'+
     '<div class="dnote">'+T('fnote_'+area)+'</div>'+
     (classAvail(k)?'<button class="dpick" onclick="pickFromDetail(\''+k+'\')">'+T('dt_pick')+'</button>':'<div class="dpick" style="background:#e7ebf2;color:#8a97ad;text-align:center;cursor:default">'+T('fl_nostock2')+'</div>');
@@ -712,8 +713,8 @@ function loadPriceMaster(){
    }).catch(function(){});
 }
 // 基本料金 日別合算（暦日・月別price優先→基準／高い日→b・他→a）＝RPCと同一ロジック
-function baseSum(){
-  var cl=state.cls,c=CLS[cl];if(!c)return 0;
+function baseSum(cl){
+  cl=cl||state.cls;var c=CLS[cl];if(!c)return 0;
   var aP=(c._a!=null?c._a:c.p),bP=(c._b!=null?c._b:aP),baseP=(c._base!=null?c._base:aP),M=window._MONTHS||{},H=window._HIGH||{},L=window._LOW||{};
   if(!pD||!rD)return baseP;
   var s=new Date(pD),e=new Date(rD),t=0,g=0;
@@ -723,6 +724,8 @@ function baseSum(){
     s.setDate(s.getDate()+1);g++;}
   return t;
 }
+// 車両カード表示用：選択日程の実際の1日あたり料金（安い日・月別料金を反映した平均）
+function dayPrice(k){var c=CLS[k];if(!c)return 0;try{if(pD&&rD){var d=daysCount();if(d>0){var t=baseSum(k);if(t>0)return Math.round(t/d/100)*100;}}}catch(e){}return c.p;}
 function calc(){
   var base=state.cls&&CLS[state.cls]?CLS[state.cls].p:0;
   var tot=base+(insPrice[state.ins]||0)+optTotal();
@@ -730,7 +733,7 @@ function calc(){
 }
 // 選択中の車両カード（STEP3で表示）
 function renderChosen(){var el=document.getElementById('chosenCar');if(!el)return;var c=CLS[state.cls];if(!c){el.innerHTML=({ja:'車両が未選択です',en:'No car selected',zh:'尚未選擇車輛',ko:'차량이 선택되지 않았습니다'}[(window.hdmLang?hdmLang():'ja')]||'車両が未選択です');return;}
-  el.innerHTML='<div style="display:flex;gap:12px;align-items:center"><div style="width:96px;height:62px;border-radius:8px;overflow:hidden;flex:0 0 auto;background:#fff">'+carImg(state.cls)+'</div><div><div style="font-weight:900;color:#0a1f44;font-size:14px;word-break:keep-all">'+window.hdmTerm(c.l)+'　'+window.hdmTerm(c.v)+'</div><div style="font-size:12px;color:var(--mut);margin-top:3px">👥 '+String(c.s).replace(/名/,T('seats'))+'　¥'+c.p.toLocaleString()+T('perday')+'</div></div></div>';}
+  el.innerHTML='<div style="display:flex;gap:12px;align-items:center"><div style="width:96px;height:62px;border-radius:8px;overflow:hidden;flex:0 0 auto;background:#fff">'+carImg(state.cls)+'</div><div><div style="font-weight:900;color:#0a1f44;font-size:14px;word-break:keep-all">'+window.hdmTerm(c.l)+'　'+window.hdmTerm(c.v)+'</div><div style="font-size:12px;color:var(--mut);margin-top:3px">👥 '+String(c.s).replace(/名/,T('seats'))+'　¥'+dayPrice(state.cls).toLocaleString()+T('perday')+'</div></div></div>';}
 // 引き継ぐ共通パラメータ
 function qs(extra){return 'area='+area+'&method='+method+'&pd='+encodeURIComponent(pD)+'&pt='+encodeURIComponent(pT)+'&rd='+encodeURIComponent(rD)+'&rt='+encodeURIComponent(rT)+(extra||'');}
 // ===== ステップ表示切替（画面内遷移・stateは保持）=====

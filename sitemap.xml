@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://rent-handyman.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://rent-handyman.com/sapporo-delivery.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://rent-handyman.com/sapporo-delivery.html</loc><lastmod>2026-10-08</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://rent-handyman.com/sapporo-okadama-airport.html</loc><lastmod>2026-10-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://rent-handyman.com/sapporo-winter-rentacar.html</loc><lastmod>2026-10-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://rent-handyman.com/sapporo-ski-snowfestival.html</loc><lastmod>2026-10-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://rent-handyman.com/sapporo-alphard-rentacar.html</loc><lastmod>2026-10-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://rent-handyman.com/sapporo-minivan-rentacar.html</loc><lastmod>2026-10-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://rent-handyman.com/sapporo-drive-course.html</loc><lastmod>2026-10-08</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://rent-handyman.com/takamatsu-rentacar.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://rent-handyman.com/naha-rentacar.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://rent-handyman.com/daisha.html</loc><lastmod>2026-10-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://rent-handyman.com/sapporo-daisha.html</loc><lastmod>2026-10-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://rent-handyman.com/official-bus.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://rent-handyman.com/official-access.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://rent-handyman.com/official-vehicles.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
