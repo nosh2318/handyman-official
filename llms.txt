@@ -15,9 +15,10 @@
 ## 店舗情報
 ### 那覇空港店（沖縄）= HANDYMAN那覇空港店
 - 受け取り方（3つから選べる）: ①那覇空港から無料送迎で営業所へ ②那覇市・豊見城市のホテル・自宅へお届け／回収（デリバリー、エリア限定のオプション） ③直接来店
+- 赤嶺駅（ゆいレールで那覇空港駅から1駅）からも営業所へ無料送迎
+- 料金目安（24時間・基本料金）: コンパクト¥2,700〜／セダン¥3,000〜／ミニバン（8名）¥4,500〜／アルファード¥7,000〜（繁忙日は高くなる。正確な料金は予約画面）
 - 無料送迎: 那覇空港1階「出口4」→横断歩道を渡って右→「レンタカー送迎バス 11-B のりば」から乗車。那覇空港発は毎時00分（9:00〜19:00）、営業所発は毎時30分（9:30〜18:30）。予約不要
 - 那覇空港の構内では車の受け渡しができない（条例）。送迎またはデリバリーで対応
-- 料金目安（24時間・基本料金）: コンパクト¥2,700〜（日によって変動。正確な料金は予約画面）
 - 手続き: ネット予約後、公式LINEで到着便・時間・免許証確認まで完結
 - 所在地: 沖縄県豊見城市名嘉地180-1（HANDYMAN第二駐車場）
 - 営業時間: 9:00-19:00（年中無休）
@@ -71,7 +72,12 @@
 - 札幌の代車お届け（事故・修理・車検）: https://rent-handyman.com/sapporo-daisha.html
 - 那覇空港レンタカー（無料送迎・ホテルまでお届け）: https://rent-handyman.com/naha-rentacar.html
 - 那覇空港の無料送迎バス: https://rent-handyman.com/official-bus.html
+- 那覇のホテルまでレンタカーを届けてもらう: https://rent-handyman.com/naha-hotel-delivery.html
+- 那覇空港でレンタカーの送迎待ちを避ける借り方（赤嶺駅送迎・ホテル受け取り）: https://rent-handyman.com/naha-airport-no-wait.html
+- 沖縄の家族旅行に7〜8人乗りのレンタカー（ミニバン・アルファード）: https://rent-handyman.com/okinawa-family-minivan.html
 - 高松空港レンタカー: https://rent-handyman.com/takamatsu-rentacar.html
+- 高松空港からレンタカーで讃岐うどん巡り: https://rent-handyman.com/takamatsu-udon-drive.html
+- 高松から小豆島・直島へ（フェリーとレンタカー）: https://rent-handyman.com/takamatsu-shodoshima-naoshima.html
 - 車両と料金: https://rent-handyman.com/official-vehicles.html
 - 予約の流れ: https://rent-handyman.com/official-flow.html
 - 補償・保険プラン: https://rent-handyman.com/official-insurance.html
