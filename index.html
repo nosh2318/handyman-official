@@ -623,7 +623,7 @@ function loadTakamatsuLive(T){
      var TC=(window.hdmTerm||function(x){return x;});
      grid.innerHTML=TKM_ORDER.filter(function(k){return byc[k];}).map(function(k){var c=byc[k];var m=TKM_MAP[k]||{l:k,img:k};
        var tkmImg='<img src="official-assets/cars/tkm/tkm_'+k+'.jpg" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\'official-assets/cars/class_'+m.img+'.png\'" alt="" style="width:100%;height:100%;object-fit:contain;background:#fff;padding:5px">';
-       return '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\'takamatsu\')"><div class="pic">'+tkmImg+'</div>'+
+       return '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\'takamatsu\',\''+k+'\')"><div class="pic">'+tkmImg+'</div>'+
         '<div class="bd"><div class="nm2"><span class="clsbadge">'+TC(m.l)+'</span><span class="nmtx">'+TC(m.v||c.vehicles)+'</span></div>'+
         '<div class="spec">👥 '+c.seats+T('seats')+' ・ '+T('stock')+c.cnt+T('stock_unit')+'</div>'+
         '<div class="pr2"><b>¥'+((masterPrice('takamatsu',k)!=null?masterPrice('takamatsu',k):(m.p||0)).toLocaleString())+'</b><small>'+T('perday')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>';
@@ -645,13 +645,23 @@ function setCar(a){
   if(a==='takamatsu'){loadTakamatsuLive(T);return;} // 高松＝BUDDICA本番在庫と連携
   var TC=(window.hdmTerm||function(x){return x;});
   document.getElementById('cagrid').innerHTML=st.order.map(function(k){var c=st.cls[k];return (
-    '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\''+a+'\')"><div class="pic">'+carImg(k,a)+'</div>'+
+    '<div class="cacar" style="cursor:pointer" onclick="pickCarType(\''+a+'\',\''+k+'\')"><div class="pic">'+carImg(k,a)+'</div>'+
     '<div class="bd"><div class="nm2"><span class="clsbadge">'+TC(c.l)+'</span><span class="nmtx">'+TC(c.v)+'</span></div><div class="spec">👥 '+String(c.s).replace(/名/,T('seats'))+'</div>'+
     '<div class="pr2"><b>¥'+((masterPrice(a,k)!=null?masterPrice(a,k):c.p)).toLocaleString()+'</b><small>'+T('perday')+'</small></div><div class="catap">'+T('ca_book')+' →</div></div></div>');
   }).join('');
 }
 // CAR TYPEの車をタップ→その店舗を選択し検索フォーム(日程入力)へ誘導（予約フローは日程が必須のため）
-function pickCarType(a){try{var sel=document.getElementById('areaSel');if(sel){sel.value=a;onAreaSel();}}catch(e){}var s=document.getElementById('search');if(s)s.scrollIntoView({behavior:'smooth',block:'start'});}
+// ★10/08 押した車を覚えて、日程入力済みならそのまま予約画面（その車を選択済み）へ。未入力なら日程欄へ案内し「選択中の車」を表示
+window.__PICKCLS=null;
+function pickCarType(a,k){try{var sel=document.getElementById('areaSel');if(sel&&sel.value!==a){sel.value=a;onAreaSel();}}catch(e){}
+  window.__PICKCLS=k?{a:a,k:k}:null;
+  var ok=['pickDate','pickTime','retDate','retTime'].every(function(id){var el=document.getElementById(id);return el&&el.value;});
+  if(k&&ok){doSearch();return;}
+  var nm='';try{nm=(a==='takamatsu'?(TKM_MAP[k]||{}).v:(STORE[a].cls[k]||{}).v)||'';}catch(e){}
+  var b=document.getElementById('pickNote');if(!b){b=document.createElement('div');b.id='pickNote';b.style.cssText='background:#fff7d6;border:2px solid #ffbe2e;color:#06214f;font-weight:800;font-size:14px;padding:10px 14px;border-radius:12px;margin:0 0 10px';var si=document.querySelector('#search .searchIn');if(si)si.insertBefore(b,si.firstChild);}
+  if(k){b.style.display='';b.textContent='🚗 選択中：'+nm+'　出発・返却の日時を入れて「検索」を押すと、この車でご予約に進みます。';}else{b.style.display='none';}
+  var s=(k&&b)||document.getElementById('search');if(s){var hd=document.querySelector('header');var y=s.getBoundingClientRect().top+window.scrollY-((hd&&hd.offsetHeight)||70)-12;window.scrollTo({top:y,behavior:'smooth'});}
+  setTimeout(function(){var f=['pickDate','pickTime','retDate','retTime'].map(function(id){return document.getElementById(id);}).filter(function(el){return el&&!el.value;})[0];if(f)try{f.focus({preventScroll:true});}catch(e){}},500);}
 // 店舗カード→その店の「取扱車種・料金」(#cars・ライブ料金)へ。検索の店舗も合わせる。
 function goStoreCars(a){try{if(typeof ctTab==='function')ctTab(a);}catch(e){}try{var sel=document.getElementById('areaSel');if(sel){sel.value=a;onAreaSel();}}catch(e){}var el=document.getElementById('cars');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
 // CAR TYPE 店舗タブ切替（検索フォームと独立して直接ブラウズ可）
@@ -690,13 +700,14 @@ function doSearch(){
   if(rd<pd){var e2=document.getElementById('retDate');e2.classList.add('need');e2.focus();alert('ご返却日はご出発日以降をお選びください。');return;}
   var _bk=(window.__BOOKUNTIL||{})[a];
   if(_bk&&(pd>_bk||rd>_bk)){var e3=document.getElementById(pd>_bk?'pickDate':'retDate');e3.classList.add('need');e3.focus();alert('ご予約は '+_bk+' までとなります。それ以前の日程をお選びください。');return;}
+  var _pc=(window.__PICKCLS&&window.__PICKCLS.a===a)?'&class='+encodeURIComponent(window.__PICKCLS.k):'';
   var dt='&pd='+encodeURIComponent(pd)+'&pt='+encodeURIComponent(pt)+'&rd='+encodeURIComponent(rd)+'&rt='+encodeURIComponent(rt);
   if(a==='sapporo'){ // 札幌=KEYDROP仕様を完全コピー(公式サイト内・デリバリー専門)
-    location.href='official-flow.html?area=sapporo&method=delivery'+dt;return;
+    location.href='official-flow.html?area=sapporo&method=delivery'+dt+_pc;return;
   }
   // 那覇・高松=受取方法つきフロー
   var m='delivery',mc=document.querySelector('#methodChips .chip.on');if(mc)m=mc.getAttribute('data-m');
-  location.href='official-flow.html?area='+a+'&method='+m+dt;
+  location.href='official-flow.html?area='+a+'&method='+m+dt+_pc;
 }
 /* ===== 🎁 お得オファー（注目クーポンWELCOMEを読み、TOPバー＋離脱ポップに反映。クリックで日程選択へ／予約フローで自動適用） ===== */
 var OFFER_CODE='WELCOME';window._offerCoupon='';window._offerAmt='';
@@ -713,16 +724,18 @@ function offRender(){var amt=window._offerAmt||'';
   var t=document.getElementById('offBarTxt');if(t)t.innerHTML='<span class="opre">'+(window.hdmT?window.hdmT('off_bar_pre'):'初回ネット予約')+'</span> <b>'+amt+'</b>';
   var big=document.getElementById('offPopBig');if(big)big.innerHTML=amt.replace('OFF','<small>OFF</small>');
   var cd=document.getElementById('offPopCode');if(cd)cd.innerHTML=(window.hdmT?window.hdmT('off_code'):'クーポンコード ')+'<b>'+(window._offerCoupon||'')+'</b>';}
-function offClaim(){var code=window._offerCoupon||'';try{if(navigator.clipboard)navigator.clipboard.writeText(code);}catch(e){}offPopClose();
+function offClaim(){var code=window._offerCoupon||'';try{if(navigator.clipboard)navigator.clipboard.writeText(code);}catch(e){}try{sessionStorage.setItem('hdm_cp',code);}catch(e){} /* ★10/08 予約画面の確認ステップで自動適用（ポップの「自動適用」表記どおりに） */offPopClose();
   var el=document.getElementById('search');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
-  offToast((window.hdmT?window.hdmT('off_toast'):'クーポンコード「{code}」をコピーしました。ご予約時にクーポン欄へご入力ください。').replace('{code}',code));}
+  offToast((window.hdmT?window.hdmT('off_toast'):'クーポン「{code}」はご予約画面で自動で適用されます（コードもコピー済み）。').replace('{code}',code));}
 function offToast(msg){var d=document.createElement('div');d.textContent=msg;d.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#06214f;color:#fff;font-weight:800;font-size:13px;padding:12px 18px;border-radius:12px;z-index:99999;box-shadow:0 10px 30px rgba(0,10,40,.35);max-width:90vw;text-align:center';document.body.appendChild(d);setTimeout(function(){d.style.transition='opacity .5s';d.style.opacity='0';setTimeout(function(){if(d.parentNode)d.remove();},500);},3200);}
 function offPopClose(){var p=document.getElementById('offPop');if(p)p.classList.remove('on');}
 function offPopOpen(){try{if(sessionStorage.getItem('hdm_offpop'))return;}catch(e){}var p=document.getElementById('offPop');if(!p||!window._offerCoupon)return;offRender();p.classList.add('on');try{sessionStorage.setItem('hdm_offpop','1');}catch(e){}}
 function offArmExit(){
   document.addEventListener('mouseout',function(e){if(e.clientY<=0&&!e.relatedTarget)offPopOpen();});
   var scrolled=false;window.addEventListener('scroll',function(){if(window.scrollY>320)scrolled=true;},{passive:true});
-  setTimeout(function(){if(scrolled)offPopOpen();},20000);
+  // ★10/08 スマホ（指で操作する端末）では20秒後の全画面ポップを出さない＝札幌で74人中40人が「あとで」で閉じていた。上部のオファーバーは残す
+  var _touch=false;try{_touch=window.matchMedia('(pointer:coarse)').matches;}catch(e){}
+  if(!_touch)setTimeout(function(){if(scrolled)offPopOpen();},20000);
   window.addEventListener('pagehide',function(){});
 }
 if(typeof window.hdmOnLang==='function'){var _pl=window.hdmOnLang;window.hdmOnLang=function(){try{_pl();}catch(e){}try{offRender();}catch(e){}};}else{window.hdmOnLang=function(){try{offRender();}catch(e){}};}
