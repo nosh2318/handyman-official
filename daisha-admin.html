@@ -189,7 +189,7 @@ window.reply=async()=>{const v=$("#ta").value.trim();if(!v||!SEL)return;const st
 window.setStatus=async(s)=>{if(!SEL)return;const j=await api("staff_status",{id:SEL.id,status:s});if(j.ok){SEL.status=s;open_(SEL.id);}else alert("更新失敗");};
 // エリア別×クラス別 割引設定
 const DAISHA_CLS={
-  spk:[['A','Aクラス（アルファード）'],['A2','A2クラス'],['B','Bクラス（ノア/デリカ）'],['B2','B2クラス'],['C','Cクラス（ロッキー/CX-3）'],['S','Sクラス（ハリアー/CX-5）'],['F','Fクラス（ソリオ）'],['H','Hクラス（アクセラ）']],
+  spk:[['A','Aクラス（アルファード）'],['A2','A2クラス'],['B','Bクラス（ノア/デリカ）'],['B2','B2クラス'],['C','Cクラス（ロッキー/CX-3）'],['S','Sクラス（ハリアー/CX-5）'],['F','Fクラス（ソリオ）'],['H','Hクラス（アクセラ）'],['G','Gクラス（デミオ/ノート）']],
   nha:[['A','プレミアムミニバン'],['B','ミニバン'],['C','コンパクトSUV'],['D','ミニバン(D)'],['F','コンパクト'],['H','セダン/ハイブリッド'],['S','SUV']]
 };
 let DISC_CFG={spk:{default:0,byClass:{}},nha:{default:0,byClass:{}}},DISC_STORE="spk";
