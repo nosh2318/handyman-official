@@ -52,6 +52,9 @@ textarea{resize:vertical;min-height:64px;line-height:1.6}
 .cl.any .ph{font-size:26px}
 .csum{background:#f4f6fa;border-radius:10px;padding:9px 12px;font-size:12.5px;font-weight:700;color:#334155;line-height:1.6}
 .csum a{font-weight:800;margin-left:6px}
+.bud{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bud button{font:inherit;font-size:14px;font-weight:800;color:#16243f;background:#fff;border:2px solid var(--line);border-radius:10px;padding:11px 4px;cursor:pointer}
+.bud button.on{border-color:var(--y);background:#fffbf0;box-shadow:0 0 0 2px var(--y) inset}
 details.more{margin-top:14px;border:1px dashed var(--line);border-radius:10px;padding:10px 12px}
 details.more summary{font-size:13px;font-weight:800;color:#0a2e80;cursor:pointer}
 .after{margin-top:16px;background:#fffbf0;border:1.5px solid var(--y);border-radius:12px;padding:11px 12px;font-size:12.5px;line-height:1.7;color:#334155}
@@ -121,6 +124,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="csum" id="condSum"></div>
     <div class="q">🚗 希望の車種 <span class="req">必須</span></div>
     <div class="cls" id="clsGrid"></div>
+    <div class="q">💴 1日あたりのご予算 <span class="req">必須</span></div>
+    <div class="bud" id="budGrid">
+      <button type="button" data-v="〜3,000円">〜3,000円</button>
+      <button type="button" data-v="3,000〜5,000円">3,000〜5,000円</button>
+      <button type="button" data-v="5,000〜8,000円">5,000〜8,000円</button>
+      <button type="button" data-v="8,000円〜">8,000円〜</button>
+    </div>
     <div class="q">📍 お届け先 <span class="req">必須</span></div>
     <input type="text" id="place" placeholder="住所、または整備工場・お店の名前" autocomplete="street-address">
     <div class="q">お名前 <span class="req">必須</span></div>
@@ -179,6 +189,11 @@ let ranks=[]; // 選択順に車両v
 (function(){
   $("clsGrid").innerHTML='<div class="cl any" data-v="おまかせ" onclick="pickCls(-1)"><div class="rk">✓</div><div class="ph">🙆</div><div class="n">おまかせ</div></div>'+CLASSES.map((c,i)=>'<div class="cl" data-v="'+c.v+'" onclick="pickCls('+i+')"><div class="rk"></div><div class="ph"><img src="official-assets/cars/class_'+c.img.split("_")[1]+'.png" alt="" loading="lazy" onerror="this.style.display=\'none\'"></div><div class="n">'+c.v+'</div><div class="s">'+c.s+'</div></div>').join("");
 })();
+let budget="";
+document.getElementById("budGrid").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;budget=b.getAttribute("data-v");
+  this.querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b)});
+});
 function pickCls(i){
   ranks=[i<0?"おまかせ":CLASSES[i].v];
   renderRanks();
@@ -238,6 +253,7 @@ let sending=false;
 async function submitReq(){
   hideErr("e1");
   if(ranks.length===0)return showErr("e1","希望の車種を選んでください（迷ったら「おまかせ」）");
+  if(!budget)return showErr("e1","1日あたりのご予算を選んでください");
   if(!$("place").value.trim())return showErr("e1","お届け先を入力してください");
   if(!$("name").value.trim())return showErr("e1","お名前を入力してください");
   if(!$("tel").value.trim())return showErr("e1","電話番号を入力してください");
@@ -250,7 +266,7 @@ async function submitReq(){
     del_place:$("place").value.trim(), col_place:"", same_col:true,
     cust_type:$("cust_type").value, company:$("company").value.trim(),
     name:$("name").value.trim(), tel:$("tel").value.trim(), email:$("email").value.trim(),
-    choice1:ranks[0]||"", choice2:ranks[1]||"", choice3:ranks[2]||"", memo:$("memo").value.trim()
+    choice1:ranks[0]||"", choice2:ranks[1]||"", choice3:ranks[2]||"", budget:budget, memo:"【1日の予算】"+budget+($("memo").value.trim()?"\n"+$("memo").value.trim():"")
   };
   try{
     var r=await fetch(FN,{method:"POST",headers:{apikey:ANON,Authorization:"Bearer "+ANON,"Content-Type":"application/json"},body:JSON.stringify(body)});
