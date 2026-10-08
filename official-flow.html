@@ -431,15 +431,15 @@ function cpMsg(color,txt){var m=document.getElementById('couponMsg');if(m){m.sty
 function cpRefresh(){if(couponDiscount>0)cpMsg('#0e9f50',T('cp_ok2').replace('{amt}','¥'+couponDiscount.toLocaleString()));}
 function applyCoupon(){
   var el=document.getElementById('couponInput');var code=((el&&el.value)||'').trim().toUpperCase();
-  if(!code){couponDiscount=0;couponCode='';cpMsg('','');try{if(step==='confirm')renderConfirm();}catch(e){}return;}
+  if(!code){couponDiscount=0;couponCode='';cpMsg('','');try{if(step==='confirm')renderConfirm();calc();}catch(e){}return;}
   var sub=couponSubtotal();var email=((document.getElementById('fEmail')||{}).value||'').trim();
   cpMsg('#5a6b85','…');
   fetch(SUPABASE_URL+'/rest/v1/rpc/official_check_coupon',{method:'POST',headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({p_code:code,p_store:couponStore(),p_amount:sub,p_email:email||null})})
    .then(function(r){return r.json();}).then(function(d){
      if(d&&d.ok){couponDiscount=Math.max(0,Math.round(Number(d.discount||0)));couponCode=code;cpMsg('#0e9f50',T('cp_ok2').replace('{amt}','¥'+couponDiscount.toLocaleString()));}
      else{couponDiscount=0;couponCode='';cpMsg('#c0392b',T('cp_ng'));}
-     try{if(step==='confirm')renderConfirm();}catch(e){}
-   }).catch(function(){couponDiscount=0;couponCode='';cpMsg('#c0392b',T('cp_ng'));try{if(step==='confirm')renderConfirm();}catch(e){}});
+     try{if(step==='confirm')renderConfirm();calc();}catch(e){}
+   }).catch(function(){couponDiscount=0;couponCode='';cpMsg('#c0392b',T('cp_ng'));try{if(step==='confirm')renderConfirm();calc();}catch(e){}});
 }
 if(typeof window.hdmTerm!=='function')window.hdmTerm=function(s){return s==null?s:String(s);}; // i18n.js読込前の初期描画で落ちない安全スタブ（読込後に本体で上書き）
 var MKEY={delivery:'del',airport:'air',store:'store'};
@@ -737,6 +737,12 @@ function dayPrice(k){var c=CLS[k];if(!c)return 0;try{if(pD&&rD){var d=daysCount(
 function calc(){
   var base=state.cls&&CLS[state.cls]?CLS[state.cls].p:0;
   var tot=base+(insPrice[state.ins]||0)+optTotal();
+  var lb=document.querySelector('.cta .tot span');
+  // ★10/08 確認・お支払い画面では「実際に引き落とされる総額（日数・クーポン込み）」を表示（1日あたりだけだとカード入力直前に総額が分からない）
+  if(base&&(step==='confirm'||step==='payment')){var d=daysCount(),sub=0;try{sub=baseSum()+((insPrice[state.ins]||0)+optTotal())*d;}catch(e){sub=tot*d;}var cd=(couponDiscount>0)?Math.min(couponDiscount,sub):0;
+    var L=(window.hdmLang?hdmLang():'ja');if(lb)lb.textContent=({ja:'お支払い総額（'+d+'日間・税込）',en:'Total to pay ('+d+' days, tax incl.)',zh:'應付總額（'+d+'天・含稅）',ko:'결제 총액（'+d+'일・세금 포함）'}[L]||('お支払い総額（'+d+'日間・税込）'));
+    document.getElementById('totPr').textContent='¥'+(sub-cd).toLocaleString();return;}
+  if(lb)lb.textContent=T('cta_total');
   document.getElementById('totPr').textContent=base?('¥'+tot.toLocaleString()):'¥—';
 }
 // 選択中の車両カード（STEP3で表示）
@@ -765,6 +771,7 @@ function applyStep(){
   if(step==='options')renderChosen();
   if(step==='confirm')renderConfirm();
   if(step==='done')renderDone();
+  try{calc();}catch(e){}
   // 予約フロー ステップ別計測（どの段階で離脱するか特定）→ kd_events(kind=step)
   try{if(window.KDT&&KDT.step)KDT.step(step,cur+1);}catch(e){}
   window.scrollTo(0,0);
