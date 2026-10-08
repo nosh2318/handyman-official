@@ -52,7 +52,7 @@
   .pts{max-width:520px;margin:18px auto 0;padding:0 14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
   .pts div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 4px;text-align:center;font-size:12px;font-weight:800;line-height:1.4}
   .pts div b{display:block;font-size:20px}
-  .sec{max-width:520px;margin:0 auto;padding:26px 14px 0}
+  .sec{max-width:780px;margin:0 auto;padding:26px 14px 0}
   .sec h2{font-size:17px;font-weight:900;color:var(--navy);margin-bottom:10px}
   .flow{background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px 14px}
   .flow div{display:flex;gap:11px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13.5px;font-weight:700}
@@ -78,6 +78,15 @@
   .bar{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(0,22,63,.96);transform:translateY(110%);transition:transform .25s}
   .bar.show{transform:none}
   .bar button{display:block;width:100%;max-width:520px;margin:0 auto;font:inherit;font-size:16px;font-weight:900;color:var(--ink);background:var(--y);border:0;border-radius:12px;padding:13px;cursor:pointer}
+  .need,.feat{display:grid;gap:8px}
+  .need div,.feat div{display:flex;gap:11px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 13px}
+  .need div{background:#fffbf0;border-color:#f5d77a}
+  .need b,.feat b{flex:none;font-size:22px;line-height:1.2}
+  .feat b{width:36px;height:36px;border-radius:50%;background:var(--y);display:flex;align-items:center;justify-content:center;font-size:18px}
+  .need p,.feat p{font-size:12.5px;color:#5a6068;line-height:1.7}
+  .need strong,.feat strong{display:block;font-size:14px;color:#16243f;margin-bottom:2px}
+  .feat em{font-style:normal;font-weight:800;color:#8a6a00}
+  @media(min-width:700px){.need{grid-template-columns:1fr 1fr 1fr}.need div{flex-direction:column}}
 </style>
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "Service", "name": "代車のお届けサービス", "serviceType": "代車レンタル（事故・車検・修理）", "description": "事故・車検・修理で車がない時、代車を自宅・職場・整備工場など指定の場所へお届け・回収。通常料金から割り引いた代車価格。札幌は冬期スタッドレスタイヤ装着。", "provider": {"@type": "AutoRental", "name": "HANDYMAN RENTCAR", "url": "https://rent-handyman.com/", "telephone": "+81-50-1724-6197"}, "areaServed": [{"@type": "City", "name": "札幌市"}, {"@type": "AdministrativeArea", "name": "沖縄本島"}], "url": "https://rent-handyman.com/daisha.html"}
@@ -126,10 +135,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
-<div class="pts">
-  <div><b>🚚</b>お届け・回収</div>
-  <div><b>💴</b>代車価格</div>
-  <div><b>❄️</b>冬はスタッドレス</div>
+<div class="sec">
+  <h2>こんな時の「代車」に</h2>
+  <div class="need">
+    <div><b>🚗💥</b><p><strong>事故で愛車が入庫中</strong>修理が終わるまでの数日〜数週間、生活と仕事の足として。</p></div>
+    <div><b>🔧</b><p><strong>車検・修理で車がない</strong>整備工場に預けている間だけ、代わりの1台が欲しい。</p></div>
+    <div><b>🛡️</b><p><strong>保険の代車が合わない</strong>車種・台数・期間が希望と合わない時の、もう一つの選択肢に。</p></div>
+  </div>
+</div>
+
+<div class="sec">
+  <h2>HANDYMAN の代車が、ちがう理由</h2>
+  <div class="feat">
+    <div><b>🚚</b><p><strong>店に行かず、代車が届く</strong>事故直後で動けない、車がなくて店まで行けない時も、<em>ご指定の場所（自宅・職場・整備工場など）までお届け</em>。返却も回収にうかがいます。</p></div>
+    <div><b>💴</b><p><strong>代車価格（割引料金）でご案内</strong>通常のレンタル料金から<em>割り引いた「代車価格」</em>でご提案。お届け・回収も込みで、費用が分かりやすい。</p></div>
+    <div><b>❄️</b><p><strong>冬タイヤ（スタッドレス）でご用意</strong>札幌の冬道でも安心してお使いいただけるよう、<em>冬期は冬タイヤでご用意</em>します。</p></div>
+    <div><b>💬</b><p><strong>チャットで車両をご提案</strong>リクエストを送ると、担当が在庫を確認して<em>実際にお出しできる車両をチャットでご提案</em>。長期・法人のご相談もそのまま進められます。</p></div>
+  </div>
 </div>
 
 <div class="sec">
