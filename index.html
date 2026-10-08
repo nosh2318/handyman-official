@@ -392,7 +392,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
   <!-- 検索フォーム -->
   <div class="search" id="search"><div class="searchIn"><div class="sgrid">
-    <div class="sgrp"><h4 data-i18n="s_store">📍 店舗を選択</h4><div class="ff" style="grid-template-columns:1fr"><select id="areaSel" onchange="onAreaSel()"><option value="" data-i18n-opt="s_store_ph">店舗を選択</option><option value="naha" data-i18n-opt="s_naha">那覇空港店（沖縄）</option><option value="sapporo" data-i18n-opt="s_sapporo">札幌店（北海道）</option><option value="takamatsu" data-i18n-opt="s_takamatsu">高松空港店（香川）</option></select></div></div>
+    <div class="sgrp"><h4 data-i18n="s_store">📍 店舗を選択</h4><div class="ff" style="grid-template-columns:1fr"><select id="areaSel" onchange="onAreaSel()" autocomplete="off"><option value="" data-i18n-opt="s_store_ph">店舗を選択</option><option value="naha" data-i18n-opt="s_naha">那覇空港店（沖縄）</option><option value="sapporo" data-i18n-opt="s_sapporo">札幌店（北海道）</option><option value="takamatsu" data-i18n-opt="s_takamatsu">高松空港店（香川）</option></select></div></div>
     <div class="sgrp"><h4 data-i18n="s_pick">📅 出発 日時</h4><div class="ff"><input type="date" id="pickDate"><select class="timeSel" id="pickTime"><option value="" data-i18n-opt="s_time">時間</option></select></div></div>
     <div class="sgrp"><h4 data-i18n="s_ret">📅 返却 日時</h4><div class="ff"><input type="date" id="retDate"><select class="timeSel" id="retTime"><option value="" data-i18n-opt="s_time">時間</option></select></div></div>
     <div class="sgrp full" id="methodGrp" style="display:none"><h4 data-i18n="s_method">🚗 受取方法を選択</h4><div class="chips" id="methodChips"><span class="chip" data-m="airport" data-i18n="m_airport">無料送迎（空港/駅）</span><span class="chip on" data-m="delivery" data-i18n="m_delivery">デリバリー</span><span class="chip" data-m="store" data-i18n="m_store">来店</span></div></div>
@@ -668,6 +668,8 @@ ctTab('naha'); // 既定=那覇を表示
 // 言語切替時にJS生成部（CAR TYPE / NEWS）を再描画
 window.hdmOnLang=function(){ try{setCar(_ctCur);}catch(e){} try{renderNews();}catch(e){} };
 // 検索フォーム：店舗連動の車クラスchip（実データ）
+// ★10/08 店舗は毎回「未選択」から始める（ブラウザの「戻る」で前回の店舗が復元されると、店舗未選択の計測と既定値が狂うため）
+window.addEventListener('pageshow',function(e){try{var sel=document.getElementById('areaSel');if(sel&&sel.value){sel.value='';onAreaSel();}}catch(x){}});
 function heroToSearch(){var s=document.getElementById('search');if(s)s.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){var a=document.getElementById('areaSel');if(a)a.focus();},480);}
 function onAreaSel(){
   var raw=document.getElementById('areaSel').value;var a=raw||'naha';var show=!!raw;if(window.KDT&&raw){KDT.setArea(a);}
