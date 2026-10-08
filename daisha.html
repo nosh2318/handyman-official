@@ -175,16 +175,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <div class="sec">
-  <h2>車種と代車価格の目安（1週間）</h2>
+  <h2>車種と代車価格の目安（1日あたり）</h2>
   <div class="fleet">
-    <div data-c="F"><img src="official-assets/cars/class_F.webp" alt="" loading="lazy">コンパクト<small>ソリオ 等</small><span class="wp"><i>札幌</i><b class="ps">30,800</b>円</span><span class="wp"><i>那覇</i><b class="pn">15,100</b>円</span></div>
-    <div data-c="H"><img src="official-assets/cars/class_H.webp" alt="" loading="lazy">セダン/HV<small>プリウス 等</small><span class="wp"><i>札幌</i><b class="ps">36,400</b>円</span><span class="wp"><i>那覇</i><b class="pn">16,800</b>円</span></div>
-    <div data-c="C"><img src="official-assets/cars/class_C.webp" alt="" loading="lazy">小型SUV<small>ロッキー 等</small><span class="wp"><i>札幌</i><b class="ps">36,400</b>円</span><span class="wp"><i>那覇</i><b class="pn">25,200</b>円</span></div>
-    <div data-c="S"><img src="official-assets/cars/class_S.webp" alt="" loading="lazy">SUV<small>ハリアー 等</small><span class="wp"><i>札幌</i><b class="ps">42,000</b>円</span><span class="wp"><i>那覇</i><b class="pn">28,000</b>円</span></div>
-    <div data-c="B"><img src="official-assets/cars/class_B.webp" alt="" loading="lazy">ミニバン<small>ノア 等</small><span class="wp"><i>札幌</i><b class="ps">56,000</b>円</span><span class="wp"><i>那覇</i><b class="pn">30,800</b>円</span></div>
-    <div data-c="A"><img src="official-assets/cars/class_A.webp" alt="" loading="lazy">高級ミニバン<small>アルファード 等</small><span class="wp"><i>札幌</i><b class="ps">70,000</b>円</span><span class="wp"><i>那覇</i><b class="pn">39,200</b>円</span></div>
+    <div data-c="F"><img src="official-assets/cars/class_F.webp" alt="" loading="lazy">コンパクト<small>ソリオ 等</small><span class="wp"><i>札幌</i><b class="ps">4,400</b>円/日</span><span class="wp"><i>那覇</i><b class="pn">2,160</b>円/日</span></div>
+    <div data-c="H"><img src="official-assets/cars/class_H.webp" alt="" loading="lazy">セダン/HV<small>プリウス 等</small><span class="wp"><i>札幌</i><b class="ps">5,200</b>円/日</span><span class="wp"><i>那覇</i><b class="pn">2,400</b>円/日</span></div>
+    <div data-c="C"><img src="official-assets/cars/class_C.webp" alt="" loading="lazy">小型SUV<small>ロッキー 等</small><span class="wp"><i>札幌</i><b class="ps">5,200</b>円/日</span><span class="wp"><i>那覇</i><b class="pn">3,600</b>円/日</span></div>
+    <div data-c="S"><img src="official-assets/cars/class_S.webp" alt="" loading="lazy">SUV<small>ハリアー 等</small><span class="wp"><i>札幌</i><b class="ps">6,000</b>円/日</span><span class="wp"><i>那覇</i><b class="pn">4,000</b>円/日</span></div>
+    <div data-c="B"><img src="official-assets/cars/class_B.webp" alt="" loading="lazy">ミニバン<small>ノア 等</small><span class="wp"><i>札幌</i><b class="ps">8,000</b>円/日</span><span class="wp"><i>那覇</i><b class="pn">4,400</b>円/日</span></div>
+    <div data-c="A"><img src="official-assets/cars/class_A.webp" alt="" loading="lazy">高級ミニバン<small>アルファード 等</small><span class="wp"><i>札幌</i><b class="ps">10,000</b>円/日</span><span class="wp"><i>那覇</i><b class="pn">5,600</b>円/日</span></div>
   </div>
-  <p class="pnote">通常料金（基本料金）から代車割引<span id="discPct">20</span>%を引いた7日間の目安です。お届け・回収込み。日程・在庫により変わるため、正式な金額はチャットでご案内します。</p>
+  <p class="pnote">通常料金（基本料金）から代車割引<span id="discPct">20</span>%を引いた1日あたりの目安です。お届け・回収込み。日程・在庫により変わるため、正式な金額はチャットでご案内します。</p>
 </div>
 
 <div class="sec">
@@ -250,7 +250,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   Promise.all([pP,pD]).then(function(x){
     var m=x[0],dc=x[1];if(!m)return;
     function disc(st,c){var o=dc&&dc[st];if(!o)return 20;var v=o.byClass&&o.byClass[c];return +(v!=null?v:(o.default!=null?o.default:20));}
-    function wk(st,c){var p=m[st]&&m[st].price&&m[st].price[c];var b=p&&+(p.base||p.a||0);if(!b)return null;return Math.round(b*7*(100-disc(st,c))/100/100)*100;}
+    function wk(st,c){var p=m[st]&&m[st].price&&m[st].price[c];var b=p&&+(p.base||p.a||0);if(!b)return null;return Math.round(b*(100-disc(st,c))/100/10)*10;}
     document.querySelectorAll(".fleet [data-c]").forEach(function(el){var c=el.getAttribute("data-c");
       var a=wk("spk",c),b=wk("nha",c);if(a)el.querySelector(".ps").textContent=a.toLocaleString();if(b)el.querySelector(".pn").textContent=b.toLocaleString();});
     var d0=disc("spk","F");if(d0)document.getElementById("discPct").textContent=d0;
