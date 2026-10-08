@@ -332,6 +332,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a href="daisha.html" style="color:#f2b600;font-weight:800">🔧 代車のお届けサービス</a>
     <a href="official-insurance.html" data-i18n="mn_ins">🛡 保険プラン一覧</a>
     <a href="official-contact.html" data-i18n="mn_contact">✉️ お問い合わせ</a>
+    <a href="official-data-protection.html">🔐 個人情報・セキュリティ</a>
     <div class="navsec">店舗ごとの情報</div>
     <details class="navgrp"><summary>🌺 那覇空港店（沖縄）</summary>
       <a href="naha-rentacar.html">那覇空港レンタカー（無料送迎・お届け）</a>
@@ -534,10 +535,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- NEWS 運営からのお知らせ -->
 <section class="news" id="news"><div class="wrap"><div class="shead"><div class="en cap">NEWS</div><div class="jp" data-i18n="news_jp">運営からのお知らせ</div></div>
+  <a href="official-data-protection.html" style="display:flex;align-items:center;gap:11px;background:linear-gradient(135deg,#0a1f44,#0a2e80);color:#fff;text-decoration:none;border-radius:13px;padding:14px 16px;margin:2px 0 16px;box-shadow:0 3px 12px rgba(10,30,80,.16)">
+    <span style="font-size:24px;flex:none">🔐</span>
+    <span style="flex:1"><span style="font-size:14.5px;font-weight:900;display:block">個人情報・セキュリティに関する当社の取り組み</span><span style="font-size:11.5px;color:#cfe;font-weight:600">運転免許証・データ保管・クレジットカード情報の取り扱いについて</span></span>
+    <span style="background:#f2b600;color:#10203f;font-weight:900;font-size:12px;border-radius:999px;padding:7px 13px;white-space:nowrap;flex:none">詳しく見る ▶</span>
+  </a>
   <div class="nlist" id="nlist"></div>
 </div></section>
 
-<footer><a href="#top" style="display:inline-flex;align-items:center"><img src="official-clone/img/common/img_logo_v2.png" alt="HANDYMAN RENTCAR" style="height:30px;width:auto;display:block"></a><div class="lk"><a href="#news" data-i18n="f_news">お知らせ</a>・<a href="company/" data-i18n="f_company">会社概要</a>・<a href="official-access.html" data-i18n="f_access">アクセス</a>・<a href="official-clause.html" data-i18n="f_terms">貸渡約款</a>・<a href="official-privacy.html" data-i18n="f_privacy">プライバシーポリシー</a>・<a href="official-transaction.html" data-i18n="f_law">特定商取引法</a></div><div style="color:#5b6c8a;font-size:11px;margin-top:10px">© HANDYMAN RENTCAR</div></footer>
+<footer><a href="#top" style="display:inline-flex;align-items:center"><img src="official-clone/img/common/img_logo_v2.png" alt="HANDYMAN RENTCAR" style="height:30px;width:auto;display:block"></a><div class="lk"><a href="#news" data-i18n="f_news">お知らせ</a>・<a href="company/" data-i18n="f_company">会社概要</a>・<a href="official-access.html" data-i18n="f_access">アクセス</a>・<a href="official-clause.html" data-i18n="f_terms">貸渡約款</a>・<a href="official-privacy.html" data-i18n="f_privacy">プライバシーポリシー</a>・<a href="official-data-protection.html">個人情報・セキュリティ</a>・<a href="official-transaction.html" data-i18n="f_law">特定商取引法</a></div><div style="color:#5b6c8a;font-size:11px;margin-top:10px">© HANDYMAN RENTCAR</div></footer>
 <script>
 document.querySelectorAll('.chips').forEach(function(g){g.addEventListener('click',function(e){var c=e.target.closest('.chip');if(!c)return;g.classList.remove('pulse');g.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on')});c.classList.add('on');});});
 // 未入力フィールドの枠を点滅（入力されたら止まる）
@@ -737,6 +743,9 @@ if(typeof window.hdmOnLang==='function'){var _pl=window.hdmOnLang;window.hdmOnLa
 })();
 // 運営からのお知らせ（将来：Supabase news テーブルに差し替え可）
 var NEWS=[
+ {d:'2026.10.08',k:'',
+   t:{ja:'重要',en:'Important',zh:'重要',ko:'중요'},
+   x:{ja:'個人情報・運転免許証・クレジットカード情報の取り扱いについて、当社の方針をご案内しています。<a href="official-data-protection.html" style="font-weight:800;color:#0a2e80">詳しくはこちら ▶</a>',en:'Our policy on handling personal data, driver\'s license and credit card information. <a href="official-data-protection.html" style="font-weight:800;color:#0a2e80">Details ▶</a>',zh:'關於個人資料・駕照・信用卡資訊的處理方針。<a href="official-data-protection.html" style="font-weight:800;color:#0a2e80">詳情 ▶</a>',ko:'개인정보·운전면허증·신용카드 정보 취급 방침 안내. <a href="official-data-protection.html" style="font-weight:800;color:#0a2e80">자세히 ▶</a>'}},
  {d:'2026.08.10',k:'',
    t:{ja:'開設',en:'New',zh:'開幕',ko:'오픈'},
    x:{ja:'高松空港店を開設しました。香川・四国の旅に、高松空港での無料送迎・ご来店でご利用いただけます（デリバリー〈お届け〉はございません）。',en:'Takamatsu Airport branch is now open. Free airport shuttle or in-store pickup for your Kagawa & Shikoku trip (no delivery).',zh:'高松機場店已開幕。前往香川・四國旅遊，可於高松機場免費接送或到店租借（不提供外送）。',ko:'다카마쓰공항점을 오픈했습니다. 가가와·시코쿠 여행에 다카마쓰공항 무료 셔틀·방문으로 이용하실 수 있습니다(배달 없음).'}},
