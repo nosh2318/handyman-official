@@ -44,7 +44,7 @@
 - 待ち合わせ: 高松空港1階・国内線到着口を出た「レンタカー会社受付」付近。スタッフがHANDYMANのプラカードでお迎え
 - 送迎の運行時間: 9:00〜18:50。返却時は搭乗便に合わせて店舗から空港へ無料送迎
 - デリバリー（ホテル等へのお届け）は高松では行っていない
-- 料金目安（24時間）: 軽自動車¥3,400〜（日によって変動。正確な料金は予約画面）
+- 料金: 予約画面で日付・車種ごとに表示
 - 手続き: ネット予約後、公式LINEで到着便・時間・免許証確認まで完結
 - 所在地: 香川県高松市香川町川東上1373-4
 - 営業時間: 9:00-19:00（年中無休）
@@ -64,6 +64,7 @@
 - 札幌（デリバリーレンタカー）: https://rent-handyman.com/sapporo-delivery.html
 - 冬の札幌レンタカーガイド（4WD・スタッドレス）: https://rent-handyman.com/sapporo-winter-rentacar.html
 - 札幌発ドライブコース: https://rent-handyman.com/sapporo-drive-course.html
+- 札幌のスキー場・さっぽろ雪まつりとレンタカー: https://rent-handyman.com/sapporo-ski-snowfestival.html
 - 丘珠空港でレンタカー（空港までお届け）: https://rent-handyman.com/sapporo-okadama-airport.html
 - 札幌の代車お届け（事故・修理・車検）: https://rent-handyman.com/sapporo-daisha.html
 - 那覇空港レンタカー（無料送迎・ホテルまでお届け）: https://rent-handyman.com/naha-rentacar.html
