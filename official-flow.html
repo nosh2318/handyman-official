@@ -700,7 +700,7 @@ function loadPriceMaster(){
   return fetch(url+'/rest/v1/'+tbl+'?key=eq.hdm_official_price&select=value',{headers:{apikey:key,Authorization:'Bearer '+key}})
    .then(function(r){return r.ok?r.json():null;}).then(function(d){
      if(!d||!d[0])return; var m; try{m=JSON.parse(d[0].value)[st];}catch(e){return;} if(!m||!m.price)return;
-     Object.keys(CLS).forEach(function(c){if(m.price[c]){var pc=m.price[c];var a=+pc.a,b=(pc.b!=null?+pc.b:a),bs=(pc.base!=null?+pc.base:a);if(a>0||bs>0){CLS[c].p=(bs||a);CLS[c]._a=a;CLS[c]._b=b;CLS[c]._base=bs;}}});
+     Object.keys(CLS).forEach(function(c){if(m.price[c]){var pc=m.price[c];var a=(pc.a!=null&&pc.a!==''?+pc.a:null),b=(pc.b!=null&&pc.b!==''?+pc.b:null),bs=(pc.base!=null&&pc.base!==''?+pc.base:null);var disp=(bs!=null?bs:(a!=null?a:b));if((a||0)>0||(bs||0)>0||(b||0)>0){CLS[c].p=disp;CLS[c]._a=a;CLS[c]._b=b;CLS[c]._base=bs;}}});
      if(m.insurance){if(m.insurance.cdw!=null)insPrice.cdw=+m.insurance.cdw;if(m.insurance.noc!=null)insPrice.noc=+m.insurance.noc;}
      if(m.seat){if(m.seat.child!=null)CHILD_P=+m.seat.child;if(m.seat.junior!=null)JR_P=+m.seat.junior;}
      window._HIGH={};(m.high_dates||[]).forEach(function(x){window._HIGH[x]=1;});
@@ -715,12 +715,16 @@ function loadPriceMaster(){
 // 基本料金 日別合算（暦日・月別price優先→基準／高い日→b・他→a）＝RPCと同一ロジック
 function baseSum(cl){
   cl=cl||state.cls;var c=CLS[cl];if(!c)return 0;
-  var aP=(c._a!=null?c._a:c.p),bP=(c._b!=null?c._b:aP),baseP=(c._base!=null?c._base:aP),M=window._MONTHS||{},H=window._HIGH||{},L=window._LOW||{};
-  if(!pD||!rD)return baseP;
+  var pa=(c._a!=null?c._a:null),pb=(c._b!=null?c._b:null),pbase=(c._base!=null?c._base:null),guard=(pbase!=null?pbase:(pa!=null?pa:(pb!=null?pb:(c.p||0)))),M=window._MONTHS||{},H=window._HIGH||{},L=window._LOW||{};
+  if(!pD||!rD)return guard;
   var s=new Date(pD),e=new Date(rD),t=0,g=0;
   while(s<=e&&g<400){var ym=s.getFullYear()+'-'+('0'+(s.getMonth()+1)).slice(-2),k=ym+'-'+('0'+s.getDate()).slice(-2);
-    var mc=(M[ym]||{})[cl]||{},a2=(mc.a!=null?+mc.a:aP),b2=(mc.b!=null?+mc.b:(mc.a!=null?+mc.a:bP)),base2=(mc.base!=null?+mc.base:baseP);
-    t+=H[k]?b2:(L[k]?a2:base2);   // 高い日→b／安い日→a／未登録→月別base→基準base
+    var mc=(M[ym]||{})[cl]||{};
+    var mb=(mc.b!=null&&mc.b!==''?+mc.b:null),ma=(mc.a!=null&&mc.a!==''?+mc.a:null),mbase=(mc.base!=null&&mc.base!==''?+mc.base:null);
+    var hi=(mb!=null?mb:(pb!=null?pb:(mbase!=null?mbase:(pbase!=null?pbase:guard))));  // 高い日: months.b→price.b→months.base→price.base
+    var lo=(ma!=null?ma:(pa!=null?pa:(mbase!=null?mbase:(pbase!=null?pbase:guard))));  // 安い日: months.a→price.a→months.base→price.base
+    var nm=(mbase!=null?mbase:(pbase!=null?pbase:guard));                               // 他: months.base→price.base
+    t+=H[k]?hi:(L[k]?lo:nm);
     s.setDate(s.getDate()+1);g++;}
   return t;
 }
