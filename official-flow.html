@@ -431,15 +431,15 @@ function cpMsg(color,txt){var m=document.getElementById('couponMsg');if(m){m.sty
 function cpRefresh(){if(couponDiscount>0)cpMsg('#0e9f50',T('cp_ok2').replace('{amt}','¥'+couponDiscount.toLocaleString()));}
 function applyCoupon(){
   var el=document.getElementById('couponInput');var code=((el&&el.value)||'').trim().toUpperCase();
-  if(!code){couponDiscount=0;couponCode='';cpMsg('','');try{if(step==='confirm')renderConfirm();}catch(e){}return;}
+  if(!code){couponDiscount=0;couponCode='';cpMsg('','');try{if(step==='confirm')renderConfirm();calc();}catch(e){}return;}
   var sub=couponSubtotal();var email=((document.getElementById('fEmail')||{}).value||'').trim();
   cpMsg('#5a6b85','…');
   fetch(SUPABASE_URL+'/rest/v1/rpc/official_check_coupon',{method:'POST',headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({p_code:code,p_store:couponStore(),p_amount:sub,p_email:email||null})})
    .then(function(r){return r.json();}).then(function(d){
      if(d&&d.ok){couponDiscount=Math.max(0,Math.round(Number(d.discount||0)));couponCode=code;cpMsg('#0e9f50',T('cp_ok2').replace('{amt}','¥'+couponDiscount.toLocaleString()));}
      else{couponDiscount=0;couponCode='';cpMsg('#c0392b',T('cp_ng'));}
-     try{if(step==='confirm')renderConfirm();}catch(e){}
-   }).catch(function(){couponDiscount=0;couponCode='';cpMsg('#c0392b',T('cp_ng'));try{if(step==='confirm')renderConfirm();}catch(e){}});
+     try{if(step==='confirm')renderConfirm();calc();}catch(e){}
+   }).catch(function(){couponDiscount=0;couponCode='';cpMsg('#c0392b',T('cp_ng'));try{if(step==='confirm')renderConfirm();calc();}catch(e){}});
 }
 if(typeof window.hdmTerm!=='function')window.hdmTerm=function(s){return s==null?s:String(s);}; // i18n.js読込前の初期描画で落ちない安全スタブ（読込後に本体で上書き）
 var MKEY={delivery:'del',airport:'air',store:'store'};
@@ -737,6 +737,12 @@ function dayPrice(k){var c=CLS[k];if(!c)return 0;try{if(pD&&rD){var d=daysCount(
 function calc(){
   var base=state.cls&&CLS[state.cls]?CLS[state.cls].p:0;
   var tot=base+(insPrice[state.ins]||0)+optTotal();
+  var lb=document.querySelector('.cta .tot span');
+  // ★10/08 確認・お支払い画面では「実際に引き落とされる総額（日数・クーポン込み）」を表示（1日あたりだけだとカード入力直前に総額が分からない）
+  if(base&&(step==='confirm'||step==='payment')){var d=daysCount(),sub=0;try{sub=baseSum()+((insPrice[state.ins]||0)+optTotal())*d;}catch(e){sub=tot*d;}var cd=(couponDiscount>0)?Math.min(couponDiscount,sub):0;
+    var L=(window.hdmLang?hdmLang():'ja');if(lb)lb.textContent=({ja:'お支払い総額（'+d+'日間・税込）',en:'Total to pay ('+d+' days, tax incl.)',zh:'應付總額（'+d+'天・含稅）',ko:'결제 총액（'+d+'일・세금 포함）'}[L]||('お支払い総額（'+d+'日間・税込）'));
+    document.getElementById('totPr').textContent='¥'+(sub-cd).toLocaleString();return;}
+  if(lb)lb.textContent=T('cta_total');
   document.getElementById('totPr').textContent=base?('¥'+tot.toLocaleString()):'¥—';
 }
 // 選択中の車両カード（STEP3で表示）
@@ -765,6 +771,7 @@ function applyStep(){
   if(step==='options')renderChosen();
   if(step==='confirm')renderConfirm();
   if(step==='done')renderDone();
+  try{calc();}catch(e){}
   // 予約フロー ステップ別計測（どの段階で離脱するか特定）→ kd_events(kind=step)
   try{if(window.KDT&&KDT.step)KDT.step(step,cur+1);}catch(e){}
   window.scrollTo(0,0);
@@ -792,7 +799,7 @@ var BT_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZi
 var sqPayments=null,sqCard=null,_sqTries=0,_sqVisTries=0,_sqInitting=false,_sqQueued=false;
 async function initSquareCard(){
   var container=document.getElementById('card-container');if(!container)return;
-  if(!window.Square){if(_sqTries++<25){setTimeout(initSquareCard,300);}else{container.innerHTML='<div style="font-size:12px;color:#c0392b;padding:8px">'+T('pc_sdk_err')+'</div>';}return;}
+  if(!window.Square){if(_sqTries++<25){setTimeout(initSquareCard,300);}else{payErr('sdk_load','');container.innerHTML='<div style="font-size:12px;color:#c0392b;padding:8px">'+T('pc_sdk_err')+'</div>';}return;}
   // ★決済パネルが実際に表示される(高さ>0)まで待ってからattach。高さ0の瞬間にattachするとSquareのiframeが潰れてカード入力欄が出ない(モバイル/表示直後のレース対策)。最大約6秒待って無理なら通常処理。
   if((container.offsetParent===null||container.offsetHeight===0)&&_sqVisTries++<40){setTimeout(initSquareCard,150);return;}
   _sqVisTries=0;
@@ -805,22 +812,24 @@ async function initSquareCard(){
     var card=await sqPayments.card();
     var c2=document.getElementById('card-container');
     if(c2){c2.innerHTML='';await card.attach('#card-container');sqCard=card;}else{try{await card.destroy();}catch(e){}}
-  }catch(e){console.error('square init',e);}
+  }catch(e){console.error('square init',e);try{payErr('square_init',e&&e.message);}catch(e2){}}
   _sqInitting=false;
   if(_sqQueued){_sqQueued=false;setTimeout(initSquareCard,0);}
 }
+// ★10/08 支払いで止まった理由を記録（解析ダッシュボードで kind='pay_err' を見る。個人情報は送らない）
+function payErr(code,msg){try{if(window.KDT&&KDT.event)KDT.event('pay_err',code+':'+String(msg||'').slice(0,90));}catch(e){}}
 async function payWithCard(){
   var btn=document.getElementById('ctaBtn');var errEl=document.getElementById('cardError');
   var reEnable=function(){if(btn){btn.disabled=false;btn.textContent=T('cta_done');}};
   if(errEl){errEl.style.display='none';errEl.textContent='';}
-  if(!sqCard){if(errEl){errEl.style.display='block';errEl.textContent=T('pc_prep');}initSquareCard();return;}
+  if(!sqCard){payErr('card_not_ready','');if(errEl){errEl.style.display='block';errEl.textContent=T('pc_prep');}initSquareCard();return;}
   if(btn){btn.disabled=true;btn.textContent=T('pc_proc');}
   var token;
   try{
     var result=await sqCard.tokenize();
-    if(result.status!=='OK'){var m=(result.errors&&result.errors[0]&&result.errors[0].message)||T('pc_card_check');if(errEl){errEl.style.display='block';errEl.textContent=m;}reEnable();return;}
+    if(result.status!=='OK'){var m=(result.errors&&result.errors[0]&&result.errors[0].message)||T('pc_card_check');payErr('tokenize',m);if(errEl){errEl.style.display='block';errEl.textContent=m;}reEnable();return;}
     token=result.token;
-  }catch(e){if(errEl){errEl.style.display='block';errEl.textContent=T('pc_card_fail');}reEnable();return;}
+  }catch(e){payErr('tokenize_ex',e&&e.message);if(errEl){errEl.style.display='block';errEl.textContent=T('pc_card_fail');}reEnable();return;}
   try{
     var c=CLS[state.cls]||{v:''};
     var payload={token:token,store:(area==='sapporo'?'spk':'nha'),
@@ -838,12 +847,12 @@ async function payWithCard(){
       del_place:(loc&&loc.del&&loc.del.label)||'',col_place:(loc&&loc.col&&loc.col.label)||(loc&&loc.del&&loc.del.label)||'',
       del_lat:(loc&&loc.del)?loc.del.lat:null,del_lng:(loc&&loc.del)?loc.del.lng:null,
       col_lat:(loc&&loc.col)?loc.col.lat:((loc&&loc.del)?loc.del.lat:null),col_lng:(loc&&loc.col)?loc.col.lng:((loc&&loc.del)?loc.del.lng:null)};
-    if(area==='naha'&&method==='delivery'){var _ng=function(o){if(!o)return false;if(nahaNoGoText((o.label||'')+' '+(o.addr||'')))return true;if(o.lat!=null&&inNahaNoGo(o.lat,o.lng))return true;return false;};if(_ng(loc.del)||(!colSame&&_ng(loc.col))){alert(T('al_nogo'));reEnable();return;}}
+    if(area==='naha'&&method==='delivery'){var _ng=function(o){if(!o)return false;if(nahaNoGoText((o.label||'')+' '+(o.addr||'')))return true;if(o.lat!=null&&inNahaNoGo(o.lat,o.lng))return true;return false;};if(_ng(loc.del)||(!colSame&&_ng(loc.col))){payErr('nogo','');alert(T('al_nogo'));reEnable();return;}}
     var _payUrl=(area==='takamatsu')?(BT_PAY_URL+'/functions/v1/official-pay-tkm'):(SUPABASE_URL+'/functions/v1/official-pay');
     var _payKey=(area==='takamatsu')?BT_ANON:SUPABASE_KEY;
     var res=await fetch(_payUrl,{method:'POST',headers:{'apikey':_payKey,'Authorization':'Bearer '+_payKey,'Content-Type':'application/json'},body:JSON.stringify(payload)});
     var data=await res.json().catch(function(){return {};});
-    if(!res.ok||!data.ok){if(errEl){errEl.style.display='block';errEl.textContent=(data&&data.error)||T('pc_pay_fail');}reEnable();return;}
+    if(!res.ok||!data.ok){payErr('server_'+res.status,data&&data.error);if(errEl){errEl.style.display='block';errEl.textContent=(data&&data.error)||T('pc_pay_fail');}reEnable();return;}
     state._resId=data.reservationId;
     // ★GTM/GA4 コンバージョン計測（予約完了）＋拡張コンバージョン用のユーザーデータ
     try{
@@ -857,7 +866,7 @@ async function payWithCard(){
           items:[{item_id:state.cls,item_name:(c.v||state.cls),item_category:SHOP,quantity:1,price:_tot}]}});
     }catch(e){}
     step='done';applyStep();
-  }catch(e){if(errEl){errEl.style.display='block';errEl.textContent=T('pc_net_fail');}reEnable();}
+  }catch(e){payErr('network',e&&e.message);if(errEl){errEl.style.display='block';errEl.textContent=T('pc_net_fail');}reEnable();}
 }
 function goBack(){var i=ORD.indexOf(step);if(i>0){step=ORD[i-1];applyStep();}}
 // お客様情報 検証（KEYDROP仕様）
