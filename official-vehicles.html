@@ -121,7 +121,7 @@ function setArea(a){
  document.getElementById('grid').innerHTML=st.order.map(function(k){var c=st.cls[k];return (
    '<div class="car"><div class="pic">'+carImg(k,a)+'<span class="clschip">'+window.hdmTerm(c.label)+'</span></div>'+
    '<div class="bd"><div class="nm">'+window.hdmTerm(c.vehicles)+'</div><div class="spec">👥 '+_seatsTxt(c.seats)+'</div>'+
-   '<div class="pr"><b>¥'+c.price.toLocaleString()+'</b><small>'+_vd('price_suffix')+'</small></div>'+
+   '<div class="pr"><b>¥'+((typeof masterPrice==='function'&&masterPrice(a,k)!=null?masterPrice(a,k):c.price)).toLocaleString()+'</b><small>'+_vd('price_suffix')+'</small></div>'+
    '<a class="bk" href="index.html#search">'+_vd('book_btn')+'</a></div></div>');
  }).join('');
 }
@@ -129,6 +129,12 @@ function _renderEquip(){
  document.getElementById('equipTags').innerHTML=EQUIP.map(function(e){return '<span class="tag">'+window.hdmTerm(e)+'</span>';}).join('');
  document.getElementById('equipNote').textContent=_vd('eqnote');
 }
+// ★2026-10-08 登録価格(hdm_official_price)をmasterから読み、一覧表示と請求を一致させる(price.base基準・オーナー確定A)。未取得/0はSTORE直書きにフォールバック(¥0/計算不能を出さない)。那覇も検索公開済(3d15782)のためズレを残さない
+window.__PRICEMASTER=window.__PRICEMASTER||{};
+function _areaToStore(a){return a==='sapporo'?'spk':(a==='naha'?'nha':'');}
+function masterPrice(a,k){var pm=window.__PRICEMASTER[_areaToStore(a)];if(pm&&pm[k]){if(pm[k].base)return pm[k].base;if(pm[k].a)return pm[k].a;}return null;} // 0/未設定はSTORE初期値へフォールバック(¥0表示防止)
+(function(){var MAIN_URL='https://ckrxttbnawkclshczsia.supabase.co',MAIN_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8';
+ fetch(MAIN_URL+'/rest/v1/app_settings?key=eq.hdm_official_price&select=value',{headers:{apikey:MAIN_ANON,Authorization:'Bearer '+MAIN_ANON}}).then(function(r){return r.ok?r.json():null;}).then(function(d){if(!d||!d[0])return;var o;try{o=JSON.parse(d[0].value);}catch(e){return;}['spk','nha'].forEach(function(st){if(o[st]&&o[st].price)window.__PRICEMASTER[st]=o[st].price;});try{setArea(_curArea);}catch(e){}}).catch(function(){});})();
 setArea('naha');
 _renderEquip();
 </script>

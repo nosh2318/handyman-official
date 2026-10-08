@@ -352,8 +352,8 @@ function loadTakamatsuLive(T){
 }
 window.__PRICEMASTER=window.__PRICEMASTER||{};
 function _areaToStore(a){return a==='sapporo'?'spk':(a==='naha'?'nha':(a==='takamatsu'?'tkm':''));}
-// カーラインナップ表示価格＝マスターの「安い日金額」→無ければ基本料金→無ければSTORE初期値
-function masterPrice(a,k){var pm=window.__PRICEMASTER[_areaToStore(a)];if(pm&&pm[k]){if(pm[k].a)return pm[k].a;if(pm[k].base)return pm[k].base;}return null;} // 0/未設定はSTORE初期値へフォールバック(¥0表示防止)
+// カーラインナップ表示価格＝マスターの基本料金(price.base)→無ければ安い日金額→無ければSTORE初期値。※2026-10-08 予約フロー既定(CLS.p=base||a)・請求と一致させるためbase優先に(オーナー確定A)
+function masterPrice(a,k){var pm=window.__PRICEMASTER[_areaToStore(a)];if(pm&&pm[k]){if(pm[k].base)return pm[k].base;if(pm[k].a)return pm[k].a;}return null;} // 0/未設定はSTORE初期値へフォールバック(¥0表示防止)
 function setCar(a){
   window.__CARAREA=a;
   // 店舗未選択(空)なら案内のみ表示。選択時はその店舗の実車種を表示
