@@ -423,7 +423,7 @@ var method=P.get('method')||'delivery';
 function T(k){return (window.hdmT?window.hdmT(k):k);}
 /* ===== 🎟 クーポン（KEYDROP方式・official_check_coupon で検証、割引後の合計を表示。確定はofficial-pay EFがredeem） ===== */
 var couponDiscount=0,couponCode='';
-var _pendCp=(P.get('cp')||'').trim();  // ?cp=（広告リンク等の明示指定）のみ自動入力。通常はお客様がクーポン欄に入力して適用
+var _pendCp=(P.get('cp')||'').trim();if(!_pendCp){try{_pendCp=(sessionStorage.getItem('hdm_cp')||'').trim();}catch(e){}} // ★10/08 TOPのオファーで「クーポンを使って予約する」を押した人は自動適用  // ?cp=（広告リンク等の明示指定）のみ自動入力。通常はお客様がクーポン欄に入力して適用
 var _cpAuto=false;
 function couponStore(){return area==='sapporo'?'spk':area==='takamatsu'?'tkm':'nha';}
 function couponSubtotal(){try{var d=daysCount();return baseSum()+((insPrice[state.ins]||0)+optTotal())*d;}catch(e){return 0;}}
@@ -466,6 +466,7 @@ if(area==='sapporo')method='delivery'; // 札幌=デリバリー専門(KEYDROP)
 var METHOD={delivery:{t:'🚗 デリバリー（お届け）',label:'お届け先'},airport:{t:'✈️ 無料送迎（空港/駅）',label:'送迎場所'},store:{t:'🏠 来店',label:'来店店舗'}};
 var insPrice={basic:0,cdw:1100,noc:1650};
 var step=P.get('step')||'select';
+var _preCls=(selCls&&CLS[selCls])?selCls:''; // ★10/08 TOPの「この車で予約」から来た車。空車ならそのまま決定して受け取り方法へ進める
 var state={cls:selCls&&CLS[selCls]?selCls:'',ins:P.get('ins')||'',avail:{},availLoaded:false};
 // ===== 在庫（選択日程で空車があるクラスのみ表示・KEYDROP公開ビュー準拠／anon）=====
 var SB_URL='https://ckrxttbnawkclshczsia.supabase.co';
@@ -475,14 +476,14 @@ function sbGet(t,q){return fetch(SB_URL+'/rest/v1/'+sbView(t)+'?'+(q||'')+'&sele
 function ymList(a,b){var out=[];if(!a||!b)return out;var s=new Date(a.slice(0,7)+'-01'),e=new Date(b.slice(0,7)+'-01');var g=0;while(s<=e&&g<24){out.push(s.getFullYear()+'-'+('0'+(s.getMonth()+1)).slice(-2));s.setMonth(s.getMonth()+1);g++;}return out;}
 function fetchAvail(){
   if(area==='takamatsu'){ // 高松=BUDDICA別DB。配車表(予約+メンテ)を見てHDM在庫のみ空車表示
-    if(!pD||!rD){state.availLoaded=false;renderV();return;}
+    if(!pD||!rD){state.availLoaded=false;renderV();applyPreCls();return;}
     fetch('https://ggqugvyskyiblxiycpci.supabase.co/rest/v1/rpc/public_bt_avail',{method:'POST',headers:{apikey:BT_ANON,Authorization:'Bearer '+BT_ANON,'Content-Type':'application/json'},body:JSON.stringify({p_lend:pD,p_ret:rD})})
      .then(function(r){return r.ok?r.json():null;}).then(function(cnt){
-       if(!cnt||typeof cnt!=='object'){state.availLoaded=false;renderV();return;} // 取得失敗=全表示(顧客を止めない)
+       if(!cnt||typeof cnt!=='object'){state.availLoaded=false;renderV();applyPreCls();return;} // 取得失敗=全表示(顧客を止めない)
        state.avail=cnt;state.availLoaded=true;
        if(state.cls&&!(cnt[state.cls]>0)){state.cls='';calc();}
-       renderV();
-     }).catch(function(){state.availLoaded=false;renderV();});
+       renderV();applyPreCls();
+     }).catch(function(){state.availLoaded=false;renderV();applyPreCls();});
     return;
   }
   if(!pD||!rD){state.availLoaded=false;return;} // 日程未指定=全表示
@@ -493,14 +494,17 @@ function fetchAvail(){
     yms.length?sbGet('public_inactive_v','year_month=in.('+inEnc+')'):Promise.resolve([])
   ]).then(function(res){
     var veh=res[0]||[],busy=res[1]||[],inact=res[2]||[];
-    if(!veh.length){state.availLoaded=false;renderV();return;} // 取得失敗時は全表示(顧客を止めない)
+    if(!veh.length){state.availLoaded=false;renderV();applyPreCls();return;} // 取得失敗時は全表示(顧客を止めない)
     var busySet={};(busy||[]).forEach(function(b){busySet[b.vehicle_code]=1;});(inact||[]).forEach(function(b){busySet[b.vehicle_code]=1;});
     var cnt={};veh.forEach(function(v){if(busySet[v.code])return;cnt[v.type]=(cnt[v.type]||0)+1;});
     state.avail=cnt;state.availLoaded=true;
     if(state.cls&&!(cnt[state.cls]>0)){state.cls='';calc();} // 満車の初期選択は解除
-    renderV();
+    renderV();applyPreCls();
   });
 }
+function applyPreCls(){if(!_preCls)return;var k=_preCls;_preCls='';
+  if(classAvail(k)){decideV(k);return;}
+  var g=document.getElementById('vgrid');if(g){var n=document.createElement('div');n.style.cssText='grid-column:1/-1;background:#fff4e5;border:1px solid #f5c26b;color:#7a4b00;font-weight:700;font-size:13px;padding:10px 12px;border-radius:10px;margin-bottom:6px';n.textContent='ご希望の「'+window.hdmTerm(CLS[k].v)+'」はこの日程では満車です。下の空いている車からお選びください。';g.insertBefore(n,g.firstChild);}}
 function classAvail(k){return state.availLoaded?((state.avail[k]||0)>0):true;}
 var loc={del:null,col:null},colSame=true;
 var KD_NAHA_NOGO_POLYS=[

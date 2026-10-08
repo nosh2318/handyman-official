@@ -156,6 +156,7 @@ var _AREA=(_P.get('area')==='sapporo')?'sapporo':'naha';
 var _EMBED=(_P.get('embed')==='1');
 var AREACFG={naha:{center:[26.2124,127.6809],areas:['那覇市','豊見城市'],airport:[26.1958,127.6459],label:'那覇市・豊見城市',bbox:'127.08,25.61,128.28,26.81'},sapporo:{center:[43.0621,141.3544],areas:['札幌市'],airport:null,label:'札幌市',bbox:'140.75,42.46,141.95,43.66'}};
 var CENTER=AREACFG[_AREA].center, AREAS=AREACFG[_AREA].areas, AIRPORT=AREACFG[_AREA].airport, AREALABEL=AREACFG[_AREA].label, BBOX=AREACFG[_AREA].bbox;
+var touched={map:false,map2:false};
 var loc={del:'',col:''},locName={del:'',col:''},_ll={del:null,col:null},_lastCommit={},same=true,maps={},moveTimer={},suppress={map:0,map2:0};
 function dist(a,b,c,d){var R=6371,dLat=(c-a)*Math.PI/180,dLng=(d-b)*Math.PI/180,x=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dLng/2)*Math.sin(dLng/2);return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));}
 var KD_NAHA_NOGO_POLYS=[
@@ -179,8 +180,11 @@ function makeMap(id,which){
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(m);
   var area=id==='map'?'maparea':'maparea2';
   m.on('movestart',function(){document.getElementById(area).classList.add('moving');});
+  // ★2026-10-08 お客様が地図を触った後の移動だけを「場所の選択」とみなす（iframeのサイズ確定などで起きる自動の移動で、地図の中心＝北1西2がお届け先に入ってしまう不具合の修正）
+  var el=document.getElementById(id);['pointerdown','touchstart','wheel'].forEach(function(ev){el.addEventListener(ev,function(){touched[id]=true;},{passive:true});});
   m.on('moveend',function(){document.getElementById(area).classList.remove('moving');
     if(Date.now()<suppress[id]){return;}
+    if(!touched[id]){return;}
     clearTimeout(moveTimer[id]);moveTimer[id]=setTimeout(function(){var c=m.getCenter();var kk=which===2?'col':'del';
       if(_lastCommit[id]&&locName[kk]&&dist(c.lat,c.lng,_lastCommit[id][0],_lastCommit[id][1])<0.06){return;} // 選択直後の微小settleでは施設名を保持
       reverseGeo(c.lat,c.lng,function(ad,comps){apply(which,'',ad,c.lat,c.lng,comps);});},650);});
@@ -313,7 +317,7 @@ function directCommit(which){var inp=document.getElementById(which===2?'q2':'q')
 function clearQ(which){document.getElementById(which===2?'q2':'q').value='';document.getElementById(which===2?'sugg2':'sugg').classList.remove('on');document.getElementById(which===2?'clr2':'clr').style.display='none';}
 function toggleSame(){same=!same;document.getElementById('sameSw').classList.toggle('off',!same);document.getElementById('retbody').classList.toggle('on',!same);
   if(!same){if(!maps.map2){maps.map2=makeMap('map2',2);}setTimeout(function(){if(maps.map2)maps.map2.invalidateSize();},350);}renderCta();}
-function locateMe(){if(!navigator.geolocation)return;navigator.geolocation.getCurrentPosition(function(p){maps.map.setView([p.coords.latitude,p.coords.longitude],16,{animate:false});},function(){});}
+function locateMe(){if(!navigator.geolocation)return;navigator.geolocation.getCurrentPosition(function(p){touched.map=true;maps.map.setView([p.coords.latitude,p.coords.longitude],16,{animate:false});},function(){});}
 
 window.addEventListener('DOMContentLoaded',function(){
   if(_EMBED)document.documentElement.classList.add('embed');
