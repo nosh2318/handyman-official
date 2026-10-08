@@ -322,7 +322,7 @@ var CT_ICON={A:'🚐',A2:'🚐',B:'🚐',B2:'🚐',C:'🚙',S:'🚙',F:'🚗',H:
 function carImg(k,area){var base=(k==='A2')?'A':k;var pngC='official-assets/cars/class_'+base+'.png';var webpC='official-assets/cars/class_'+base+'.webp';var src=(area==='naha')?'official-assets/cars/class_'+base+'_nha.webp':webpC;return '<img src="'+src+'" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\''+pngC+'\'" alt="" style="width:100%;height:100%;object-fit:contain;background:#fff;padding:5px">';}
 // 店舗別 実データ（KEYDROP public_keydrop_classes_v=札幌 / _nha_v=那覇 準拠）
 var STORE={
- sapporo:{note:'❄️ 札幌店：デリバリー専門。札幌市・北広島市へお届け／回収します。',order:['A','A2','B','B2','C','S','F','G','H'],cls:{A:{l:'プレミアムミニバン',s:'7〜8名',v:'アルファード 等',p:13000},A2:{l:'プレミアムミニバン',s:'7〜8名',v:'アルファード 等',p:12000,az:1},B:{l:'ミニバン',s:'7〜8名',v:'ノア / デリカD5 等',p:11000},B2:{l:'B2クラス',s:'7〜8名',v:'ノア（高年式モデル）',p:12000,az:1},C:{l:'コンパクトSUV',s:'5名',v:'ロッキー / CX-3 等',p:7000},S:{l:'SUV',s:'5名',v:'ハリアー / CX-5 等',p:9000},F:{l:'ハイトワゴン',s:'5名',v:'ソリオ 等',p:6000},G:{l:'コンパクト',s:'5名',v:'デミオ / ノート 等',p:5000},H:{l:'セダン',s:'5名',v:'アクセラ 等',p:6000}}},
+ sapporo:{note:'❄️ 札幌店：デリバリー専門。札幌市へお届け／回収します。',order:['A','A2','B','B2','C','S','F','G','H'],cls:{A:{l:'プレミアムミニバン',s:'7〜8名',v:'アルファード 等',p:13000},A2:{l:'プレミアムミニバン',s:'7〜8名',v:'アルファード 等',p:12000,az:1},B:{l:'ミニバン',s:'7〜8名',v:'ノア / デリカD5 等',p:11000},B2:{l:'B2クラス',s:'7〜8名',v:'ノア（高年式モデル）',p:12000,az:1},C:{l:'コンパクトSUV',s:'5名',v:'ロッキー / CX-3 等',p:7000},S:{l:'SUV',s:'5名',v:'ハリアー / CX-5 等',p:9000},F:{l:'ハイトワゴン',s:'5名',v:'ソリオ 等',p:6000},G:{l:'コンパクト',s:'5名',v:'デミオ / ノート 等',p:5000},H:{l:'セダン',s:'5名',v:'アクセラ 等',p:6000}}},
  naha:{note:'🌺 那覇店：デリバリー・無料送迎（空港/駅）・来店に対応。',order:['A','B','C','D','F','H','S'],cls:{A:{l:'プレミアムミニバン',s:'8名',v:'アルファード',p:12000},B:{l:'ミニバン',s:'8名',v:'ノア / ヴォクシー / アルファード / セレナ',p:9000},C:{l:'コンパクトSUV',s:'5名',v:'ライズ / ヤリスクロス',p:7000},D:{l:'ミニバン',s:'8名',v:'ノア / セレナ',p:7000},F:{l:'コンパクト',s:'5名',v:'アクア / ヴィッツ / ノート',p:3500},H:{l:'セダン / ハイブリッド',s:'5名',v:'プリウス / プリウスα',p:4500},S:{l:'SUV',s:'5名',v:'ハリアー',p:5500}}},
  takamatsu:{note:'🍜 高松空港店：香川・四国の旅に。高松空港での無料送迎・来店に対応（デリバリーはございません）。',order:['A','B','C','S','H','F'],cls:{A:{l:'プレミアムミニバン',s:'8名',v:'アルファード',p:12000},B:{l:'ミニバン',s:'8名',v:'ノア / ヴォクシー / セレナ',p:9000},C:{l:'コンパクトSUV',s:'5名',v:'ライズ / ヤリスクロス',p:7000},S:{l:'SUV',s:'5名',v:'ハリアー',p:5500},H:{l:'セダン / ハイブリッド',s:'5名',v:'プリウス',p:4500},F:{l:'コンパクト',s:'5名',v:'アクア / ノート',p:3500}}}
 };
@@ -352,8 +352,8 @@ function loadTakamatsuLive(T){
 }
 window.__PRICEMASTER=window.__PRICEMASTER||{};
 function _areaToStore(a){return a==='sapporo'?'spk':(a==='naha'?'nha':(a==='takamatsu'?'tkm':''));}
-// カーラインナップ表示価格＝マスターの「安い日金額」→無ければ基本料金→無ければSTORE初期値
-function masterPrice(a,k){var pm=window.__PRICEMASTER[_areaToStore(a)];if(pm&&pm[k]){if(pm[k].a)return pm[k].a;if(pm[k].base)return pm[k].base;}return null;} // 0/未設定はSTORE初期値へフォールバック(¥0表示防止)
+// カーラインナップ表示価格＝マスターの基本料金(price.base)→無ければ安い日金額→無ければSTORE初期値。※2026-10-08 予約フロー既定(CLS.p=base||a)・請求と一致させるためbase優先に(オーナー確定A)
+function masterPrice(a,k){var pm=window.__PRICEMASTER[_areaToStore(a)];if(pm&&pm[k]){if(pm[k].base)return pm[k].base;if(pm[k].a)return pm[k].a;}return null;} // 0/未設定はSTORE初期値へフォールバック(¥0表示防止)
 function setCar(a){
   window.__CARAREA=a;
   // 店舗未選択(空)なら案内のみ表示。選択時はその店舗の実車種を表示
@@ -457,7 +457,7 @@ var NEWS=[
    x:{ja:'ハイシーズン（2026/6〜2027/1）料金を適用しています。ご予約時に表示の料金をご確認ください。',en:'High-season rates (Jun 2026–Jan 2027) apply. Please check the price shown at booking.',zh:'現正適用旺季（2026/6〜2027/1）費用。預約時請確認顯示的費用。',ko:'성수기(2026/6〜2027/1) 요금이 적용됩니다. 예약 시 표시 요금을 확인해 주세요.'}},
  {d:'2026.06.15',k:'info',
    t:{ja:'お知らせ',en:'Notice',zh:'公告',ko:'공지'},
-   x:{ja:'札幌店はデリバリー専門です。札幌市・北広島市へお届け／回収いたします。',en:'Sapporo is delivery-only. We deliver/collect in Sapporo & Kitahiroshima.',zh:'札幌店僅提供送車。於札幌市・北廣島市送車／收車。',ko:'삿포로점은 배달 전용입니다. 삿포로시·기타히로시마시로 배달/회수합니다.'}},
+   x:{ja:'札幌店はデリバリー専門です。札幌市へお届け／回収いたします。',en:'Sapporo is delivery-only. We deliver/collect in Sapporo.',zh:'札幌店僅提供送車。於札幌市送車／收車。',ko:'삿포로점은 배달 전용입니다. 삿포로시로 배달/회수합니다.'}},
  {d:'2026.06.01',k:'info',
    t:{ja:'お知らせ',en:'Notice',zh:'公告',ko:'공지'},
    x:{ja:'那覇店は「無料送迎（空港/駅）・デリバリー・来店」からお受け取り方法をお選びいただけます。',en:'At Naha you can choose free shuttle (airport/station), delivery, or in-store pickup.',zh:'那覇店可從「免費接送（機場/車站）・送車・到店」選擇取車方式。',ko:'나하점은 무료 셔틀(공항/역)·배달·방문 중에서 수령 방법을 선택할 수 있습니다.'}},
@@ -470,6 +470,6 @@ function renderNews(){var el=document.getElementById('nlist');if(!el)return;var 
 renderNews();
 // 起動時：エリア未選択なので車のタイプは非表示のまま
 </script>
-<script src="official-i18n.js?v=09270921"></script>
+<script src="official-i18n.js?v=10081000"></script>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_top",area:"official"});</script>
 </body></html>

@@ -82,19 +82,19 @@ function _vL(){return (window.hdmLang?window.hdmLang():'ja');}
 // 動的生成で使う固定文言（単位・注記・ボタン・エリア注記など）
 var VDYN={
  ja:{seats_suffix:'名',price_suffix:'〜 / 1日',book_btn:'この条件で予約',
-     note_sapporo:'❄️ 札幌店：デリバリー専門。札幌市・北広島市へお届け／回収します。',
+     note_sapporo:'❄️ 札幌店：デリバリー専門。札幌市へお届け／回収します。',
      note_naha:'🌺 那覇店：デリバリー・空港送迎・来店に対応。',
      eqnote:'車種・色・仕様はお選びいただけません（同クラス内からランダムでご用意）。全車禁煙・ペット同乗不可。料金は1日（24時間）あたりの目安です。ハイシーズンは別料金。'},
  en:{seats_suffix:' pax',price_suffix:'~ / day',book_btn:'Book with these settings',
-     note_sapporo:'❄️ Sapporo Store: Delivery only. We deliver / collect in Sapporo City and Kitahiroshima City.',
+     note_sapporo:'❄️ Sapporo Store: Delivery only. We deliver / collect in Sapporo City.',
      note_naha:'🌺 Naha Store: Delivery, airport shuttle and in-store pickup available.',
      eqnote:'Car model, color and specs cannot be selected (assigned at random from within the same class). All cars are non-smoking; pets not allowed. Prices are a guide per day (24 hours). Separate rates apply in high season.'},
  zh:{seats_suffix:'人',price_suffix:'～ / 每日',book_btn:'以此條件預約',
-     note_sapporo:'❄️ 札幌店：僅提供送車服務。可送車／取車至札幌市、北廣島市。',
+     note_sapporo:'❄️ 札幌店：僅提供送車服務。可送車／取車至札幌市。',
      note_naha:'🌺 那覇店：提供送車、機場接送與到店取車。',
      eqnote:'無法指定車款、顏色與規格（於同級距中隨機提供）。全車禁菸、禁止攜帶寵物。價格為每日（24小時）參考價。旺季另計。'},
  ko:{seats_suffix:'명',price_suffix:'~ / 1일',book_btn:'이 조건으로 예약',
-     note_sapporo:'❄️ 삿포로점: 배달 전문. 삿포로시·기타히로시마시로 배달／회수합니다.',
+     note_sapporo:'❄️ 삿포로점: 배달 전문. 삿포로시로 배달／회수합니다.',
      note_naha:'🌺 나하점: 배달·공항 셔틀·방문에 대응합니다.',
      eqnote:'차종·색상·사양은 선택하실 수 없습니다(동일 클래스 내에서 무작위로 준비). 전 차량 금연·반려동물 동승 불가. 요금은 1일(24시간) 기준 참고 금액입니다. 성수기는 별도 요금.'}
 };
@@ -105,7 +105,7 @@ const ICON={A:'🚐',A2:'🚐',B:'🚐',B2:'🚐',C:'🚙',S:'🚙',F:'🚗',H:'
 function carImg(k,area){var base=(k==='A2')?'A':k;var pngC='official-assets/cars/class_'+base+'.png';var webpC='official-assets/cars/class_'+base+'.webp';var src=(area==='naha')?'official-assets/cars/class_'+base+'_nha.webp':webpC;return '<img src="'+src+'" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\''+pngC+'\'" alt="" style="width:100%;height:100%;object-fit:contain;background:#fff;padding:5px">';}
 // 店舗別 実データ（KEYDROP public_keydrop_classes_v=札幌 / _nha_v=那覇 準拠）
 const STORE={
- sapporo:{note:'❄️ 札幌店：デリバリー専門。札幌市・北広島市へお届け／回収します。',order:['A','A2','B','B2','C','S','F','H'],cls:{A:{label:'プレミアムミニバン',seats:'7〜8名',vehicles:'アルファード / ヴェルファイア 等',price:13000},A2:{label:'プレミアムミニバン',seats:'7〜8名',vehicles:'アルファード / ヴェルファイア 等',price:12000,azukari:true},B:{label:'ミニバン',seats:'7〜8名',vehicles:'ノア / デリカD5 等',price:11000},B2:{label:'B2クラス',seats:'7〜8名',vehicles:'ノア（高年式モデル）',price:12000,azukari:true},C:{label:'コンパクトSUV',seats:'5名',vehicles:'ロッキー / CX-3 等',price:7000},S:{label:'SUV',seats:'5名',vehicles:'ハリアー / CX-5 等',price:9000},F:{label:'ハイトワゴン',seats:'5名',vehicles:'ソリオ 等',price:6000},H:{label:'セダン',seats:'5名',vehicles:'アクセラ 等',price:6000}}},
+ sapporo:{note:'❄️ 札幌店：デリバリー専門。札幌市へお届け／回収します。',order:['A','A2','B','B2','C','S','F','H'],cls:{A:{label:'プレミアムミニバン',seats:'7〜8名',vehicles:'アルファード / ヴェルファイア 等',price:13000},A2:{label:'プレミアムミニバン',seats:'7〜8名',vehicles:'アルファード / ヴェルファイア 等',price:12000,azukari:true},B:{label:'ミニバン',seats:'7〜8名',vehicles:'ノア / デリカD5 等',price:11000},B2:{label:'B2クラス',seats:'7〜8名',vehicles:'ノア（高年式モデル）',price:12000,azukari:true},C:{label:'コンパクトSUV',seats:'5名',vehicles:'ロッキー / CX-3 等',price:7000},S:{label:'SUV',seats:'5名',vehicles:'ハリアー / CX-5 等',price:9000},F:{label:'ハイトワゴン',seats:'5名',vehicles:'ソリオ 等',price:6000},H:{label:'セダン',seats:'5名',vehicles:'アクセラ 等',price:6000}}},
  naha:{note:'🌺 那覇店：デリバリー・空港送迎・来店に対応。',order:['A','B','C','D','F','H','S'],cls:{A:{label:'プレミアムミニバン',seats:'8名',vehicles:'アルファード',price:12000},B:{label:'ミニバン',seats:'8名',vehicles:'ノア / ヴォクシー / アルファード / ヴェルファイア / セレナ',price:9000},C:{label:'コンパクトSUV',seats:'5名',vehicles:'ライズ / ヤリスクロス',price:7000},D:{label:'ミニバン',seats:'8名',vehicles:'ノア / セレナ',price:7000},F:{label:'コンパクト',seats:'5名',vehicles:'アクア / ヴィッツ / ノート',price:3500},H:{label:'セダン / ハイブリッド',seats:'5名',vehicles:'プリウス / プリウスα',price:4500},S:{label:'SUV',seats:'5名',vehicles:'ハリアー',price:5500}}}
 };
 const EQUIP=['ナビ','ETC車載器','Bluetooth','4WD','スタッドレスタイヤ'];
@@ -121,7 +121,7 @@ function setArea(a){
  document.getElementById('grid').innerHTML=st.order.map(function(k){var c=st.cls[k];return (
    '<div class="car"><div class="pic">'+carImg(k,a)+'<span class="clschip">'+window.hdmTerm(c.label)+'</span></div>'+
    '<div class="bd"><div class="nm">'+window.hdmTerm(c.vehicles)+'</div><div class="spec">👥 '+_seatsTxt(c.seats)+'</div>'+
-   '<div class="pr"><b>¥'+c.price.toLocaleString()+'</b><small>'+_vd('price_suffix')+'</small></div>'+
+   '<div class="pr"><b>¥'+((typeof masterPrice==='function'&&masterPrice(a,k)!=null?masterPrice(a,k):c.price)).toLocaleString()+'</b><small>'+_vd('price_suffix')+'</small></div>'+
    '<a class="bk" href="index.html#search">'+_vd('book_btn')+'</a></div></div>');
  }).join('');
 }
@@ -129,6 +129,12 @@ function _renderEquip(){
  document.getElementById('equipTags').innerHTML=EQUIP.map(function(e){return '<span class="tag">'+window.hdmTerm(e)+'</span>';}).join('');
  document.getElementById('equipNote').textContent=_vd('eqnote');
 }
+// ★2026-10-08 登録価格(hdm_official_price)をmasterから読み、一覧表示と請求を一致させる(price.base基準・オーナー確定A)。未取得/0はSTORE直書きにフォールバック(¥0/計算不能を出さない)。那覇も検索公開済(3d15782)のためズレを残さない
+window.__PRICEMASTER=window.__PRICEMASTER||{};
+function _areaToStore(a){return a==='sapporo'?'spk':(a==='naha'?'nha':'');}
+function masterPrice(a,k){var pm=window.__PRICEMASTER[_areaToStore(a)];if(pm&&pm[k]){if(pm[k].base)return pm[k].base;if(pm[k].a)return pm[k].a;}return null;} // 0/未設定はSTORE初期値へフォールバック(¥0表示防止)
+(function(){var MAIN_URL='https://ckrxttbnawkclshczsia.supabase.co',MAIN_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8';
+ fetch(MAIN_URL+'/rest/v1/app_settings?key=eq.hdm_official_price&select=value',{headers:{apikey:MAIN_ANON,Authorization:'Bearer '+MAIN_ANON}}).then(function(r){return r.ok?r.json():null;}).then(function(d){if(!d||!d[0])return;var o;try{o=JSON.parse(d[0].value);}catch(e){return;}['spk','nha'].forEach(function(st){if(o[st]&&o[st].price)window.__PRICEMASTER[st]=o[st].price;});try{setArea(_curArea);}catch(e){}}).catch(function(){});})();
 setArea('naha');
 _renderEquip();
 </script>
