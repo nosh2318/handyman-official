@@ -104,6 +104,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <option value="">選択してください</option>
       <option value="accident">事故の代車</option>
       <option value="repair">車検・修理の代車</option>
+      <option value="wait">新車・中古車の納車待ち</option>
       <option value="long">長期のご利用</option>
       <option value="other">その他</option>
     </select>
@@ -235,9 +236,9 @@ function next(from){
   if(sd&&re.test(sd))$("start_date").value=sd;
   if(P.get("und")==="1"){$("undated").checked=true;$("undated").dispatchEvent(new Event("change"));}
   else if(ed&&re.test(ed))$("end_date").value=ed;
-  if(u&&["accident","repair","long","other"].indexOf(u)>=0){$("use_case").value=u;setTimeout(function(){go(1);},0);}
+  if(u&&["accident","repair","wait","long","other"].indexOf(u)>=0){$("use_case").value=u;setTimeout(function(){go(1);},0);}
 })();
-const UCJP={accident:"事故の代車",repair:"車検・修理の代車",long:"長期のご利用",other:"その他"};
+const UCJP={wait:"納車待ちの代車",accident:"事故の代車",repair:"車検・修理の代車",long:"長期のご利用",other:"その他"};
 function periodText(){
   if($("undated").checked)return "未定・長期"+($("period_note").value?"（"+$("period_note").value+"）":"");
   var s=$("start_date").value?($("start_date").value+($("start_time").value?" "+$("start_time").value:"")):"";
@@ -261,12 +262,12 @@ async function submitReq(){
   $("submitBtn").disabled=true; $("spin").style.display="block";
   var body={
     action:"create", brand:"hdm", store:STORE,
-    use_case:$("use_case").value, start_date:$("undated").checked?"":$("start_date").value, end_date:$("undated").checked?"":$("end_date").value,
+    use_case:$("use_case").value==="wait"?"other":$("use_case").value, start_date:$("undated").checked?"":$("start_date").value, end_date:$("undated").checked?"":$("end_date").value,
     period_note:$("period_note").value.trim(),
     del_place:$("place").value.trim(), col_place:"", same_col:true,
     cust_type:$("cust_type").value, company:$("company").value.trim(),
     name:$("name").value.trim(), tel:$("tel").value.trim(), email:$("email").value.trim(),
-    choice1:ranks[0]||"", choice2:ranks[1]||"", choice3:ranks[2]||"", budget:budget, memo:"【1日の予算】"+budget+($("memo").value.trim()?"\n"+$("memo").value.trim():"")
+    choice1:ranks[0]||"", choice2:ranks[1]||"", choice3:ranks[2]||"", budget:budget, memo:($("use_case").value==="wait"?"【用途】納車待ち\n":"")+"【1日の予算】"+budget+($("memo").value.trim()?"\n"+$("memo").value.trim():"")
   };
   try{
     var r=await fetch(FN,{method:"POST",headers:{apikey:ANON,Authorization:"Bearer "+ANON,"Content-Type":"application/json"},body:JSON.stringify(body)});
