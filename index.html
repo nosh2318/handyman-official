@@ -389,6 +389,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="sgrp full" id="availMsg" style="display:none"><div style="font-size:11.5px;color:var(--mut)" data-i18n="avail_msg">🚙 ご利用日程に提供できる空車を次の画面にすべて表示します。</div></div>
     <div class="sgrp full"><div class="stepsbar" data-i18n="steps_bar">予約は <b>3ステップ・約60秒</b>　①店舗と日時 → ②車種・補償 → ③お客様情報で完了</div></div>
     <button class="sbtn" onclick="doSearch()" data-i18n="s_btn">空車と料金を検索する</button>
+    <div class="sgrp full"><div class="srchnote" data-i18n="srch_note">検索だけでは予約は確定しません。料金と空車を確認してから予約できます。</div></div>
   </div></div></div>
 </div>
 
@@ -399,6 +400,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="stcard" onclick="goStoreCars('naha')">
       <div class="sthead nh" data-i18n="st_head_naha">🌺 那覇空港店 <span>沖縄</span></div>
       <div class="stfeat" data-i18n="st_feat_naha">無料送迎・ホテル配送・来店</div>
+      <div class="stdesc" data-i18n="st_desc_naha">那覇空港から無料送迎。市内ホテル・ご自宅への配送にも対応。※空港内での直接受け渡しはありません。</div>
       <div class="stprice" data-i18n="st_price_naha">コンパクト <b>¥2,700</b> <small>〜 / 24時間</small></div>
       <div class="strev" data-i18n="st_rev_naha">Google ★4.7（154件）</div>
       <div class="stbtn" data-i18n="st_btn_naha">那覇の空車・料金を見る ▶</div>
@@ -406,6 +408,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="stcard" onclick="goStoreCars('sapporo')">
       <div class="sthead sp" data-i18n="st_head_spk">❄️ 札幌店 <span>北海道</span></div>
       <div class="stfeat" data-i18n="st_feat_spk">ホテル・自宅までお届け／回収（来店不要）</div>
+      <div class="stdesc" data-i18n="st_desc_spk">営業所へ行かずに、指定ホテル・ご自宅で受け取り／返却。札幌市対応。</div>
       <div class="stprice" data-i18n="st_price_spk">コンパクト <b>¥4,500</b> <small>〜 / 24時間</small></div>
       <div class="strev" data-i18n="st_rev_spk">Google ★5.0（28件）</div>
       <div class="stbtn" data-i18n="st_btn_spk">札幌の空車・料金を見る ▶</div>
@@ -413,6 +416,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="stcard" onclick="goStoreCars('takamatsu')">
       <div class="sthead tk" data-i18n="st_head_tkm">🍜 高松空港店 <span>香川</span></div>
       <div class="stfeat" data-i18n="st_feat_tkm">無料送迎・来店</div>
+      <div class="stdesc" data-i18n="st_desc_tkm">高松空港から無料送迎。香川・四国の旅に便利。※空港内での直接受け渡しはありません。</div>
       <div class="stprice" data-i18n="st_price_tkm">軽 <b>¥3,400</b> <small>〜 / 24時間</small></div>
       <div class="strev stnew" data-i18n="st_rev_tkm">2026.8 開店</div>
       <div class="stbtn" data-i18n="st_btn_tkm">高松の空車・料金を見る ▶</div>
@@ -430,7 +434,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 .sthead{font-size:17px;font-weight:900;color:#0a1f44;display:flex;align-items:baseline;gap:7px}
 .sthead span{font-size:11px;font-weight:800;color:#fff;border-radius:999px;padding:2px 9px}
 .sthead.nh span{background:#be123c}.sthead.sp span{background:#1d4ed8}.sthead.tk span{background:#0d9488}
-.stfeat{font-size:12.5px;font-weight:700;color:#334155;margin:9px 0 10px;line-height:1.5}
+.stfeat{font-size:12.5px;font-weight:700;color:#334155;margin:9px 0 6px;line-height:1.5}
+.stdesc{font-size:11px;color:#64748b;line-height:1.65;margin:0 0 10px}
 .stprice{font-size:13px;color:#5a6b85}.stprice b{font-size:24px;font-weight:900;color:#0a1f44;margin:0 2px}.stprice small{font-size:11px;color:#64748b}
 .strev{font-size:11.5px;font-weight:800;color:#b45309;margin-top:6px}.strev.stnew{color:#0d9488}
 .stbtn{margin-top:12px;text-align:center;background:var(--y);color:#10203f;font-weight:900;font-size:13.5px;padding:11px;border-radius:10px}
@@ -577,7 +582,7 @@ var CT_ICON={A:'🚐',A2:'🚐',B:'🚐',B2:'🚐',C:'🚙',S:'🚙',F:'🚗',H:
 function carImg(k,area){var base=(k==='A2')?'A':k;var pngC='official-assets/cars/class_'+base+'.png';var webpC='official-assets/cars/class_'+base+'.webp';var src=(area==='naha')?'official-assets/cars/class_'+base+'_nha.webp':webpC;return '<img src="'+src+'" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\''+pngC+'\'" alt="" style="width:100%;height:100%;object-fit:contain;background:#fff;padding:5px">';}
 // 店舗別 実データ（KEYDROP public_keydrop_classes_v=札幌 / _nha_v=那覇 準拠）
 var STORE={
- sapporo:{note:'❄️ 札幌店：デリバリー専門。札幌市・北広島市へお届け／回収します。',order:['A','A2','B','B2','C','S','F','G','H'],cls:{A:{l:'プレミアムミニバン',s:'7〜8名',v:'アルファード 等',p:13000},A2:{l:'プレミアムミニバン',s:'7〜8名',v:'アルファード 等',p:12000,az:1},B:{l:'ミニバン',s:'7〜8名',v:'ノア / デリカD5 等',p:11000},B2:{l:'B2クラス',s:'7〜8名',v:'ノア（高年式モデル）',p:12000,az:1},C:{l:'コンパクトSUV',s:'5名',v:'ロッキー / CX-3 等',p:7000},S:{l:'SUV',s:'5名',v:'ハリアー / CX-5 等',p:9000},F:{l:'ハイトワゴン',s:'5名',v:'ソリオ 等',p:6000},G:{l:'コンパクト',s:'5名',v:'デミオ / ノート 等',p:5000},H:{l:'セダン',s:'5名',v:'アクセラ 等',p:6000}}},
+ sapporo:{note:'❄️ 札幌店：デリバリー専門。札幌市へお届け／回収します。',order:['A','A2','B','B2','C','S','F','G','H'],cls:{A:{l:'プレミアムミニバン',s:'7〜8名',v:'アルファード 等',p:13000},A2:{l:'プレミアムミニバン',s:'7〜8名',v:'アルファード 等',p:12000,az:1},B:{l:'ミニバン',s:'7〜8名',v:'ノア / デリカD5 等',p:11000},B2:{l:'B2クラス',s:'7〜8名',v:'ノア（高年式モデル）',p:12000,az:1},C:{l:'コンパクトSUV',s:'5名',v:'ロッキー / CX-3 等',p:7000},S:{l:'SUV',s:'5名',v:'ハリアー / CX-5 等',p:9000},F:{l:'ハイトワゴン',s:'5名',v:'ソリオ 等',p:6000},G:{l:'コンパクト',s:'5名',v:'デミオ / ノート 等',p:5000},H:{l:'セダン',s:'5名',v:'アクセラ 等',p:6000}}},
  naha:{note:'🌺 那覇店：デリバリー・無料送迎（空港/駅）・来店に対応。',order:['A','B','C','D','F','H','S'],cls:{A:{l:'プレミアムミニバン',s:'8名',v:'アルファード',p:12000},B:{l:'ミニバン',s:'8名',v:'ノア / ヴォクシー / アルファード / セレナ',p:9000},C:{l:'コンパクトSUV',s:'5名',v:'ライズ / ヤリスクロス',p:7000},D:{l:'ミニバン',s:'8名',v:'ノア / セレナ',p:7000},F:{l:'コンパクト',s:'5名',v:'アクア / ヴィッツ / ノート',p:3500},H:{l:'セダン / ハイブリッド',s:'5名',v:'プリウス / プリウスα',p:4500},S:{l:'SUV',s:'5名',v:'ハリアー',p:5500}}},
  takamatsu:{note:'🍜 高松空港店：香川・四国の旅に。高松空港での無料送迎・来店に対応（デリバリーはございません）。',order:['A','B','C','S','H','F'],cls:{A:{l:'プレミアムミニバン',s:'8名',v:'アルファード',p:12000},B:{l:'ミニバン',s:'8名',v:'ノア / ヴォクシー / セレナ',p:9000},C:{l:'コンパクトSUV',s:'5名',v:'ライズ / ヤリスクロス',p:7000},S:{l:'SUV',s:'5名',v:'ハリアー',p:5500},H:{l:'セダン / ハイブリッド',s:'5名',v:'プリウス',p:4500},F:{l:'コンパクト',s:'5名',v:'アクア / ノート',p:3500}}}
 };
@@ -743,7 +748,7 @@ var NEWS=[
    x:{ja:'ハイシーズン（2026/6〜2027/1）料金を適用しています。ご予約時に表示の料金をご確認ください。',en:'High-season rates (Jun 2026–Jan 2027) apply. Please check the price shown at booking.',zh:'現正適用旺季（2026/6〜2027/1）費用。預約時請確認顯示的費用。',ko:'성수기(2026/6〜2027/1) 요금이 적용됩니다. 예약 시 표시 요금을 확인해 주세요.'}},
  {d:'2026.06.15',k:'info',
    t:{ja:'お知らせ',en:'Notice',zh:'公告',ko:'공지'},
-   x:{ja:'札幌店はデリバリー専門です。札幌市・北広島市へお届け／回収いたします。',en:'Sapporo is delivery-only. We deliver/collect in Sapporo & Kitahiroshima.',zh:'札幌店僅提供送車。於札幌市・北廣島市送車／收車。',ko:'삿포로점은 배달 전용입니다. 삿포로시·기타히로시마시로 배달/회수합니다.'}},
+   x:{ja:'札幌店はデリバリー専門です。札幌市へお届け／回収いたします。',en:'Sapporo is delivery-only. We deliver/collect in Sapporo.',zh:'札幌店僅提供送車。於札幌市送車／收車。',ko:'삿포로점은 배달 전용입니다. 삿포로시로 배달/회수합니다.'}},
  {d:'2026.06.01',k:'info',
    t:{ja:'お知らせ',en:'Notice',zh:'公告',ko:'공지'},
    x:{ja:'那覇店は「無料送迎（空港/駅）・デリバリー・来店」からお受け取り方法をお選びいただけます。',en:'At Naha you can choose free shuttle (airport/station), delivery, or in-store pickup.',zh:'那覇店可從「免費接送（機場/車站）・送車・到店」選擇取車方式。',ko:'나하점은 무료 셔틀(공항/역)·배달·방문 중에서 수령 방법을 선택할 수 있습니다.'}},
@@ -756,7 +761,7 @@ function renderNews(){var el=document.getElementById('nlist');if(!el)return;var 
 renderNews();
 // 起動時：エリア未選択なので車のタイプは非表示のまま
 </script>
-<script src="official-i18n.js?v=10070650"></script>
+<script src="official-i18n.js?v=10081000"></script>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_top",area:"official"});</script>
 <!-- 🎁 離脱防止ポップ（初回訪問・離脱時に1回） -->
 <div class="offpop" id="offPop" onclick="if(event.target===this)offPopClose()"><div class="offcard"><div class="oh"><span class="obadge" data-i18n="off_badge">初回ネット予約 限定</span><div class="obig" id="offPopBig"></div><div class="olead" data-i18n="off_lead">クーポンは予約画面で自動適用されます</div></div><div class="ob"><div class="ocode" id="offPopCode"></div><a class="obtn" href="#search" onclick="offClaim();return false;" data-i18n="off_btn">クーポンを使って予約する</a><button class="oclose" onclick="offPopClose()" data-i18n="off_later">あとで</button></div></div></div>
