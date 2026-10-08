@@ -69,6 +69,9 @@
   .fleet .wp i{font-style:normal;font-size:9.5px;color:#7a7f87}
   .fleet .wp b{font-size:13px;color:#00163f}
   .fleet .wp+.wp{margin-top:0}
+  .ins{margin-top:10px;background:#eef7f0;border:1px solid #9fd3ad;border-radius:10px;padding:9px 11px;font-size:12px;line-height:1.6;color:#1d5130}
+  .ins b{color:#0e7a3a}
+  .fleet .ok{display:inline-block;margin-top:4px;font-size:9.5px;font-weight:900;color:#fff;background:#0e9f50;border-radius:999px;padding:1px 7px}
   .pnote{font-size:11px;color:#7a7f87;margin-top:8px;line-height:1.6}
   .faq{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
   .faq details{border-bottom:1px solid var(--line)}
@@ -184,6 +187,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div data-c="B"><img src="official-assets/cars/class_B.webp" alt="" loading="lazy">ミニバン<small>ノア 等</small><span class="wp"><i>札幌</i><b class="ps">8,000</b>円/日</span><span class="wp"><i>那覇</i><b class="pn">4,400</b>円/日</span></div>
     <div data-c="A"><img src="official-assets/cars/class_A.webp" alt="" loading="lazy">高級ミニバン<small>アルファード 等</small><span class="wp"><i>札幌</i><b class="ps">10,000</b>円/日</span><span class="wp"><i>那覇</i><b class="pn">5,600</b>円/日</span></div>
   </div>
+  <p class="ins">🛡 保険の代車特約（日額5,000円〜）をお使いの方へ：<b>「特約内」</b>の車種は1日5,000円以内なので、日額5,000円の特約で自己負担なくご利用いただけます。</p>
   <p class="pnote">通常料金（基本料金）から代車割引<span id="discPct">20</span>%を引いた1日あたりの目安です。お届け・回収込み。日程・在庫により変わるため、正式な金額はチャットでご案内します。</p>
 </div>
 
@@ -241,6 +245,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   $("dzBarBtn").addEventListener("click",function(){var y=f.getBoundingClientRect().top+scrollY-60;scrollTo({top:y,behavior:"smooth"})});
 })();
 
+function markIns(){
+  document.querySelectorAll(".fleet [data-c]").forEach(function(el){
+    var n=function(q){return +String(el.querySelector(q).textContent).replace(/,/g,"")};
+    var ok=[];if(n(".ps")<=5000)ok.push("札幌");if(n(".pn")<=5000)ok.push("那覇");
+    var t=el.querySelector(".ok");if(!t){t=document.createElement("span");t.className="ok";el.appendChild(t);}
+    t.textContent=ok.length?("特約内："+ok.join("・")):"";t.style.display=ok.length?"inline-block":"none";
+  });
+}
+markIns();
 (function(){
   // 料金コントローラー(hdm_official_price)の基本料金 × 代車割引(get_discount) で7日間の目安を更新（取得できなければ静的値のまま）
   var U="https://ckrxttbnawkclshczsia.supabase.co",K="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8";
@@ -253,6 +266,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     function wk(st,c){var p=m[st]&&m[st].price&&m[st].price[c];var b=p&&+(p.base||p.a||0);if(!b)return null;return Math.round(b*(100-disc(st,c))/100/10)*10;}
     document.querySelectorAll(".fleet [data-c]").forEach(function(el){var c=el.getAttribute("data-c");
       var a=wk("spk",c),b=wk("nha",c);if(a)el.querySelector(".ps").textContent=a.toLocaleString();if(b)el.querySelector(".pn").textContent=b.toLocaleString();});
+    markIns();
     var d0=disc("spk","F");if(d0)document.getElementById("discPct").textContent=d0;
   });
 })();
