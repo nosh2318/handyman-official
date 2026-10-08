@@ -392,21 +392,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
   <!-- 検索フォーム -->
   <div class="search" id="search"><div class="searchIn"><div class="sgrid">
-    <div class="sgrp"><h4 data-i18n="s_store">📍 店舗を選択</h4><div class="ff" style="grid-template-columns:1fr"><select id="areaSel" onchange="onAreaSel()"><option value="" data-i18n-opt="s_store_ph">店舗を選択</option><option value="naha" data-i18n-opt="s_naha">那覇空港店（沖縄）</option><option value="sapporo" data-i18n-opt="s_sapporo">札幌店（北海道）</option><option value="takamatsu" data-i18n-opt="s_takamatsu">高松空港店（香川）</option></select></div></div>
+    <div class="sgrp"><h4 data-i18n="s_store">📍 店舗を選択</h4><div class="ff" style="grid-template-columns:1fr"><select id="areaSel" onchange="onAreaSel()" autocomplete="off"><option value="" data-i18n-opt="s_store_ph">店舗を選択</option><option value="naha" data-i18n-opt="s_naha">那覇空港店（沖縄）</option><option value="sapporo" data-i18n-opt="s_sapporo">札幌店（北海道）</option><option value="takamatsu" data-i18n-opt="s_takamatsu">高松空港店（香川）</option></select></div></div>
     <div class="sgrp"><h4 data-i18n="s_pick">📅 出発 日時</h4><div class="ff"><input type="date" id="pickDate"><select class="timeSel" id="pickTime"><option value="" data-i18n-opt="s_time">時間</option></select></div></div>
     <div class="sgrp"><h4 data-i18n="s_ret">📅 返却 日時</h4><div class="ff"><input type="date" id="retDate"><select class="timeSel" id="retTime"><option value="" data-i18n-opt="s_time">時間</option></select></div></div>
     <div class="sgrp full" id="methodGrp" style="display:none"><h4 data-i18n="s_method">🚗 受取方法を選択</h4><div class="chips" id="methodChips"><span class="chip" data-m="airport" data-i18n="m_airport">無料送迎（空港/駅）</span><span class="chip on" data-m="delivery" data-i18n="m_delivery">デリバリー</span><span class="chip" data-m="store" data-i18n="m_store">来店</span></div></div>
     <div class="sgrp full" id="spkMsg" style="display:none"><div style="background:#0a1f44;border:1px solid var(--line);border-radius:10px;padding:11px 14px;font-size:12px;color:#dfe7f5" data-i18n="spk_msg"><b style="color:var(--y)">❄️ 札幌はデリバリー専門</b>　お届け先を地図で指定して予約します。「検索する」で予約画面へ進みます。</div></div>
-    <div class="sgrp full" id="availMsg" style="display:none"><div style="font-size:11.5px;color:var(--mut)" data-i18n="avail_msg">🚙 ご利用日程に提供できる空車を次の画面にすべて表示します。</div></div>
-    <div class="sgrp full"><div class="stepsbar" data-i18n="steps_bar">予約は <b>3ステップ・約60秒</b>　①店舗と日時 → ②車種・補償 → ③お客様情報で完了</div></div>
     <button class="sbtn" onclick="doSearch()" data-i18n="s_btn">空車と料金を検索する</button>
-    <div class="sgrp full"><div class="srchnote" data-i18n="srch_note">検索だけでは予約は確定しません。料金と空車を確認してから予約できます。</div></div>
   </div></div></div>
 </div>
 
 <!-- 店舗選択カード（受取方法＋最安料金＝予約前に迷いをなくす） -->
 <section class="stores" id="stores"><div class="wrap">
-  <div class="sttitle" data-i18n="st_title">どちらの店舗をご利用ですか？<small>受け取り方法と最安料金をチェック</small></div>
+  <div class="sttitle" data-i18n="st_title">どちらの店舗をご利用ですか？</div>
   <div class="stgrid">
     <div class="stcard" onclick="goStoreCars('naha')">
       <div class="sthead nh" data-i18n="st_head_naha">🌺 那覇空港店 <span>沖縄</span></div>
@@ -671,6 +668,8 @@ ctTab('naha'); // 既定=那覇を表示
 // 言語切替時にJS生成部（CAR TYPE / NEWS）を再描画
 window.hdmOnLang=function(){ try{setCar(_ctCur);}catch(e){} try{renderNews();}catch(e){} };
 // 検索フォーム：店舗連動の車クラスchip（実データ）
+// ★10/08 店舗は毎回「未選択」から始める（ブラウザの「戻る」で前回の店舗が復元されると、店舗未選択の計測と既定値が狂うため）
+window.addEventListener('pageshow',function(e){try{var sel=document.getElementById('areaSel');if(sel&&sel.value){sel.value='';onAreaSel();}}catch(x){}});
 function heroToSearch(){var s=document.getElementById('search');if(s)s.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){var a=document.getElementById('areaSel');if(a)a.focus();},480);}
 function onAreaSel(){
   var raw=document.getElementById('areaSel').value;var a=raw||'naha';var show=!!raw;if(window.KDT&&raw){KDT.setArea(a);}
@@ -684,7 +683,7 @@ function onAreaSel(){
   }else if(_delc){ _delc.style.display=''; }
   if(raw==='naha'||raw==='takamatsu'){var _mc=document.getElementById('methodChips');_mc.classList.remove('pulse');void _mc.offsetWidth;_mc.classList.add('pulse');}
   document.getElementById('spkMsg').style.display=(raw==='sapporo')?'block':'none';
-  document.getElementById('availMsg').style.display=show?'block':'none';
+  var _am=document.getElementById('availMsg');if(_am)_am.style.display=show?'block':'none';
   if(show)ctTab(a); // 下のCAR TYPE(情報)＋店舗タブを店舗連動
 }
 // 検索ボタン：日程で出せる空車を全て次画面に表示
