@@ -198,3 +198,4 @@ for key,slug,fn,store,kd,desc in PAGES:
     print(fn,len(page),"langs-from-notion" if rngs else "ja+translations")
 print("UNRESOLVED",len(unresolved)); 
 for u in sorted(set(unresolved)): print(" ",u)
+import faq_schema; faq_schema.run()
