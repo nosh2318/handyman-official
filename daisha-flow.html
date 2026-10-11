@@ -60,6 +60,10 @@ textarea{resize:vertical;min-height:64px;line-height:1.6}
 .bud button.on{border-color:var(--y);background:#fffbf0;box-shadow:0 0 0 2px var(--y) inset}
 details.more{margin-top:14px;border:1px dashed var(--line);border-radius:10px;padding:10px 12px}
 details.more summary{font-size:13px;font-weight:800;color:#0a2e80;cursor:pointer}
+.mform .q{display:block}
+.mform textarea{width:100%;min-height:110px}
+.opt{display:inline-block;font-size:10.5px;font-weight:800;color:#64748b;background:#eef2f8;border-radius:4px;padding:1px 6px;margin-left:4px;vertical-align:1px}
+.mnote{margin-top:10px;font-size:12px;line-height:1.7;color:#475569}
 .after{margin-top:16px;background:#fffbf0;border:1.5px solid var(--y);border-radius:12px;padding:11px 12px;font-size:12.5px;line-height:1.7;color:#334155}
 .hint{font-size:11.5px;color:var(--mut);margin-top:6px;line-height:1.7}
 .err{background:#fff1f1;border:1px solid #f3b4b4;color:#b42318;border-radius:10px;padding:9px 12px;font-size:12.5px;font-weight:700;margin-top:12px;display:none}
@@ -153,12 +157,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a id="lineAdd" href="https://lin.ee/g6iDNYz" target="_blank" rel="noopener" style="display:block;text-align:center;margin:9px 0;background:#06c755;color:#fff;font-weight:900;font-size:15px;padding:12px;border-radius:10px;text-decoration:none">🟢 友だち追加する</a>
       <b>② この画面に戻って「送信する」</b>を押し、LINEで<b>「代車 お名前」</b>とお送りください。担当がLINEで車両と料金をご案内します。
     </div>
-    <div id="telBox" style="display:none;margin-top:10px;background:#f2f6fd;border:1.5px solid #0a2e80;border-radius:12px;padding:12px;font-size:13px;line-height:1.7;color:#16243f">
-      📞 ご入力の電話番号に、担当から<b>お電話でご案内</b>します（受付 9:00〜19:00 年中無休）。<br>非通知・知らない番号の着信拒否を設定している場合は解除をお願いします。
+    <div id="telBox" style="display:none;margin-top:10px;background:#f2f6fd;border:1.5px solid #0a2e80;border-radius:12px;padding:14px 12px;text-align:center;color:#16243f">
+      <div style="font-size:13px;font-weight:700">お電話でのご相談はこちら</div>
+      <a id="telCall" href="tel:05017246197" style="display:block;margin:8px 0 6px;background:#0a2e80;color:#fff;font-size:22px;font-weight:900;letter-spacing:.04em;padding:13px;border-radius:12px;text-decoration:none">📞 050-1724-6197</a>
+      <div style="font-size:12px;color:#475569">受付 9:00〜19:00（年中無休）</div>
     </div>
-    <div id="emailBox" style="display:none">
-      <div class="q">✉️ メールアドレス <span class="req">必須</span></div>
+    <div id="emailBox" style="display:none" class="mform">
+      <label class="q" for="email">メールアドレス <span class="req">必須</span></label>
       <input type="email" id="email" placeholder="example@email.com" inputmode="email" autocomplete="email">
+      <label class="q" for="email2">メールアドレス（確認用） <span class="req">必須</span></label>
+      <input type="email" id="email2" placeholder="もう一度入力してください" inputmode="email" autocomplete="off">
+      <label class="q" for="mailBody">お問い合わせ内容 <span class="opt">任意</span></label>
+      <textarea id="mailBody" rows="5" placeholder="ご希望の車種・期間・お届け先などご自由にご記入ください"></textarea>
+      <div class="mnote">担当が在庫を確認し、入力いただいたメールアドレスへ車両と料金をご返信します。</div>
     </div>
     <details class="more"><summary>ご要望を追加（任意）</summary>
       <div class="q">👤 ご利用区分</div>
@@ -292,11 +303,34 @@ document.getElementById("ctGrid").addEventListener("click",function(e){
   $("emailBox").style.display=contact==="mail"?"block":"none";
   $("lineBox").style.display=contact==="line"?"block":"none";
   $("telBox").style.display=contact==="tel"?"block":"none";
+  // 電話は番号を出すだけ（送信ボタン等は出さない）／メールは一般的なフォーム表示
+  document.querySelector("#s1 details.more").style.display=(contact==="tel"||contact==="mail")?"none":"";
+  $("afterTxt").style.display=(contact==="tel"||contact==="mail")?"none":"";
+  $("submitBtn").style.display=contact==="tel"?"none":"";
+  $("submitBtn").textContent=contact==="mail"?"この内容で送信する ▶":"送信する ▶";
   try{window.KDT&&KDT.event&&KDT.event("click","dz_contact_"+contact);}catch(_){}
 });
 const CTJP={chat:"チャット",mail:"メール",line:"公式LINE",tel:"電話"};
 document.getElementById("lineAdd").href=(STORE==="nha")?"https://lin.ee/jMU6xdJ":"https://lin.ee/g6iDNYz";
 document.getElementById("lineAdd").addEventListener("click",function(){try{window.KDT&&KDT.event&&KDT.event("click","dz_line_add");}catch(_){}});
+// 電話発信ボタン: お名前・電話番号が入力済みなら、内容を管理画面とSlackにも残す（担当が着信と照合できるように）
+$("telCall").addEventListener("click",function(){
+  try{window.KDT&&KDT.event&&KDT.event("click","dz_tel_call");}catch(_){}
+  if(!$("name").value.trim()||!$("tel").value.trim()||ranks.length===0)return;
+  try{fetch(FN,{method:"POST",keepalive:true,headers:{apikey:ANON,Authorization:"Bearer "+ANON,"Content-Type":"application/json"},body:JSON.stringify(buildBody())});}catch(_){}
+});
+function buildBody(){
+  var extra=contact==="mail"?$("mailBody").value.trim():$("memo").value.trim();
+  return {
+    action:"create", brand:"hdm", store:STORE,
+    use_case:$("use_case").value==="wait"?"other":$("use_case").value, start_date:$("undated").checked?"":$("start_date").value, end_date:$("undated").checked?"":$("end_date").value,
+    period_note:$("period_note").value.trim(),
+    del_place:$("place").value.trim(), col_place:"", same_col:true,
+    cust_type:contact==="mail"?"individual":$("cust_type").value, company:contact==="mail"?"":$("company").value.trim(),
+    name:$("name").value.trim(), tel:$("tel").value.trim(), email:contact==="mail"?$("email").value.trim():"",
+    choice1:ranks[0]||"", choice2:ranks[1]||"", choice3:ranks[2]||"", budget:budget, memo:"【ご案内の受け取り方法】"+CTJP[contact]+(contact==="line"?"（お客様から公式LINEに連絡あり次第ご案内）":contact==="tel"?"（お客様が電話発信ボタンを押しました。着信をご確認ください）":"")+"\n"+($("use_case").value==="wait"?"【用途】納車待ち\n":"")+"【1日の予算】"+(budget||"未選択")+(extra?"\n"+extra:"")
+  };
+}
 let sending=false;
 async function submitReq(){
   hideErr("e1");
@@ -306,18 +340,13 @@ async function submitReq(){
   if(!$("name").value.trim())return showErr("e1","お名前を入力してください");
   if(!$("tel").value.trim())return showErr("e1","電話番号を入力してください");
   if(!contact)return showErr("e1","ご案内の受け取り方法を選んでください");
+  if(contact==="tel")return;
   if(contact==="mail"&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test($("email").value.trim()))return showErr("e1","メールアドレスを正しく入力してください");
+  if(contact==="mail"&&$("email").value.trim()!==$("email2").value.trim())return showErr("e1","確認用のメールアドレスが一致しません");
   if(sending)return; sending=true;
   $("submitBtn").disabled=true; $("spin").style.display="block";
-  var body={
-    action:"create", brand:"hdm", store:STORE,
-    use_case:$("use_case").value==="wait"?"other":$("use_case").value, start_date:$("undated").checked?"":$("start_date").value, end_date:$("undated").checked?"":$("end_date").value,
-    period_note:$("period_note").value.trim(),
-    del_place:$("place").value.trim(), col_place:"", same_col:true,
-    cust_type:$("cust_type").value, company:$("company").value.trim(),
-    name:$("name").value.trim(), tel:$("tel").value.trim(), email:$("email").value.trim(),
-    choice1:ranks[0]||"", choice2:ranks[1]||"", choice3:ranks[2]||"", budget:budget, memo:"【ご案内の受け取り方法】"+CTJP[contact]+(contact==="line"?"（お客様から公式LINEに連絡あり次第ご案内）":contact==="tel"?"（ご入力の電話番号へ折り返しでご案内）":"")+"\n"+($("use_case").value==="wait"?"【用途】納車待ち\n":"")+"【1日の予算】"+budget+($("memo").value.trim()?"\n"+$("memo").value.trim():"")
-  };
+  var body=buildBody();
+
   try{
     var r=await fetch(FN,{method:"POST",headers:{apikey:ANON,Authorization:"Bearer "+ANON,"Content-Type":"application/json"},body:JSON.stringify(body)});
     var j=await r.json();
