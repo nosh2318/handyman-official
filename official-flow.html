@@ -271,6 +271,16 @@ select.fld:focus{box-shadow:0 0 0 3px rgba(250,190,0,.35)}
 .cta button{margin-left:auto;background:var(--y);color:#10203f;border:0;border-radius:10px;padding:13px 26px;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;white-space:nowrap}
 .cta .tot{flex:1 1 auto;min-width:0}
 @media(max-width:430px){.cta{gap:7px;padding:10px 12px;margin:0 -12px -60px}.cta button{padding:12px 15px;font-size:13.5px}.cta .tot{font-size:10.5px}.cta .tot b{font-size:16px;margin-left:2px}#ctaBack{padding:11px 11px!important;font-size:12px!important}}
+
+/* ===== セクションの区切り（2026-10-12・トップと統一）：濃いめの背景＋各ブロックを白い枠に ===== */
+body{background:#c6d0de}
+.steps{background:#fff;border-radius:16px;padding:12px 8px 12px!important;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,22,63,.06)}
+.sec{background:#fff;border:1px solid #d7dfeb;border-radius:16px;padding:18px 16px 16px;box-shadow:0 2px 10px rgba(0,22,63,.06);margin-bottom:14px}
+.sec>.card,.sec>.ins>.card{border:0;padding:0}
+.sec>.card{background:transparent}
+.sec.locked{background:#f4f6fa}
+.hint{margin-top:10px}
+@media(min-width:821px){.sec{padding:24px 26px 22px}}
 </style></head>
 <body>
 <!-- Google Tag Manager (noscript) -->
