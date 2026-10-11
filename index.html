@@ -303,6 +303,24 @@ footer .brand{font-size:20px}
 footer .lk{margin-top:12px;font-size:12px;line-height:2.1}
 footer a{color:var(--mut);text-decoration:none;margin:0 8px;white-space:nowrap;display:inline-block}
 .devtag{background:#fff7ed;color:#b45309;font-size:11px;text-align:center;padding:7px;font-weight:800}
+
+/* ===== セクションの区切り（2026-10-12）：各ブロックを枠で独立させ、見出しを統一 ===== */
+body{background:#e9eef5}
+.search{background:transparent!important;border-top:0!important;padding:14px 12px 4px}
+.searchIn{background:#fff;border:2px solid var(--y);border-radius:16px;box-shadow:0 10px 28px rgba(0,22,63,.12);position:relative;padding-top:30px!important}
+.searchIn:before{content:"🔍 空車と料金をさがす";position:absolute;top:-1px;left:16px;transform:translateY(-50%);background:var(--y);color:#10203f;font-weight:900;font-size:12.5px;letter-spacing:.06em;padding:5px 14px;border-radius:999px}
+html[lang="en"] .searchIn:before{content:"🔍 Find a car"}
+.stores,.dband,.gallery,.cars,.voices,.news,#guide{background:transparent!important;padding:14px 12px!important}
+.stores>.wrap,.gallery>.wrap,.cars>.wrap,.voices>.wrap,.news>.wrap,#guide>.wrap{background:#fff;border:1px solid #d7dfeb;border-radius:16px;padding:26px 18px 22px!important;box-shadow:0 2px 10px rgba(0,22,63,.05);max-width:1080px;margin:0 auto}
+.dband>div:first-child{display:none!important}
+.dband .dcard{border-left:6px solid #33c2b1!important;border-radius:16px!important;position:relative;margin-top:12px!important}
+.dband .dcard:before{content:"別のサービス";position:absolute;top:0;left:16px;transform:translateY(-50%);background:#33c2b1;color:#04221f;font-size:11.5px;font-weight:900;letter-spacing:.08em;padding:4px 12px;border-radius:999px;z-index:2}
+html[lang="en"] .dband .dcard:before{content:"Other service"}
+.shead,.voices .shead{text-align:left!important;margin:0 0 18px!important;padding-left:12px;border-left:5px solid var(--y)}
+.shead .en,.voices .en.cap{font-family:inherit!important;font-style:normal!important;font-size:11px!important;font-weight:900!important;letter-spacing:.2em!important;color:#5a6b85!important}
+.shead .jp,.voices .jp{font-size:19px!important;font-weight:900!important;color:#0a1f44!important;letter-spacing:.02em!important;margin-top:2px}
+.sttitle{text-align:left!important;padding-left:12px;border-left:5px solid var(--y);font-size:19px!important;margin-bottom:16px!important}
+@media(min-width:821px){.search{padding:0 18px;margin-top:-34px;position:relative;z-index:6}.stores,.dband,.gallery,.cars,.voices,.news,#guide{padding:18px 18px!important}.stores>.wrap,.gallery>.wrap,.cars>.wrap,.voices>.wrap,.news>.wrap,#guide>.wrap{padding:34px 32px 28px!important}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"レンタカー HANDYMAN","alternateName":"HANDYMAN RENTCAR","url":"https://rent-handyman.com/","logo":"https://rent-handyman.com/official-clone/img/common/img_logo_v2.png","telephone":"050-1724-6197","sameAs":["https://www.instagram.com/delivery_rentalcar_handyman","https://www.facebook.com/p/%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%83%E3%83%97-HandyMan-100091745645173/"],"department":[
@@ -460,7 +478,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- 代車バナー -->
 <!-- 代車のお届け＝レンタカーとは別カテゴリ（事故・車検・修理向け）→ ティール系で区別 -->
-<section style="background:#fff;padding:22px 16px 14px">
+<section class="dband" style="background:#fff;padding:22px 16px 14px">
   <div style="max-width:1080px;margin:0 auto 12px;display:flex;align-items:center;gap:10px;color:#7d8ba0;font-size:11px;font-weight:900;letter-spacing:.16em">
     <span style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#d0d8e4)"></span>別のサービス ／ OTHER SERVICE<span style="flex:1;height:1px;background:linear-gradient(90deg,#d0d8e4,transparent)"></span>
   </div>
@@ -491,10 +509,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- CAR TYPE -->
 <section class="cars" id="cars"><div class="wrap"><div class="shead"><div class="en cap">CAR TYPE</div><div class="jp" data-i18n="cars_jp">取扱車種・料金</div></div>
   <div class="cttabs" id="cttabs"><button type="button" class="cttab on" data-a="naha" onclick="ctTab('naha')" data-i18n="tab_naha">那覇空港店</button><button type="button" class="cttab" data-a="sapporo" onclick="ctTab('sapporo')" data-i18n="tab_sapporo">札幌店</button><button type="button" class="cttab" data-a="takamatsu" onclick="ctTab('takamatsu')" data-i18n="tab_takamatsu">高松空港店</button></div>
-  </div>
   <div class="canote" id="canote" style="display:none"></div>
   <div class="cagrid" id="cagrid" style="display:none"></div>
   <div class="camore" id="camore" style="display:none"></div>
+</div>
 </section>
 
 <div class="glb" id="glb" onclick="if(event.target===this)closeLB()"><button class="gclose" onclick="closeLB()" aria-label="閉じる">×</button><img src="" alt=""></div>
