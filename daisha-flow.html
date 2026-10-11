@@ -138,9 +138,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <input type="text" id="name" placeholder="山田 太郎" autocomplete="name">
     <div class="q">📞 電話番号 <span class="req">必須</span></div>
     <input type="tel" id="tel" placeholder="09012345678" inputmode="tel" autocomplete="tel">
-    <details class="more"><summary>メール・ご要望を追加（任意）</summary>
-      <div class="q">✉️ メールアドレス</div>
+    <div class="q">📨 ご案内の受け取り方法 <span class="req">必須</span></div>
+    <div class="bud" id="ctGrid" style="grid-template-columns:1fr 1fr 1fr">
+      <button type="button" data-v="chat">💬 チャット</button>
+      <button type="button" data-v="mail">✉️ メール</button>
+      <button type="button" data-v="line">🟢 公式LINE</button>
+    </div>
+    <div id="emailBox" style="display:none">
+      <div class="q">✉️ メールアドレス <span class="req">必須</span></div>
       <input type="email" id="email" placeholder="example@email.com" inputmode="email" autocomplete="email">
+    </div>
+    <details class="more"><summary>ご要望を追加（任意）</summary>
       <div class="q">👤 ご利用区分</div>
       <select id="cust_type"><option value="individual">個人</option><option value="business">事業者（整備工場・法人など）</option></select>
       <div class="q" id="companyQ" style="display:none">🏢 会社名・工場名</div>
@@ -148,10 +156,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="q">📝 ご要望・メモ</div>
       <textarea id="memo" placeholder="回収先が別の場所／チャイルドシート希望 など"></textarea>
     </details>
-    <div class="after">💬 送信すると、そのまま<b>チャット画面</b>に移ります。担当が在庫を確認し、車両と料金をチャットでご案内します（この時点では予約は確定しません）。</div>
+    <div class="after" id="afterTxt">💬 担当が在庫を確認し、車両と料金を<b>選んだ方法</b>でご案内します（この時点では予約は確定しません）。</div>
     <div class="spin" id="spin"></div>
     <div class="err" id="e1"></div>
-    <div class="nav"><button class="prev" onclick="go(0)">◀ 条件</button><button class="next" id="submitBtn" onclick="submitReq()">送信してチャットへ ▶</button></div>
+    <div class="nav"><button class="prev" onclick="go(0)">◀ 条件</button><button class="next" id="submitBtn" onclick="submitReq()">送信する ▶</button></div>
   </div>
 
   <!-- DONE -->
@@ -159,7 +167,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="done">
       <div class="ic">✅</div>
       <h2>リクエストを受け付けました</h2>
-      <p>担当が在庫を確認し、お出しできる車両を<b>チャットでご提案</b>します。<br>下のボタンから、そのままチャットでやり取りできます。<br><b>このページのURLは大切に保管してください。</b></p>
+      <p id="doneTxt">担当が在庫を確認し、お出しできる車両を<b>チャットでご提案</b>します。<br>下のボタンから、そのままチャットでやり取りできます。<br><b>このページのURLは大切に保管してください。</b></p>
+      <a class="go" id="lineLink" href="https://lin.ee/g6iDNYz" target="_blank" rel="noopener" style="display:none;background:#06c755;color:#fff">🟢 公式LINEを開く</a>
       <a class="go" id="chatLink" href="#">💬 チャットを開く</a>
       <p style="font-size:11.5px;color:#94a3b8;margin-top:14px">お急ぎの場合はお電話でも承ります<br>📞 050-1724-6197（受付 9:00〜19:00 年中無休）</p>
     </div>
@@ -251,6 +260,14 @@ function renderSummary(){
   var t=AREAJP+" ／ "+(UCJP[$("use_case").value]||"-")+" ／ "+periodText();
   $("condSum").innerHTML=t.replace(/</g,"&lt;")+'<a href="#" onclick="go(0);return false">変更</a>';
 }
+let contact="";
+document.getElementById("ctGrid").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;contact=b.getAttribute("data-v");
+  this.querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b)});
+  $("emailBox").style.display=contact==="mail"?"block":"none";
+  try{window.KDT&&KDT.event&&KDT.event("click","dz_contact_"+contact);}catch(_){}
+});
+const CTJP={chat:"チャット",mail:"メール",line:"公式LINE"};
 let sending=false;
 async function submitReq(){
   hideErr("e1");
@@ -259,6 +276,8 @@ async function submitReq(){
   if(!$("place").value.trim())return showErr("e1","お届け先を入力してください");
   if(!$("name").value.trim())return showErr("e1","お名前を入力してください");
   if(!$("tel").value.trim())return showErr("e1","電話番号を入力してください");
+  if(!contact)return showErr("e1","ご案内の受け取り方法を選んでください");
+  if(contact==="mail"&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test($("email").value.trim()))return showErr("e1","メールアドレスを正しく入力してください");
   if(sending)return; sending=true;
   $("submitBtn").disabled=true; $("spin").style.display="block";
   var body={
@@ -268,7 +287,7 @@ async function submitReq(){
     del_place:$("place").value.trim(), col_place:"", same_col:true,
     cust_type:$("cust_type").value, company:$("company").value.trim(),
     name:$("name").value.trim(), tel:$("tel").value.trim(), email:$("email").value.trim(),
-    choice1:ranks[0]||"", choice2:ranks[1]||"", choice3:ranks[2]||"", budget:budget, memo:($("use_case").value==="wait"?"【用途】納車待ち\n":"")+"【1日の予算】"+budget+($("memo").value.trim()?"\n"+$("memo").value.trim():"")
+    choice1:ranks[0]||"", choice2:ranks[1]||"", choice3:ranks[2]||"", budget:budget, memo:"【ご案内の受け取り方法】"+CTJP[contact]+(contact==="line"?"（お客様から公式LINEに連絡あり次第ご案内）":"")+"\n"+($("use_case").value==="wait"?"【用途】納車待ち\n":"")+"【1日の予算】"+budget+($("memo").value.trim()?"\n"+$("memo").value.trim():"")
   };
   try{
     var r=await fetch(FN,{method:"POST",headers:{apikey:ANON,Authorization:"Bearer "+ANON,"Content-Type":"application/json"},body:JSON.stringify(body)});
@@ -281,8 +300,17 @@ async function submitReq(){
       $("sdone").style.display="block";
       try{window.KDT&&KDT.step&&KDT.step("done",3);}catch(e){}
       window.scrollTo(0,0);
-      // 3秒後に自動でチャットへ
-      setTimeout(function(){location.href=url;},3500);
+      if(contact==="chat"){
+        // 3秒後に自動でチャットへ
+        setTimeout(function(){location.href=url;},3500);
+      }else if(contact==="mail"){
+        $("doneTxt").innerHTML="担当が在庫を確認し、お出しできる車両と料金を<b>メール（"+$("email").value.trim().replace(/</g,"&lt;")+"）</b>でご案内します。<br>届かない場合は迷惑メールフォルダもご確認ください。<br>チャットでのやり取りもできます。";
+        $("chatLink").textContent="💬 チャットも開く（任意）";
+      }else{
+        $("doneTxt").innerHTML="下のボタンから<b>HANDYMAN"+(STORE==="nha"?"那覇空港店":"札幌店")+"の公式LINE</b>を友だち追加し、<b>「代車 "+$("name").value.trim().replace(/</g,"&lt;")+"」</b>とお送りください。<br>担当が車両と料金をLINEでご案内します。";
+        $("lineLink").href=STORE==="nha"?"https://lin.ee/jMU6xdJ":"https://lin.ee/g6iDNYz";$("lineLink").style.display="block";$("lineLink").style.marginBottom="10px";
+        $("chatLink").textContent="💬 チャットも開く（任意）";
+      }
     }else{
       showErr("e1",j.error||"送信に失敗しました。時間をおいて再度お試しください");
     }
