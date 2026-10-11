@@ -188,6 +188,8 @@ for key,slug,fn,store,kd,desc in PAGES:
             p=f"trans/{key}_{L}.html"
             if not os.path.exists(p): print("MISSING translation",p); body="<p>(translation pending)</p>"
             else: body=open(p).read()
+        if kind=="faq":
+            import qa; body=qa.transform(body)
         h=f'<h1>{TITLES[kind][L]}</h1><div class="sub">HANDYMAN RENTCAR {STORE_L[store][L]}</div>'
         secs.append(f'<section class="lg" data-lang="{L}" lang="{ {"zh":"zh-Hant"}.get(L,L) }">{h}{body}</section>')
     title=TITLES[kind]["ja"]
