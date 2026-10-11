@@ -694,6 +694,20 @@ const TX={
   trb_f3:{ja:"空き車両がないと代車をご用意できない場合があります",en:"Without an available vehicle, a replacement may not be possible",zh:"若無空車，可能無法提供代步車",ko:"여유 차량이 없으면 대차를 준비하지 못할 수 있습니다"},
   trb_f4:{ja:"パンク・バースト費用は原則お客様負担です",en:"Flat tire / blowout costs are generally your expense",zh:"爆胎費用原則由客戶負擔",ko:"펑크·파열 비용은 원칙적으로 고객 부담입니다"},
   trb_fine:{ja:"保険適用は契約・事案により異なります。手配前に必ず保険会社の確認が必要です。",en:"Insurance coverage varies by contract and case. Confirmation with the insurer is required before any arrangement.",zh:"保險適用依合約與個案而異。安排前務必向保險公司確認。",ko:"보험 적용은 계약·사안에 따라 다릅니다. 수배 전 반드시 보험사 확인이 필요합니다."},
+  // ⛽ 周辺ガソリンスタンド（BUDDICAご利用ガイド guide/index.html の gasCard と同一内容・2026-10-11移植）
+  sec_gas:{ja:"周辺ガソリンスタンド",en:"Nearby Gas Stations",zh:"周邊加油站",ko:"주변 주유소"},
+  gas_lead:{ja:"満タン返却のため、ご返却前にお近くのガソリンスタンドで給油をお願いします。",en:"Please refuel at a nearby gas station before returning (full-tank return required).",zh:"還車需加滿油，還車前請至附近加油站加油。",ko:"만탱크 반납을 위해 반납 전 가까운 주유소에서 주유해 주세요."},
+  gas_n1:{ja:"満タン返却が必要（返却前に給油してください）",en:"Full-tank return required (refuel before return)",zh:"需加滿油還車（還車前請加油）",ko:"만탱크 반납 필요 (반납 전 주유)"},
+  gas_n2:{ja:"後払い不可（ガソリン代は現地精算）",en:"No post-payment (pay for fuel on site)",zh:"不可後付（油費現場結算）",ko:"후불 불가 (연료비는 현장 결제)"},
+  gas_n3:{ja:"油種間違い注意（車両指定の油種を確認）",en:"Use correct fuel type (check the car's specified fuel)",zh:"注意油種（請確認車輛指定油種）",ko:"유종 주의 (차량 지정 유종 확인)"},
+  gas_addr:{ja:"住所",en:"Address",zh:"地址",ko:"주소"},
+  gas_tel:{ja:"電話",en:"Tel",zh:"電話",ko:"전화"},
+  gas_hours:{ja:"営業時間",en:"Hours",zh:"營業時間",ko:"영업시간"},
+  gas1_h:{ja:"月〜金 7:00-20:30／土 7:00-20:00／日祝 8:00-19:00",en:"Mon–Fri 7:00-20:30 / Sat 7:00-20:00 / Sun & Hol 8:00-19:00",zh:"週一至週五 7:00-20:30／週六 7:00-20:00／週日及假日 8:00-19:00",ko:"월~금 7:00-20:30 / 토 7:00-20:00 / 일·공휴일 8:00-19:00"},
+  gas2_h:{ja:"給油 7:00-24:00",en:"Fueling 7:00-24:00",zh:"加油 7:00-24:00",ko:"주유 7:00-24:00"},
+  gas3_h:{ja:"毎日 0:00-1:00・2:00-24:00（1:00-2:00休止）",en:"Daily 0:00-1:00 & 2:00-24:00 (closed 1:00-2:00)",zh:"每日 0:00-1:00、2:00-24:00（1:00-2:00暫停）",ko:"매일 0:00-1:00·2:00-24:00 (1:00-2:00 중지)"},
+  gas_open_map:{ja:"📍 Googleマップで開く",en:"📍 Open in Google Maps",zh:"📍 用Google地圖開啟",ko:"📍 Google 지도에서 열기"},
+  gas_note:{ja:"⚠️ カーナビはMAPCODE、スマホはリンクを推奨。住所検索は別地点へ案内される場合があります。営業時間・休日は変更になる場合がありますので、出発前に最新情報をご確認ください。",en:"⚠️ Use MAPCODE for car navigation and the link on smartphones. Address search may lead to a different spot. Hours/holidays may change — please check the latest info before departure.",zh:"⚠️ 車用導航建議用MAPCODE，手機建議用連結。地址搜尋可能導向其他地點。營業時間及公休可能變更，出發前請確認最新資訊。",ko:"⚠️ 차량 내비게이션은 MAPCODE, 스마트폰은 링크를 권장합니다. 주소 검색은 다른 지점으로 안내될 수 있습니다. 영업시간·휴일은 변경될 수 있으니 출발 전 최신 정보를 확인해 주세요."},
 };
 const OTANAME={J:{ja:"じゃらん",en:"Jalan",zh:"Jalan",ko:"Jalan"},R:{ja:"楽天トラベル",en:"Rakuten Travel",zh:"樂天旅遊",ko:"라쿠텐 트래블"},S:{ja:"skyticket",en:"skyticket",zh:"skyticket",ko:"skyticket"},O:{ja:"エアトリ",en:"Airtrip",zh:"Airtrip",ko:"에어트립"},RC:{ja:"レンタカードットコム",en:"Rentalcars.com",zh:"Rentalcars",ko:"렌터카닷컴"},G:{ja:"GoGoOut",en:"GoGoOut",zh:"GoGoOut",ko:"GoGoOut"},HP:{ja:"公式サイト",en:"Official site",zh:"官方網站",ko:"공식 사이트"},SP:{ja:"公式サイト",en:"Official site",zh:"官方網站",ko:"공식 사이트"},direct:{ja:"直販",en:"Direct",zh:"直營",ko:"직판"},KEYDROP:{ja:"KEYDROP",en:"KEYDROP",zh:"KEYDROP",ko:"KEYDROP"}};
 function otaName(o){const e=OTANAME[o];return e?(e[L]||e.ja):(o||"-");}
@@ -1330,6 +1344,51 @@ function render(){
     </div>
 
     <div style="font-size:11px;color:#64748b;margin-top:14px;text-align:center;line-height:1.6">${t('trb_fine')}</div>
+    </div>
+  </details>
+
+  <!-- ⛽ 周辺ガソリンスタンド（BUDDICAご利用ガイド gasCard と同一仕様・内容） -->
+  <details class="acc" id="gasCard">
+    <summary><span class="ic">⛽</span>${t('sec_gas')}<span class="chev">▾</span></summary>
+    <div class="accb">
+    <div class="note" style="margin:0 0 10px">${t('gas_lead')}</div>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+      <div style="background:#2a1416;border:1px solid #5b2327;border-radius:8px;padding:8px 10px;color:#ffd7d9;font-size:12.5px;font-weight:700;"><span style="color:#ff6b6b;">①</span> ${t('gas_n1')}</div>
+      <div style="background:#2a1416;border:1px solid #5b2327;border-radius:8px;padding:8px 10px;color:#ffd7d9;font-size:12.5px;font-weight:700;"><span style="color:#ff6b6b;">②</span> ${t('gas_n2')}</div>
+      <div style="background:#2a1416;border:1px solid #5b2327;border-radius:8px;padding:8px 10px;color:#ffd7d9;font-size:12.5px;font-weight:700;"><span style="color:#ff6b6b;">③</span> ${t('gas_n3')}</div>
+    </div>
+
+    <div style="border:1px solid #2a2a30;border-radius:12px;padding:12px;margin-top:10px;background:#15151a;">
+      <div style="font-weight:800;color:#FABE00;font-size:15px;">① apollostation 香南SS</div>
+      <div style="color:#aeb4bd;font-size:12px;margin-top:2px;">株式会社 本田石油</div>
+      <div style="margin-top:8px;font-size:13px;color:#ddd;"><span style="color:#8a94a0;">${t('gas_addr')}</span>：高松市香南町横井1012-2</div>
+      <div style="font-size:13px;color:#ddd;"><span style="color:#8a94a0;">${t('gas_tel')}</span>：<a href="tel:0878793222" style="color:#7db4ff;">087-879-3222</a></div>
+      <div style="font-size:13px;color:#ddd;">MAPCODE：<b>60 241 399*57</b></div>
+      <div style="font-size:13px;color:#ddd;"><span style="color:#8a94a0;">${t('gas_hours')}</span>：${t('gas1_h')}</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=apollostation%20%E9%A6%99%E5%8D%97SS%20%E9%AB%98%E6%9D%BE%E5%B8%82%E9%A6%99%E5%8D%97%E7%94%BA%E6%A8%AA%E4%BA%951012-2" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;background:#0F1F45;color:#fff;font-weight:800;font-size:13px;text-decoration:none;padding:8px 14px;border-radius:8px;">${t('gas_open_map')}</a>
+    </div>
+
+    <div style="border:1px solid #2a2a30;border-radius:12px;padding:12px;margin-top:10px;background:#15151a;">
+      <div style="font-weight:800;color:#FABE00;font-size:15px;">② SOLATO セルフ高松空港SS</div>
+      <div style="color:#aeb4bd;font-size:12px;margin-top:2px;">太陽石油販売株式会社</div>
+      <div style="margin-top:8px;font-size:13px;color:#ddd;"><span style="color:#8a94a0;">${t('gas_addr')}</span>：高松市香川町川東下572-1</div>
+      <div style="font-size:13px;color:#ddd;"><span style="color:#8a94a0;">${t('gas_tel')}</span>：<a href="tel:0878792105" style="color:#7db4ff;">087-879-2105</a></div>
+      <div style="font-size:13px;color:#ddd;">MAPCODE：<b>60 243 386*74</b></div>
+      <div style="font-size:13px;color:#ddd;"><span style="color:#8a94a0;">${t('gas_hours')}</span>：${t('gas2_h')}</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=SOLATO%20%E3%82%BB%E3%83%AB%E3%83%95%E9%AB%98%E6%9D%BE%E7%A9%BA%E6%B8%AFSS%20%E9%AB%98%E6%9D%BE%E5%B8%82%E9%A6%99%E5%B7%9D%E7%94%BA%E5%B7%9D%E6%9D%B1%E4%B8%8B572-1" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;background:#0F1F45;color:#fff;font-weight:800;font-size:13px;text-decoration:none;padding:8px 14px;border-radius:8px;">${t('gas_open_map')}</a>
+    </div>
+
+    <div style="border:1px solid #2a2a30;border-radius:12px;padding:12px;margin-top:10px;background:#15151a;">
+      <div style="font-weight:800;color:#FABE00;font-size:15px;">③ apollostation 空港通りSS</div>
+      <div style="color:#aeb4bd;font-size:12px;margin-top:2px;">出光リテール販売株式会社</div>
+      <div style="margin-top:8px;font-size:13px;color:#ddd;"><span style="color:#8a94a0;">${t('gas_addr')}</span>：高松市香川町大野3-1</div>
+      <div style="font-size:13px;color:#ddd;"><span style="color:#8a94a0;">${t('gas_tel')}</span>：<a href="tel:0878154185" style="color:#7db4ff;">087-815-4185</a></div>
+      <div style="font-size:13px;color:#ddd;">MAPCODE：<b>60 333 627*14</b></div>
+      <div style="font-size:13px;color:#ddd;"><span style="color:#8a94a0;">${t('gas_hours')}</span>：${t('gas3_h')}</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=apollostation%20%E7%A9%BA%E6%B8%AF%E9%80%9A%E3%82%8ASS%20%E9%AB%98%E6%9D%BE%E5%B8%82%E9%A6%99%E5%B7%9D%E7%94%BA%E5%A4%A7%E9%87%8E3-1" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;background:#0F1F45;color:#fff;font-weight:800;font-size:13px;text-decoration:none;padding:8px 14px;border-radius:8px;">${t('gas_open_map')}</a>
+    </div>
+
+    <div style="margin-top:12px;color:#64748b;font-size:11.5px;line-height:1.5;">${t('gas_note')}</div>
     </div>
   </details>
 
