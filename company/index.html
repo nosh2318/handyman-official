@@ -8,154 +8,125 @@
 <meta name="description" content="株式会社Global Lines（グローバルラインズ）は、沖縄・北海道を拠点に、移動（モビリティ）の課題をDXで解決します。配達型レンタカー「HANDYMAN」を運営。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Lora:ital@1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+/* NOT A HOTEL 風：白地・大きく静かな文字・角のない写真・細い罫線・広い余白 */
 :root{
-  --navy:#0a1f44; --navy2:#13315c; --accent:#1ec8b0; --accent2:#0fa896;
-  --gold:#c9a96a; --ink:#14202e; --gray:#5b6b7b; --line:#e7ecf1; --bg:#f7f9fb; --white:#fff;
+  --ink:#141414; --gray:#6e6e6a; --line:#e4e4e0; --bg:#ffffff; --soft:#f6f6f3; --red:#e8323f; --navy:#0a1f44;
+  --en:"Jost","Noto Sans JP",system-ui,sans-serif; --jp:"Noto Sans JP","Hiragino Sans",system-ui,sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:"Noto Sans JP",sans-serif;color:var(--ink);background:var(--white);line-height:1.9;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:var(--jp);color:var(--ink);background:var(--bg);line-height:1.95;letter-spacing:.03em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-.en{font-family:"Montserrat",sans-serif;letter-spacing:.06em}
+.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(18px,5vw,64px)}
+.en{font-family:var(--en);letter-spacing:.12em}
 
 /* header */
-header{position:fixed;top:0;left:0;width:100%;z-index:100;transition:.35s;padding:22px 0}
-header.scrolled{background:rgba(255,255,255,.92);backdrop-filter:blur(10px);box-shadow:0 2px 20px rgba(10,31,68,.07);padding:14px 0}
-.nav{display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:"Montserrat";font-weight:800;font-size:22px;color:#fff;letter-spacing:.02em;transition:.35s}
-.logo b{color:#ff4757}
-header.scrolled .logo{color:var(--navy)}
-.menu{display:flex;gap:34px;align-items:center}
-.menu a{font-family:"Montserrat";font-weight:600;font-size:13px;color:#fff;letter-spacing:.08em;position:relative;transition:.3s}
-header.scrolled .menu a{color:var(--navy)}
-.menu a span{display:block;font-family:"Noto Sans JP";font-size:10px;font-weight:400;opacity:.7;margin-top:2px}
-.menu a:hover{color:var(--accent)}
-.menu .cta{background:var(--accent);color:#042;padding:11px 22px;border-radius:40px;font-size:12px}
-.menu .cta:hover{background:var(--accent2);color:#fff}
-.burger{display:none;flex-direction:column;gap:6px;cursor:pointer;z-index:101}
-.burger span{width:26px;height:2px;background:#fff;transition:.3s}
-header.scrolled .burger span{background:var(--navy)}
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);padding:16px 0}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-family:var(--en);font-weight:500;font-size:15px;letter-spacing:.34em;text-transform:uppercase;color:var(--ink)}
+.logo b{font-weight:500;color:var(--ink);margin-left:.34em}
+.menu{display:flex;gap:30px;align-items:center;margin-left:auto}
+.menu a{font-size:12.5px;color:var(--ink);letter-spacing:.06em}
+.menu a span{display:none}
+.menu a:hover{color:var(--gray)}
+.menu .cta{border:1px solid var(--ink);padding:9px 18px;font-size:12px}
+.menu .cta:hover{background:var(--ink);color:#fff}
+.burger{display:none;flex-direction:column;gap:6px;cursor:pointer;z-index:101;padding:6px}
+.burger span{width:24px;height:1px;background:var(--ink);transition:.3s}
 
 /* hero */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;background:linear-gradient(135deg,#0a1f44 0%,#13315c 55%,#0a3d4d 100%);color:#fff;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background:
-  radial-gradient(circle at 80% 20%,rgba(30,200,176,.22),transparent 40%),
-  radial-gradient(circle at 15% 80%,rgba(201,169,106,.14),transparent 45%)}
-.hero-lines{position:absolute;inset:0;opacity:.13;background-image:linear-gradient(transparent 49.5%,rgba(255,255,255,.5) 50%,transparent 50.5%);background-size:100% 70px;animation:flow 18s linear infinite}
-@keyframes flow{to{background-position:0 700px}}
-.hero-inner{position:relative;z-index:2}
-.hero h1{font-size:clamp(38px,7vw,82px);line-height:1.08;font-weight:800;letter-spacing:.01em}
-.hero h1 .accent{color:#ff4757}
-.hero .sub{font-family:"Lora";font-style:italic;font-size:clamp(15px,2.4vw,22px);color:rgba(255,255,255,.8);margin-top:18px}
-.hero .jp{font-size:clamp(16px,2.6vw,21px);font-weight:500;margin-top:28px;letter-spacing:.04em}
-.hero .scroll{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);font-family:"Montserrat";font-size:11px;letter-spacing:.2em;color:rgba(255,255,255,.6);z-index:2}
-.hero .scroll::after{content:"";display:block;width:1px;height:46px;background:rgba(255,255,255,.4);margin:10px auto 0;animation:sc 2s ease-in-out infinite}
-@keyframes sc{0%,100%{transform:scaleY(.3);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}}
+.hero{padding:clamp(90px,14vw,190px) 0 clamp(60px,8vw,110px)}
+.hero h1{font-family:var(--en);font-weight:300;font-size:clamp(42px,8.4vw,120px);line-height:1.02;letter-spacing:.04em}
+.hero h1 .accent{color:var(--red);font-weight:400}
+.hero .sub{font-family:var(--en);font-size:clamp(13px,1.6vw,16px);letter-spacing:.14em;color:var(--gray);margin-top:28px}
+.hero .jp{font-size:clamp(15px,2vw,19px);margin-top:18px;max-width:34em}
+.hero .scroll,.hero-lines{display:none}
 
 /* sections */
-section{padding:120px 0}
-.shead{margin-bottom:54px}
-.shead .label{font-family:"Montserrat";font-weight:700;font-size:13px;letter-spacing:.22em;color:var(--accent2)}
-.shead h2{font-size:clamp(26px,4vw,40px);font-weight:700;line-height:1.35;margin-top:14px;color:var(--navy)}
-.lead{font-size:16px;color:var(--gray);max-width:760px}
-.lead p{margin-bottom:20px}
+section{padding:clamp(70px,10vw,140px) 0;border-top:1px solid var(--line)}
+.shead{margin-bottom:clamp(36px,5vw,60px);display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.shead .label{font-family:var(--en);font-size:clamp(26px,4vw,44px);font-weight:400;letter-spacing:.18em;color:var(--ink)}
+.shead h2{font-size:13px;font-weight:400;color:var(--gray);letter-spacing:.08em}
+.shead h2.en{font-size:clamp(26px,4vw,44px)!important;font-weight:400;color:var(--ink);letter-spacing:.18em!important}
+.lead{font-size:15px;color:var(--gray);max-width:40em}
+.lead p{margin-bottom:18px}
+.concept .shead{display:block}
+.concept .shead h2{font-size:clamp(22px,3.4vw,36px);color:var(--ink);font-weight:500;line-height:1.6;margin-top:22px;letter-spacing:.04em}
+.concept .big{font-size:clamp(16px,2vw,20px);line-height:1.9;margin-bottom:30px;max-width:36em}
+.concept .big em{font-style:normal;font-family:var(--en);letter-spacing:.08em}
 
-.concept{background:var(--bg)}
-.concept .big{font-size:clamp(22px,3.6vw,34px);font-weight:700;color:var(--navy);line-height:1.6;margin-bottom:36px}
-.concept .big em{font-style:normal;color:var(--accent2)}
-
-/* business cards */
-.biz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px}
-.card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:.4s;display:flex;flex-direction:column}
-.card:hover{transform:translateY(-8px);box-shadow:0 24px 50px rgba(10,31,68,.12);border-color:transparent}
-.card .ph{aspect-ratio:4/3;overflow:hidden;background:var(--navy);position:relative}
-.card .ph img{width:100%;height:100%;object-fit:cover;transition:.6s;position:relative;z-index:1}
-.card:hover .ph img{transform:scale(1.06)}
-/* 横長バナーを切らずに全体表示（背景は同画像のぼかしで充填） */
-.card .ph.fit::before{content:"";position:absolute;inset:-12px;background:var(--bgimg) center/cover no-repeat;filter:blur(20px) brightness(1.04);z-index:0}
-.card .ph.fit img{object-fit:contain}
-.card .body{padding:30px 26px;flex:1;display:flex;flex-direction:column}
-.card h3{font-size:21px;color:var(--navy);margin-bottom:6px}
-.card .area{font-family:"Montserrat";font-size:12px;letter-spacing:.1em;color:var(--accent2);margin-bottom:14px}
-.card p{font-size:14.5px;color:var(--gray);flex:1}
-.card .link{margin-top:18px;font-weight:700;font-size:14px;color:var(--navy);display:inline-flex;align-items:center;gap:8px}
+/* business: ラインナップ風 */
+.biz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:clamp(36px,4vw,56px) clamp(20px,3vw,40px)}
+.card{display:flex;flex-direction:column}
+.card .ph{aspect-ratio:4/3;overflow:hidden;background:var(--soft);position:relative}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s ease}
+.card:hover .ph img{transform:scale(1.03)}
+.card .ph.fit::before{display:none}
+.card .ph.fit img{object-fit:cover}
+.card .credit{position:absolute;right:8px;bottom:6px;font-size:10px;line-height:1.4;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6);letter-spacing:.02em}
+.card .body{padding-top:20px;flex:1;display:flex;flex-direction:column}
+.card .area{order:-1;font-family:var(--en);font-size:11px;letter-spacing:.2em;color:var(--gray);margin-bottom:6px;text-transform:uppercase}
+.card h3{font-size:19px;font-weight:500;letter-spacing:.08em;margin-bottom:10px}
+.card p{font-size:13.5px;color:var(--gray);flex:1;line-height:1.9}
+.card .link{margin-top:16px;font-size:12px;letter-spacing:.08em;color:var(--ink);display:inline-flex;align-items:center;gap:10px;align-self:flex-start;border-bottom:1px solid var(--ink);padding-bottom:2px}
 .card .link::after{content:"→";transition:.3s}
-.card:hover .link::after{transform:translateX(6px)}
-.card .link.soon{color:var(--gray)}
+.card:hover .link::after{transform:translateX(4px)}
+.card .link.soon{color:var(--gray);border-color:var(--line)}
+.card .link.soon::after{content:""}
 
 /* company table */
-.company{background:linear-gradient(180deg,#fff,var(--bg))}
-.ctable{border-top:1px solid var(--line)}
-.ctable .row{display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid var(--line);padding:20px 4px}
-.ctable .row dt{font-family:"Montserrat";font-weight:700;font-size:13px;letter-spacing:.08em;color:var(--accent2);padding-top:3px}
-.ctable .row dd{font-size:15px;color:var(--ink)}
-.ctable .row dd a{color:var(--accent2);text-decoration:underline;text-underline-offset:3px}
+.ctable{border-top:1px solid var(--line);max-width:980px}
+.ctable .row{display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid var(--line);padding:22px 0}
+.ctable .row dt{font-size:13px;color:var(--gray);padding-top:2px}
+.ctable .row dd{font-size:14.5px;min-width:0}
+.ctable .row dd a{text-decoration:underline;text-underline-offset:3px;color:var(--gray);margin-left:8px;font-size:13px}
 
 /* contact */
-.contact{background:var(--navy);color:#fff;text-align:center}
-.contact h2{color:#fff}
-.contact .label{color:var(--accent)}
-.contact .lead{color:rgba(255,255,255,.7);margin:0 auto 40px}
-.btn{display:inline-block;background:var(--accent);color:#042;font-family:"Montserrat";font-weight:700;font-size:15px;letter-spacing:.04em;padding:18px 46px;border-radius:50px;transition:.3s;border:none;cursor:pointer}
-.btn:hover{background:#fff;transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.25)}
-/* contact form */
-.cform{max-width:680px;margin:0 auto;text-align:left}
-.cform .fg{margin-bottom:22px}
-.cform label{display:block;font-size:13px;font-weight:700;letter-spacing:.04em;color:rgba(255,255,255,.85);margin-bottom:9px}
-.cform label .req{color:var(--accent);font-size:11px;margin-left:7px}
-.cform label .opt{color:rgba(255,255,255,.45);font-size:11px;margin-left:7px}
-.cform input,.cform select,.cform textarea{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:11px;padding:15px 16px;color:#fff;font-family:inherit;font-size:15px;transition:.25s;-webkit-appearance:none;appearance:none}
-.cform textarea{min-height:140px;resize:vertical}
-.cform input::placeholder,.cform textarea::placeholder{color:rgba(255,255,255,.35)}
-.cform input:focus,.cform select:focus,.cform textarea:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,.1)}
-.cform select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%231ec8b0' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;padding-right:42px}
-.cform option{color:#14202e}
-.cform .submit-wrap{text-align:center;margin-top:34px}
-.cform .note{font-size:12px;color:rgba(255,255,255,.45);text-align:center;margin-top:18px;line-height:1.7}
+.contact{background:var(--soft)}
+.contact .lead{margin:0 0 44px}
+.btn{display:inline-block;background:var(--ink);color:#fff;font-size:13px;letter-spacing:.14em;padding:18px 56px;transition:.3s;border:1px solid var(--ink);cursor:pointer;font-family:var(--jp)}
+.btn:hover{background:transparent;color:var(--ink)}
+.cform{max-width:720px}
+.cform .fg{margin-bottom:24px}
+.cform label{display:block;font-size:12.5px;letter-spacing:.06em;margin-bottom:8px}
+.cform label .req{color:var(--red);font-size:11px;margin-left:8px}
+.cform label .opt{color:var(--gray);font-size:11px;margin-left:8px}
+.cform input,.cform select,.cform textarea{width:100%;background:#fff;border:1px solid var(--line);border-radius:0;padding:15px 16px;color:var(--ink);font-family:inherit;font-size:15px;-webkit-appearance:none;appearance:none}
+.cform textarea{min-height:150px;resize:vertical}
+.cform input::placeholder,.cform textarea::placeholder{color:#b3b3ae}
+.cform input:focus,.cform select:focus,.cform textarea:focus{outline:none;border-color:var(--ink)}
+.cform select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23141414' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;padding-right:42px}
+.cform .submit-wrap{margin-top:36px}
+.cform .note{font-size:12px;color:var(--gray);margin-top:18px;line-height:1.7}
 
-footer{background:#061331;color:rgba(255,255,255,.55);padding:46px 0;text-align:center;font-size:13px}
-footer .flogo{font-family:"Montserrat";font-weight:800;font-size:20px;color:#fff;margin-bottom:10px}
-footer .flogo b{color:#ff4757}
+footer{border-top:1px solid var(--line);padding:48px 0;font-size:12px;color:var(--gray)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+footer .flogo{font-family:var(--en);font-weight:500;font-size:13px;letter-spacing:.34em;text-transform:uppercase;color:var(--ink)}
+footer .flogo b{font-weight:500;color:var(--ink);margin-left:.34em}
+.showband{display:none}
 
-/* showband */
-.showband{position:relative;line-height:0;background:#fff;overflow:hidden}
-.showband img{width:100%;max-width:1536px;margin:0 auto;display:block}
-.showband::before,.showband::after{content:"";position:absolute;left:0;width:100%;height:16%;z-index:2;pointer-events:none}
-.showband::before{top:0;background:linear-gradient(#f7f9fb,rgba(247,249,251,0))}
-.showband::after{bottom:0;background:linear-gradient(rgba(255,255,255,0),#fff)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.rv{opacity:1;transform:none}
 
-/* reveal */
-.rv{opacity:0;transform:translateY(30px);transition:.8s cubic-bezier(.2,.7,.3,1)}
-.rv.on{opacity:1;transform:none}
-
-@media(max-width:820px){
-  section{padding:80px 0}
-  .menu{position:fixed;inset:0;background:var(--navy);flex-direction:column;justify-content:center;gap:30px;transform:translateX(100%);transition:.4s}
+@media(max-width:860px){
+  .menu{position:fixed;inset:0;background:#111;flex-direction:column;justify-content:center;align-items:flex-start;gap:26px;padding:0 32px;transform:translateX(100%);transition:.4s}
   .menu.open{transform:none}
-  .menu a,header.scrolled .menu a{color:#fff;font-size:18px;text-align:center}
-  .menu .cta{background:var(--accent);color:#042}
-  .burger{display:flex}
-  .ctable .row{grid-template-columns:1fr;gap:6px;padding:18px 4px}
-  .ctable .row dt{padding-top:0}
-  .biz-grid{gap:20px}
-  .shead{margin-bottom:36px}
-  .concept .big{margin-bottom:26px}
+  .menu a{color:#fff;font-size:22px;letter-spacing:.1em}
+  .menu .cta{border-color:#fff;color:#fff;font-size:15px}
+  .burger{display:flex;position:relative}
+  .menu.open ~ .burger span{background:#fff}
+  .menu.open ~ .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .menu.open ~ .burger span:nth-child(2){opacity:0}
+  .menu.open ~ .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .nav{gap:6px}
+  .logo,.logo b{font-size:12px;letter-spacing:.2em}
+  .logo b{margin-left:.2em}
+  .ctable .row{grid-template-columns:1fr;gap:4px;padding:18px 0}
 }
-@media(max-width:520px){
-  .wrap{padding:0 18px}
-  section{padding:64px 0}
-  header{padding:16px 0}
-  .hero{min-height:88vh}
-  .hero .jp{font-size:15px;line-height:1.85}
-  .hero .sub{font-size:13px}
-  .card .body{padding:24px 20px}
-  .btn{padding:16px 36px;font-size:14px}
-  .hero .scroll{display:none}
-}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
@@ -196,12 +167,13 @@ footer .flogo b{color:#ff4757}
   <div class="wrap">
     <div class="shead rv">
       <div class="label">CONCEPT</div>
-      <h2 data-i18n="concept_h2">移動が変わると、旅が変わる。<br>その一歩を、沖縄と北海道から。</h2>
+      <h2 data-i18n="concept_h2">移動を、もっと自由に。<br>体験を、もっと確かに。</h2>
     </div>
-    <p class="big rv" data-i18n="concept_big">私たち Global Lines は、旅とビジネスにおける「移動」の課題を、<br><em>AI-native</em> な発想で解決していきます。</p>
+    <p class="big rv" data-i18n="concept_big">私たち Global Lines は、「移動」と「体験」の課題を、<br><em>AI-native</em> な発想で解決していきます。</p>
     <div class="lead rv">
-      <p data-i18n="concept_p1">国内外から多くの人が訪れる沖縄と北海道。旅行、出張、ワーケーション——目的は違っても、すべての旅は「移動」から始まります。</p>
-      <p data-i18n="concept_p2">その移動を、もっと自由に、もっと心地よく。かけがえのない体験を通じて、大切な人と過ごす時間を増やし、一人でも多くの方の人生を豊かにすることを、私たちは目指しています。</p>
+      <p data-i18n="concept_p1">移動：HANDYMAN と KEY は、レンタカーを空港やホテルまで届け、沖縄・北海道・四国での移動を、もっと自由で心地よいものにします。</p>
+      <p data-i18n="concept_p2">体験：八咫烏 - YATA. は、流氷や紅葉、桜のように、その時その場所でしか会えない日本の自然を、公式の情報にもとづいて伝えます。</p>
+      <p data-i18n="concept_p3">自由に移動できること。本物の体験に出会えること。その一つひとつが、人生を豊かにしていくと、私たちは信じています。</p>
     </div>
   </div>
 </section>
@@ -249,6 +221,15 @@ footer .flogo b{color:#ff4757}
           <span class="link" data-i18n="biz_link">Webサイトを開く</span>
         </div>
       </a>
+      <a class="card rv" href="#business">
+        <div class="ph"><img src="assets/yata-driftice-utoro.jpg" alt="知床ウトロの流氷"><span class="credit">Photo: kkawamura / CC BY 4.0 (Wikimedia Commons)</span></div>
+        <div class="body">
+          <h3 data-i18n="biz_yata_t">八咫烏 - YATA.</h3>
+          <div class="area">Nature Phenomena in Japan</div>
+          <p data-i18n="biz_yata_p">日本の自然には、会える「時」がある。流氷・紅葉・桜など、自然現象にいつ・どこで会えるかを、公式の情報にもとづいて伝えるサービス。</p>
+          <span class="link soon" data-i18n="biz_soon">準備中</span>
+        </div>
+      </a>
     </div>
   </div>
 </section>
@@ -266,7 +247,7 @@ footer .flogo b{color:#ff4757}
       <div class="row"><dt data-i18n="co_rep">代表者</dt><dd data-i18n="co_rep_v">大下 紀孝</dd></div>
       <div class="row"><dt data-i18n="co_hq">本社所在地</dt><dd>〒901-0223　沖縄県豊見城市翁長854-1　MEGAドン・キホーテ豊見城店内6階　<a href="https://maps.google.com/?q=沖縄県豊見城市翁長854-1" target="_blank" rel="noopener" data-i18n="co_map">アクセスマップ</a></dd></div>
       <div class="row"><dt data-i18n="co_spk">札幌オフィス</dt><dd>〒060-0005　北海道札幌市中央区北5条西11丁目15-4　BYYARD　<a href="https://maps.google.com/?q=北海道札幌市中央区北5条西11丁目15-4+BYYARD" target="_blank" rel="noopener" data-i18n="co_map2">アクセスマップ</a></dd></div>
-      <div class="row"><dt data-i18n="co_biz">事業内容</dt><dd data-i18n="co_biz_v">レンタカー事業／カーデリバリーサービスプラットフォーム運営</dd></div>
+      <div class="row"><dt data-i18n="co_biz">事業内容</dt><dd data-i18n="co_biz_v">レンタカー事業／カーデリバリーサービスプラットフォーム運営／自然現象情報サービス「八咫烏 - YATA.」の運営（準備中）</dd></div>
       <div class="row"><dt data-i18n="co_bank">取引銀行</dt><dd>北洋銀行／北海道銀行／沖縄銀行</dd></div>
       <div class="row"><dt data-i18n="co_client">主要取引先</dt><dd>auコマース＆ライフ株式会社</dd></div>
     </dl>
@@ -337,11 +318,11 @@ footer .flogo b{color:#ff4757}
 </footer>
 
 <style>
-.langsw{display:flex;gap:3px;margin-left:16px}
-.langsw button{font:600 11px/1 "Montserrat","Noto Sans JP",sans-serif;padding:6px 8px;border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:6px;cursor:pointer;transition:.2s;white-space:nowrap}
-.langsw button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-.langsw button:hover{border-color:var(--navy)}
-@media(max-width:820px){.langsw{margin-left:auto;margin-right:10px;gap:2px}.langsw button{padding:5px 6px;font-size:10px}}
+.langsw{display:flex;gap:2px;margin-left:18px;align-items:center}
+.langsw::before{content:"🌐";font-size:12px;margin-right:6px}
+.langsw button{font:400 11px/1 var(--en);letter-spacing:.06em;padding:6px 6px;border:0;border-bottom:1px solid transparent;background:none;color:var(--gray);cursor:pointer;white-space:nowrap}
+.langsw button.on{color:var(--ink);border-bottom-color:var(--ink)}
+@media(max-width:860px){.langsw{margin-left:auto;margin-right:6px}.langsw::before{display:none}.langsw button{padding:5px 4px;font-size:10px}}
 </style>
 <script>
 const hd=document.getElementById('hd');
@@ -361,10 +342,11 @@ const I18N={
  nav_contact:{ja:'お問い合わせ',en:'Contact',zh:'聯絡我們',ko:'문의하기'},
  hero_sub:{ja:'移動という体験から、すべての人に、より豊かな人生を。',en:'From the experience of moving, to a richer life for everyone.',zh:'從移動的體驗，到每個人更豐富的人生。',ko:'이동이라는 경험에서, 모두에게 더 풍요로운 삶을.'},
  hero_jp:{ja:'移動という体験から、世界にたくさんの「<span style="color:#ff4757">LINES</span>」を。<br>その一つひとつが、人生を豊かにしていく。',en:'From the experience of moving, we create countless <span style="color:#ff4757">LINES</span> across the world.<br>Each one enriches someone’s life.',zh:'從移動的體驗，為世界創造無數的「<span style="color:#ff4757">LINES</span>」。<br>每一條，都讓人生更加豐富。',ko:'이동이라는 경험에서, 세계에 수많은 「<span style="color:#ff4757">LINES</span>」를.<br>그 하나하나가 인생을 풍요롭게 합니다.'},
- concept_h2:{ja:'移動が変わると、旅が変わる。<br>その一歩を、沖縄と北海道から。',en:'When movement changes, travel changes.<br>That first step, from Okinawa &amp; Hokkaido.',zh:'當移動改變，旅行就會改變。<br>這一步，從沖繩與北海道開始。',ko:'이동이 바뀌면, 여행이 바뀝니다.<br>그 첫걸음을, 오키나와와 홋카이도에서.'},
- concept_big:{ja:'私たち Global Lines は、旅とビジネスにおける「移動」の課題を、<br><em>AI-native</em> な発想で解決していきます。',en:'At Global Lines, we solve the challenges of “movement” in travel and business with an <br><em>AI-native</em> approach.',zh:'Global Lines 以 <br><em>AI-native</em> 的思維，解決旅行與商務中「移動」的課題。',ko:'Global Lines는 여행과 비즈니스의 ‘이동’ 과제를 <br><em>AI-native</em> 발상으로 해결합니다.'},
- concept_p1:{ja:'国内外から多くの人が訪れる沖縄と北海道。旅行、出張、ワーケーション——目的は違っても、すべての旅は「移動」から始まります。',en:'Okinawa and Hokkaido welcome visitors from Japan and abroad. Travel, business, workation — whatever the purpose, every journey begins with movement.',zh:'沖繩與北海道迎接來自國內外的眾多旅客。旅行、出差、工作度假——無論目的為何，所有旅程都始於「移動」。',ko:'국내외에서 많은 사람이 찾는 오키나와와 홋카이도. 여행, 출장, 워케이션—목적은 달라도 모든 여행은 ‘이동’에서 시작됩니다.'},
- concept_p2:{ja:'その移動を、もっと自由に、もっと心地よく。かけがえのない体験を通じて、大切な人と過ごす時間を増やし、一人でも多くの方の人生を豊かにすることを、私たちは目指しています。',en:'We aim to make that movement freer and more comfortable — creating more time with the people who matter, and enriching as many lives as possible through unforgettable experiences.',zh:'我們希望讓移動更自由、更舒適。透過無可取代的體驗，增加與重要之人共度的時光，讓更多人的人生更加豐富，是我們的目標。',ko:'그 이동을 더 자유롭고 편안하게. 소중한 사람과 보내는 시간을 늘리고, 잊지 못할 경험을 통해 한 사람이라도 더 많은 이의 인생을 풍요롭게 하는 것을 지향합니다.'},
+ concept_h2:{ja:'移動を、もっと自由に。<br>体験を、もっと確かに。',en:'Make moving freer.<br>Make experiences more certain.',zh:'讓移動更自由。<br>讓體驗更確實。',ko:'이동을 더 자유롭게.<br>경험을 더 확실하게.'},
+ concept_big:{ja:'私たち Global Lines は、「移動」と「体験」の課題を、<br><em>AI-native</em> な発想で解決していきます。',en:'At Global Lines, we solve the challenges of “moving” and “experiencing” with an <em>AI-native</em> approach.',zh:'Global Lines 以 <em>AI-native</em> 的思維，解決「移動」與「體驗」的課題。',ko:'Global Lines는 ‘이동’과 ‘경험’의 과제를 <em>AI-native</em> 발상으로 해결합니다.'},
+ concept_p1:{ja:'移動：HANDYMAN と KEY は、レンタカーを空港やホテルまで届け、沖縄・北海道・四国での移動を、もっと自由で心地よいものにします。',en:'Moving: HANDYMAN and KEY deliver rental cars to airports and hotels, making getting around Okinawa, Hokkaido and Shikoku freer and more comfortable.',zh:'移動：HANDYMAN 與 KEY 將租車送到機場與飯店，讓在沖繩、北海道與四國的移動更自由、更舒適。',ko:'이동: HANDYMAN과 KEY는 렌터카를 공항과 호텔까지 배달해, 오키나와·홋카이도·시코쿠에서의 이동을 더 자유롭고 편안하게 만듭니다.'},
+ concept_p2:{ja:'体験：八咫烏 - YATA. は、流氷や紅葉、桜のように、その時その場所でしか会えない日本の自然を、公式の情報にもとづいて伝えます。',en:'Experiencing: YATA shows Japan’s nature that can only be met at a certain time and place, such as drift ice, autumn leaves and cherry blossoms, based on official information.',zh:'體驗：八咫烏 - YATA. 根據官方資訊，傳遞流冰、紅葉、櫻花等只有在特定時刻與地點才能遇見的日本自然。',ko:'경험: 八咫烏 - YATA.는 유빙, 단풍, 벚꽃처럼 그때 그곳에서만 만날 수 있는 일본의 자연을 공식 정보를 바탕으로 전합니다.'},
+ concept_p3:{ja:'自由に移動できること。本物の体験に出会えること。その一つひとつが、人生を豊かにしていくと、私たちは信じています。',en:'Being free to move. Meeting real experiences. We believe each of these makes a life richer.',zh:'能夠自由移動，能夠遇見真實的體驗。我們相信，每一件都讓人生更加豐富。',ko:'자유롭게 이동할 수 있는 것. 진짜 경험을 만날 수 있는 것. 그 하나하나가 인생을 풍요롭게 한다고 우리는 믿습니다.'},
  biz_naha_t:{ja:'那覇店',en:'Naha Store',zh:'那霸店',ko:'나하점'},
  biz_naha_p:{ja:'那覇空港の無料送迎「エアポートシャトル」付き。空港やホテルまでお届けし、沖縄の旅を身軽にスタートできます。',en:'Includes a free “Airport Shuttle” at Naha Airport. We deliver to the airport or your hotel so you can start your Okinawa trip hands-free.',zh:'附那霸機場免費接送「Airport Shuttle」。可配送至機場或飯店，讓您輕鬆展開沖繩之旅。',ko:'나하공항 무료 셔틀 포함. 공항·호텔까지 배달해 가볍게 오키나와 여행을 시작하세요.'},
  biz_spk_t:{ja:'札幌店',en:'Sapporo Store',zh:'札幌店',ko:'삿포로점'},
@@ -384,7 +366,10 @@ const I18N={
  co_hq:{ja:'本社所在地',en:'Head Office',zh:'總公司地址',ko:'본사 소재지'},
  co_spk:{ja:'札幌オフィス',en:'Sapporo Office',zh:'札幌辦公室',ko:'삿포로 오피스'},
  co_biz:{ja:'事業内容',en:'Business',zh:'營業項目',ko:'사업 내용'},
- co_biz_v:{ja:'レンタカー事業／カーデリバリーサービスプラットフォーム運営',en:'Rental car business / Car delivery service platform operation',zh:'租車事業／汽車配送服務平台營運',ko:'렌터카 사업／카 딜리버리 서비스 플랫폼 운영'},
+ co_biz_v:{ja:'レンタカー事業／カーデリバリーサービスプラットフォーム運営／自然現象情報サービス「八咫烏 - YATA.」の運営（準備中）',en:'Rental car business / Car delivery service platform operation / Operation of “YATA”, a Japanese nature-phenomena information service (coming soon)',zh:'租車事業／汽車配送服務平台營運／日本自然現象資訊服務「八咫烏 - YATA.」營運（籌備中）',ko:'렌터카 사업／카 딜리버리 서비스 플랫폼 운영／일본 자연현상 정보 서비스 「八咫烏 - YATA.」 운영(준비 중)'},
+ biz_yata_t:{ja:'八咫烏 - YATA.',en:'YATA',zh:'八咫烏 - YATA.',ko:'八咫烏 - YATA.'},
+ biz_yata_p:{ja:'日本の自然には、会える「時」がある。流氷・紅葉・桜など、自然現象にいつ・どこで会えるかを、公式の情報にもとづいて伝えるサービス。',en:'Japan’s nature has its moments. YATA shows when and where you can see natural phenomena such as drift ice, autumn leaves and cherry blossoms, based on official information.',zh:'日本的自然，有能夠相遇的「時刻」。根據官方資訊，告訴您流冰、紅葉、櫻花等自然現象何時、何地能看見的服務。',ko:'일본의 자연에는 만날 수 있는 "때"가 있습니다. 유빙·단풍·벚꽃 등 자연현상을 언제, 어디서 만날 수 있는지 공식 정보를 바탕으로 알려주는 서비스.'},
+ biz_soon:{ja:'準備中',en:'Coming soon',zh:'籌備中',ko:'준비 중'},
  co_bank:{ja:'取引銀行',en:'Banks',zh:'往來銀行',ko:'거래 은행'},
  co_client:{ja:'主要取引先',en:'Key Client',zh:'主要客戶',ko:'주요 거래처'},
  co_map:{ja:'アクセスマップ',en:'Map',zh:'地圖',ko:'지도'},
