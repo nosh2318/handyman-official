@@ -379,7 +379,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- ===== STEP5：確認・決済 ===== -->
   <div id="stepConfirm" style="display:none">
     <div class="sec"><h2 data-i18n="confirm_head">📋 ご予約内容の確認</h2><div class="card" id="confirmBox"></div></div>
-    <div class="sec"><h2 data-i18n="coupon_head">🎟 クーポン</h2><div class="card"><div style="display:flex;gap:8px;align-items:center"><input id="couponInput" autocomplete="off" style="flex:1;height:46px;border:2px solid #d8e0ee;border-radius:10px;padding:0 12px;font-size:14px;text-transform:uppercase;font-family:inherit" data-i18n-ph="cp_ph"><button type="button" onclick="applyCoupon()" data-i18n="cp_apply" style="background:var(--y);color:#1a1a1a;border:0;border-radius:10px;padding:0 20px;height:46px;font-weight:900;cursor:pointer;font-family:inherit">適用</button></div><div id="couponMsg" style="font-size:12.5px;font-weight:800;margin-top:9px"></div><div id="couponHint" data-i18n="cp_hint" style="font-size:11px;color:#5a6b85;margin-top:6px">※ お持ちのクーポンコードを入力してください。</div></div></div>
+    <div class="sec"><h2 data-i18n="coupon_head">🎟 クーポン</h2><div class="card"><div style="display:flex;gap:8px;align-items:center"><input id="couponInput" autocomplete="off" style="flex:1;min-width:0;height:46px;border:2px solid #d8e0ee;border-radius:10px;padding:0 12px;font-size:14px;text-transform:uppercase;font-family:inherit" data-i18n-ph="cp_ph"><button type="button" onclick="applyCoupon()" data-i18n="cp_apply" style="background:var(--y);color:#1a1a1a;border:0;border-radius:10px;padding:0 20px;height:46px;font-weight:900;cursor:pointer;font-family:inherit;flex-shrink:0;white-space:nowrap">適用</button></div><div id="couponMsg" style="font-size:12.5px;font-weight:800;margin-top:9px"></div><div id="couponHint" data-i18n="cp_hint" style="font-size:11px;color:#5a6b85;margin-top:6px">※ お持ちのクーポンコードを入力してください。</div></div></div>
     <div class="sec"><h2 data-i18n="terms_head">📄 貸渡約款</h2><div class="card termsagree" id="termsAgreeCard">
       <div class="termsnote" data-i18n="terms_read">ご予約前に貸渡約款を必ずお読みください（下記をスクロールしてご確認いただけます）。</div>
       <div class="termsbox" id="clauseBox"><div class="loading">貸渡約款を読み込み中…</div></div>
@@ -902,7 +902,7 @@ function renderClause(){var box=document.getElementById('clauseBox');if(!box)ret
     return;}
   var doc=new DOMParser().parseFromString(_clauseHtml,'text/html');var lg=_flowLang();
   var pane=doc.querySelector('.pane[data-lang="'+lg+'"]')||doc.querySelector('.pane[data-lang="ja"]');
-  if(pane){var h=pane.querySelector('.hero');if(h&&h.parentNode)h.parentNode.removeChild(h);box.innerHTML=pane.innerHTML;}
+  if(pane){var h=pane.querySelector('.hero');if(h&&h.parentNode)h.parentNode.removeChild(h);pane.querySelectorAll('.cta').forEach(function(c){if(c.parentNode)c.parentNode.removeChild(c);});box.innerHTML=pane.innerHTML;}
   else box.innerHTML='<div class="loading">貸渡約款を表示できません。別途お問い合わせください。</div>';
 }
 function loadClause(){renderClause();}
