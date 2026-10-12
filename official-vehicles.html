@@ -122,7 +122,7 @@ function setArea(a){
    '<div class="car"><div class="pic">'+carImg(k,a)+'<span class="clschip">'+window.hdmTerm(c.label)+'</span></div>'+
    '<div class="bd"><div class="nm">'+window.hdmTerm(c.vehicles)+'</div><div class="spec">👥 '+_seatsTxt(c.seats)+'</div>'+
    '<div class="pr"><b>¥'+((typeof masterPrice==='function'&&masterPrice(a,k)!=null?masterPrice(a,k):c.price)).toLocaleString()+'</b><small>'+_vd('price_suffix')+'</small></div>'+
-   '<a class="bk" href="index.html#search">'+_vd('book_btn')+'</a></div></div>');
+   '<a class="bk" href="index.html?area='+a+'&class='+encodeURIComponent(k)+'#search">'+_vd('book_btn')+'</a></div></div>');
  }).join('');
 }
 function _renderEquip(){

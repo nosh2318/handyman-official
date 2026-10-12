@@ -476,6 +476,10 @@ if(area==='sapporo')method='delivery'; // 札幌=デリバリー専門(KEYDROP)
 // ★10/13 受取方法を店ごとの対応範囲に正規化（LP・広告・旧ブックマーク等 method 未指定/不正の導線で高松がデリバリーになる不具合の根治）
 // 高松＝無料送迎(空港)・来店のみ（デリバリーなし）→既定は送迎／那覇＝送迎・デリバリー・来店（不正値はTOPの既定=デリバリー）
 (function(){var OK={sapporo:['delivery'],takamatsu:['airport','store']}[area]||['delivery','airport','store'];if(OK.indexOf(method)<0)method=OK[0];})();
+// ★10/13 日程なし(LP・広告等)で来たら、店舗・受取方法を引き継いでTOPの検索欄へ（日程なしで全車「空車」表示→決済時に日付エラー、を防ぐ）
+function searchUrl(){return 'index.html?area='+area+'&method='+method+(P.get('class')?'&class='+encodeURIComponent(P.get('class')):'')+'#search';}
+if(!P.get('pd')||!P.get('rd')){location.replace(searchUrl());}
+try{var _ve=document.querySelector('#vEmpty a');if(_ve)_ve.href=searchUrl();}catch(e){}
 var METHOD={delivery:{t:'🚗 デリバリー（お届け）',label:'お届け先'},airport:{t:'✈️ 無料送迎（空港/駅）',label:'送迎場所'},store:{t:'🏠 来店',label:'来店店舗'}};
 var insPrice={basic:0,cdw:1100,noc:1650};
 var step=P.get('step')||'select';
@@ -543,7 +547,7 @@ document.getElementById('sumbar').innerHTML=
   '<span class="it"><b>'+T('sum_recv')+'</b>'+T('mt_'+MKEY[method])+'</span>'+
   '<span class="it"><b>'+T('sum_dep')+'</b>'+fmtDT(pD,pT)+'</span>'+
   '<span class="it"><b>'+T('sum_ret')+'</b>'+fmtDT(rD,rT)+'</span>'+
-  '<a class="edit" href="index.html#search">'+T('sum_change')+'</a>';
+  '<a class="edit" href="'+searchUrl()+'">'+T('sum_change')+'</a>';
 
 // 受取方法別の入力
 document.getElementById('methodTitle').textContent=T('mt_'+MKEY[method]);

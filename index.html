@@ -701,6 +701,8 @@ window.hdmOnLang=function(){ try{setCar(_ctCur);}catch(e){} try{renderNews();}ca
 // 検索フォーム：店舗連動の車クラスchip（実データ）
 // ★10/08 店舗は毎回「未選択」から始める（ブラウザの「戻る」で前回の店舗が復元されると、店舗未選択の計測と既定値が狂うため）
 window.addEventListener('pageshow',function(e){try{var sel=document.getElementById('areaSel');if(sel&&sel.value){sel.value='';onAreaSel();}}catch(x){}});
+// ★10/13 他ページ(LP・車両一覧・予約画面の「変更」)から来た時は ?area=&method=&class= で店舗・受取方法・車を引き継ぐ（導線ごとに情報がずれるのを防ぐ）
+window.addEventListener('pageshow',function(){try{var q=new URLSearchParams(location.search),a=q.get('area');if(['naha','sapporo','takamatsu'].indexOf(a)<0)return;var sel=document.getElementById('areaSel');sel.value=a;onAreaSel();var m=q.get('method');var c=m&&document.querySelector('#methodChips .chip[data-m="'+m+'"]');if(c&&c.style.display!=='none'){document.querySelectorAll('#methodChips .chip').forEach(function(x){x.classList.remove('on');});c.classList.add('on');}var k=q.get('class');if(k){pickCarType(a,k);}else{var s=document.getElementById('search');if(s)s.scrollIntoView({block:'start'});}}catch(x){}});
 function heroToSearch(){var s=document.getElementById('search');if(s)s.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){var a=document.getElementById('areaSel');if(a)a.focus();},480);}
 function onAreaSel(){
   var raw=document.getElementById('areaSel').value;var a=raw||'naha';var show=!!raw;if(window.KDT&&raw){KDT.setArea(a);}
