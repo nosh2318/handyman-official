@@ -331,12 +331,14 @@ function buildBody(){
     choice1:ranks[0]||"", choice2:ranks[1]||"", choice3:ranks[2]||"", budget:budget, memo:"【ご案内の受け取り方法】"+CTJP[contact]+(contact==="line"?"（お客様から公式LINEに連絡あり次第ご案内）":contact==="tel"?"（お客様が電話発信ボタンを押しました。着信をご確認ください）":"")+"\n"+($("use_case").value==="wait"?"【用途】納車待ち\n":"")+"【1日の予算】"+(budget||"未選択")+(extra?"\n"+extra:"")
   };
 }
-// 問い合わせ管理アプリ(handyman-inquiry)の受信箱(inquiries・store別)にも「代車」として入れる
+// 問い合わせ管理アプリ(handyman-inquiry)の受信箱にも「代車」として入れる（公式お問い合わせと同じ official-inquiry 経由＝main inquiries に保存。keepaliveはCORS事前確認と併用できないため付けない）
+var INQ_EF="https://ggqugvyskyiblxiycpci.supabase.co/functions/v1/official-inquiry";
+var INQ_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdncXVndnlza3lpYmx4aXljcGNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxMDc3NjksImV4cCI6MjA5MzY4Mzc2OX0.uNhWcBd_Dl5nzemZDQfJ8mQV6iY73MwystGGpTRPC18";
 function toInquiry(reqId){
   try{
     var b=buildBody(), extra=b.memo.split("\n").filter(function(l){return l&&l.indexOf("【")!==0}).join("\n");
     var txt="【代車リクエスト】\n受け取り方法："+CTJP[contact]+"\n用途："+(UCJP[$("use_case").value]||"-")+"\n期間："+periodText()+"\nお届け先："+b.del_place+"\n希望車種："+[b.choice1,b.choice2,b.choice3].filter(Boolean).join(" / ")+"\n1日の予算："+(b.budget||"未選択")+(extra?"\nご要望："+extra:"")+(reqId?"\n\n▼代車の管理画面（チャット・料金提案）\nhttps://keydrop.jp/daisha-admin.html?id="+reqId+"&store="+STORE:"");
-    fetch("https://ckrxttbnawkclshczsia.supabase.co/rest/v1/inquiries",{method:"POST",headers:{apikey:ANON,Authorization:"Bearer "+ANON,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify({name:b.name,email:b.email,phone:b.tel,inquiry_type:"代車",inquiry_content:txt,status:"new",store:STORE==="nha"?"naha":"sapporo",source:"official_form",received_at:new Date().toISOString()})}).catch(function(){});
+    fetch(INQ_EF,{method:"POST",headers:{apikey:INQ_KEY,Authorization:"Bearer "+INQ_KEY,"Content-Type":"application/json"},body:JSON.stringify({name:b.name,email:b.email,phone:b.tel,inquiry_type:"代車",inquiry_content:txt,status:"new",store:STORE==="nha"?"naha":"sapporo",source:"official_form"})}).catch(function(){});
   }catch(_){}
 }
 let sending=false;
