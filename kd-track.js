@@ -27,6 +27,8 @@
   function source(){ try{
     var kk='kd_ev_src', cached=sessionStorage.getItem(kk); if(cached) return cached;
     var qp=new URLSearchParams(location.search), s=(qp.get('utm_source')||'').toLowerCase().trim();
+    // Google広告のクリック（自動タグ gclid/gbraid/wbraid）は自然検索と分けて記録する
+    if(qp.get('gclid')||qp.get('gbraid')||qp.get('wbraid')) s='google_ads';
     if(!s){ var r=''; try{ r=document.referrer?new URL(document.referrer).hostname.replace(/^www\./,''):''; }catch(e){}
       if(!r) s='direct'; else if(/google\./.test(r)) s='google'; else if(/yahoo\./.test(r)) s='yahoo';
       else if(/insta/.test(r)) s='instagram'; else if(/face|fb\./.test(r)) s='facebook'; else if(/t\.co|twitter|x\.com/.test(r)) s='x';
