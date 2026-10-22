@@ -325,7 +325,7 @@
    'ETC車載器':{en:'ETC',zh:'ETC',ko:'ETC'},'4WD':{en:'AWD',zh:'4WD',ko:'4WD'},
    'スタッドレスタイヤ':{en:'Snow tires',zh:'雪胎',ko:'스노우 타이어'},'ナビ':{en:'Navigation',zh:'導航',ko:'내비게이션'},'Bluetooth':{en:'Bluetooth',zh:'Bluetooth',ko:'Bluetooth'},
    // 括弧補足
-   '高年式モデル':{en:'newer model',zh:'高年式車款',ko:'최신 연식'},
+   '高年式モデル':{en:'newer model',zh:'高年式車款',ko:'최신 연식'},'高年式':{en:'newer model',zh:'較新車款',ko:'최신 연식'},
    // 送迎/来店の地点名
    '高松空港':{en:'Takamatsu Airport',zh:'高松機場',ko:'다카마쓰공항'},'那覇空港':{en:'Naha Airport',zh:'那覇機場',ko:'나하공항'},'赤嶺駅':{en:'Akamine Sta.',zh:'赤嶺站',ko:'아카미네역'}
   };
