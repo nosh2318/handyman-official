@@ -240,7 +240,9 @@ markIns();
   Promise.all([pP,pD]).then(function(x){
     var m=x[0],dc=x[1];if(!m)return;
     function disc(st,c){var o=dc&&dc[st];if(!o)return 20;var v=o.byClass&&o.byClass[c];return +(v!=null?v:(o.default!=null?o.default:20));}
-    function wk(st,c){var p=m[st]&&m[st].price&&m[st].price[c];var b=p&&+(p.base||p.a||0);if(!b)return null;return Math.round(b*(100-disc(st,c))/100/10)*10;}
+    // ★2026-10-22 月別の基本料金に対応：months[今月(JST)][クラス].base があればそれ、無ければ price.base（公式HPのカード・予約画面の通常日と同じ順）
+    function ymJ(){var d=new Date(Date.now()+9*3600000);return d.getUTCFullYear()+"-"+("0"+(d.getUTCMonth()+1)).slice(-2);}
+    function wk(st,c){var o=m[st]||{},mb=+((((o.months||{})[ymJ()]||{})[c]||{}).base);var p=o.price&&o.price[c];var b=mb>0?mb:(p&&+(p.base||p.a||0));if(!b)return null;return Math.round(b*(100-disc(st,c))/100/10)*10;}
     document.querySelectorAll(".fleet [data-c]").forEach(function(el){var c=el.getAttribute("data-c");
       var a=wk("spk",c);if(a)el.querySelector(".ps").textContent=a.toLocaleString();});
     markIns();
