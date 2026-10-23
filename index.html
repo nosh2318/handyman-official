@@ -745,7 +745,7 @@ function doSearch(){
 }
 /* ===== 🎁 お得オファー（注目クーポンWELCOMEを読み、TOPバー＋離脱ポップに反映。クリックで日程選択へ／予約フローで自動適用） ===== */
 var OFFER_CODE='WELCOME';window._offerCoupon='';window._offerAmt='';
-var OFF_SB='https://ckrxttbnawkclshczsia.supabase.co',OFF_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8';
+var OFF_SB='https://ckrxttbnawkclshczsia.supabase.co',OFF_KEY='sb_publishable_aTVhlY0YD-5BBfI03ZNnsg_MzO_vsIe';
 (function(){try{
   fetch(OFF_SB+'/rest/v1/official_coupons?code=eq.'+OFFER_CODE+'&active=eq.true&select=code,discount_type,discount_value',{headers:{apikey:OFF_KEY,Authorization:'Bearer '+OFF_KEY}})
    .then(function(r){return r.ok?r.json():[];}).then(function(a){
@@ -795,7 +795,7 @@ if(typeof window.hdmOnLang==='function'){var _pl=window.hdmOnLang;window.hdmOnLa
   }
   // ★予約可能期限(book_until)連動：価格マスターの期限まで しか予約日を選べない
   window.__BOOKUNTIL={};
-  var MAIN_URL='https://ckrxttbnawkclshczsia.supabase.co',MAIN_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrcnh0dGJuYXdrY2xzaGN6c2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4Nzg1NTAsImV4cCI6MjA4NzQ1NDU1MH0.kDC_UDVWvcrS97wzqQ3NXP79ewjgYwF4vSFdV7y06S8';
+  var MAIN_URL='https://ckrxttbnawkclshczsia.supabase.co',MAIN_ANON='sb_publishable_aTVhlY0YD-5BBfI03ZNnsg_MzO_vsIe';
   function applyMaxBook(){var a=(document.getElementById('areaSel')||{}).value||'';var st=a==='sapporo'?'spk':(a==='takamatsu'?'tkm':(a==='naha'?'nha':''));var bk=window.__BOOKUNTIL[st]||'';if(pdEl)pdEl.max=bk||'';if(rdEl)rdEl.max=bk||'';}
   function pull(url,key,tbl,map){fetch(url+'/rest/v1/'+tbl+'?key=eq.hdm_official_price&select=value',{headers:{apikey:key,Authorization:'Bearer '+key}}).then(function(r){return r.ok?r.json():null;}).then(function(d){if(!d||!d[0])return;var o;try{o=JSON.parse(d[0].value);}catch(e){return;}Object.keys(map).forEach(function(st){var bu=(o[st]||{}).book_until;if(bu)window.__BOOKUNTIL[st]=bu;if(o[st]&&o[st].price){window.__PRICEMASTER[st]=o[st].price;window.__PRICEMONTHS=window.__PRICEMONTHS||{};window.__PRICEMONTHS[st]=o[st].months||{};}});applyMaxBook();if(window.__CARAREA&&_areaToStore(window.__CARAREA)&&window.__PRICEMASTER[_areaToStore(window.__CARAREA)])setCar(window.__CARAREA);}).catch(function(){});}
   pull(MAIN_URL,MAIN_ANON,'app_settings',{nha:1,spk:1});
