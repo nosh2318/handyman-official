@@ -427,8 +427,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div></div>
 
 <script>
-var P=new URLSearchParams(location.search);
-var area=P.get('area')||'naha';
+var P=(function(q){return {get:function(k){var v=q.get(k);return v==null?null:String(v).replace(/[^A-Za-z0-9_\-:.]/g,'');}};})(new URLSearchParams(location.search)); // ★security 2026-10-23: URL の値をそのまま画面に入れない（反射型XSS対策）。値は英数字・日付・時刻のみ
+var area=P.get('area')||'naha';if(['naha','sapporo','takamatsu'].indexOf(area)<0)area='naha';
 var method=P.get('method')||'delivery';
 function T(k){return (window.hdmT?window.hdmT(k):k);}
 /* ===== 🎟 クーポン（KEYDROP方式・official_check_coupon で検証、割引後の合計を表示。確定はofficial-pay EFがredeem） ===== */
