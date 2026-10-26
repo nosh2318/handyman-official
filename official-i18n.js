@@ -233,7 +233,7 @@
     am_spot_lead:'高松空港1F、国内線到着口の出口付近（地図の赤いピン）が待ち合わせ場所です。ご到着されましたら「レンタカー会社受付」付近でお待ちください。スタッフがHANDYMANのプラカードを持ってお迎えに向かいます。',
     am_ret_h:'🚙 お帰り（店舗 → 高松空港）',am_ret_lead:'ご返却時は、店舗から高松空港まで無料でお送りします。ご搭乗便のお時間に合わせてご出発いただけますので、受付時にご希望の時間をお申し付けください。',
     am_flow_h:'🧭 当日の流れ',am_s1:'高松空港 国内線到着口を出て「レンタカー会社受付」付近でお待ちください。',am_s2:'スタッフ（HANDYMANのプラカード）がお迎えにまいります。',am_s3:'店舗まで約5分。ご契約・お車の確認後、ご出発です。',am_s4:'ご返却時は店舗から高松空港まで無料送迎（ご搭乗便に合わせて出発）。',
-    am_note:'※ 運行時間 9:00–18:50。ご到着・ご返却のお時間はご予約時／公式LINEにてお知らせください。時間外のお受け渡しはご相談ください。',am_back:'← TOPに戻る'},
+    am_note:'※ 運行時間 9:00–18:50。ご到着・ご返却のお時間はご予約時／メール（reserve@rent-handyman.com）にてお知らせください。時間外のお受け渡しはご相談ください。',am_back:'← TOPに戻る'},
    en:{stock:'Stock: ',stock_unit:'',price_on_search:'See price in availability search',tab_takamatsu:'Takamatsu Airport',
     note_takamatsu:'🍜 Takamatsu Airport: for trips around Kagawa & Shikoku. Free airport shuttle & in-store pickup (no delivery).',
     fnote_naha:'Okinawa area, delivery available. Specific model, color and trim cannot be chosen (random within the class).',
@@ -247,7 +247,7 @@
     am_spot_lead:'The meeting point is near the domestic arrivals exit on the 1F of Takamatsu Airport (red pin on the map). On arrival, please wait near the “Rental Car Reception”. Our staff will come to meet you holding a HANDYMAN placard.',
     am_ret_h:'🚙 Return (Store → Takamatsu Airport)',am_ret_lead:'On return, we take you from the store to Takamatsu Airport free of charge. You can depart to match your flight — just tell us your preferred time at check-in.',
     am_flow_h:'🧭 On the day',am_s1:'Exit the domestic arrivals gate at Takamatsu Airport and wait near the “Rental Car Reception”.',am_s2:'Our staff (holding a HANDYMAN placard) will come to meet you.',am_s3:'About 5 min to the store. After the contract & car check, you’re off.',am_s4:'On return, free shuttle from the store to Takamatsu Airport (departs to match your flight).',
-    am_note:'※ Hours 9:00–18:50. Please tell us your arrival/return times when booking or via official LINE. For handover outside hours, please ask.',am_back:'← Back to top'},
+    am_note:'※ Hours 9:00–18:50. Please tell us your arrival/return times when booking or by email (reserve@rent-handyman.com). For handover outside hours, please ask.',am_back:'← Back to top'},
    zh:{stock:'庫存 ',stock_unit:'台',price_on_search:'費用請見空車搜尋',tab_takamatsu:'高松機場店',
     note_takamatsu:'🍜 高松機場店：香川・四國之旅。提供高松機場免費接送・到店取車（無送車服務）。',
     fnote_naha:'沖繩區域・提供送車。無法指定車種・顏色・配備（同車型隨機）。',
@@ -261,7 +261,7 @@
     am_spot_lead:'會合地點在高松機場1F國內線到達口出口附近（地圖上的紅色標記）。抵達後請於「租車公司櫃檯」附近等候，工作人員將手持 HANDYMAN 看板前往迎接。',
     am_ret_h:'🚙 送機（門市 → 高松機場）',am_ret_lead:'還車時，將由門市免費送您至高松機場。可配合您的航班時間出發，請於受理時告知希望的時間。',
     am_flow_h:'🧭 當日流程',am_s1:'走出高松機場國內線到達口，於「租車公司櫃檯」附近等候。',am_s2:'工作人員（手持 HANDYMAN 看板）前往迎接。',am_s3:'至門市約5分鐘。完成合約・車輛確認後即可出發。',am_s4:'還車時由門市免費送至高松機場（配合航班出發）。',
-    am_note:'※ 運行時間 9:00–18:50。抵達・還車時間請於預約時／官方LINE告知。營業時間外之交還請洽詢。',am_back:'← 返回首頁'},
+    am_note:'※ 運行時間 9:00–18:50。抵達・還車時間請於預約時／電子郵件（reserve@rent-handyman.com）告知。營業時間外之交還請洽詢。',am_back:'← 返回首頁'},
    ko:{stock:'재고 ',stock_unit:'대',price_on_search:'요금은 빈차 검색에서',tab_takamatsu:'다카마쓰공항점',
     note_takamatsu:'🍜 다카마쓰공항점: 가가와・시코쿠 여행에. 다카마쓰공항 무료 셔틀・방문 수령 대응(배달 없음).',
     fnote_naha:'오키나와 지역・배달 대응. 차종・색상・사양은 선택할 수 없습니다(같은 클래스 내 랜덤).',
@@ -275,7 +275,7 @@
     am_spot_lead:'만남 장소는 다카마쓰공항 1F 국내선 도착구 출구 부근(지도의 빨간 핀)입니다. 도착하시면 「렌터카 회사 접수처」 부근에서 기다려 주세요. 스태프가 HANDYMAN 팻말을 들고 마중 나갑니다.',
     am_ret_h:'🚙 배웅(매장 → 다카마쓰공항)',am_ret_lead:'반납 시 매장에서 다카마쓰공항까지 무료로 모셔다드립니다. 탑승편 시간에 맞춰 출발하실 수 있으니 접수 시 희망 시간을 말씀해 주세요.',
     am_flow_h:'🧭 당일 흐름',am_s1:'다카마쓰공항 국내선 도착구를 나와 「렌터카 회사 접수처」 부근에서 기다려 주세요.',am_s2:'스태프(HANDYMAN 팻말)가 마중 나갑니다.',am_s3:'매장까지 약 5분. 계약・차량 확인 후 출발합니다.',am_s4:'반납 시 매장에서 다카마쓰공항까지 무료 셔틀(탑승편에 맞춰 출발).',
-    am_note:'※ 운행 시간 9:00–18:50. 도착・반납 시간은 예약 시／공식 LINE으로 알려주세요. 영업시간 외 인수는 문의해 주세요.',am_back:'← 처음으로'}
+    am_note:'※ 운행 시간 9:00–18:50. 도착・반납 시간은 예약 시／이메일(reserve@rent-handyman.com)로 알려주세요. 영업시간 외 인수는 문의해 주세요.',am_back:'← 처음으로'}
   };
   var EXTRA2={
    ja:{am_busbtn:'🚐 高松空港 無料送迎について確認する',am_store_addr:'香川県高松市・高松空港周辺（詳細はご予約時にご案内）',
