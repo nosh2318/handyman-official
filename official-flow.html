@@ -908,7 +908,7 @@ function renderClause(){var box=document.getElementById('clauseBox');if(!box)ret
     return;}
   var doc=new DOMParser().parseFromString(_clauseHtml,'text/html');var lg=_flowLang();
   var pane=doc.querySelector('.pane[data-lang="'+lg+'"]')||doc.querySelector('.pane[data-lang="ja"]');
-  if(pane){var h=pane.querySelector('.hero');if(h&&h.parentNode)h.parentNode.removeChild(h);pane.querySelectorAll('.cta').forEach(function(c){if(c.parentNode)c.parentNode.removeChild(c);});box.innerHTML=pane.innerHTML;}
+  if(pane){var h=pane.querySelector('.hero');if(h&&h.parentNode)h.parentNode.removeChild(h);pane.querySelectorAll('.cta,a.btn').forEach(function(c){var w=c.parentNode;if(w)w.removeChild(c);if(w&&w!==pane&&!w.textContent.trim()&&w.parentNode)w.parentNode.removeChild(w);});box.innerHTML=pane.innerHTML;}
   else box.innerHTML='<div class="loading">貸渡約款を表示できません。別途お問い合わせください。</div>';
 }
 function loadClause(){renderClause();}
