@@ -752,7 +752,7 @@ function baseSum(cl){
 // 車両カード表示用：選択日程の実際の1日あたり料金（安い日・月別料金を反映した平均）
 function dayPrice(k){var c=CLS[k];if(!c)return 0;try{if(pD&&rD){var d=daysCount();if(d>0){var t=baseSum(k);if(t>0)return Math.round(t/d/100)*100;}}}catch(e){}return c.p;}
 function calc(){
-  var base=state.cls&&CLS[state.cls]?CLS[state.cls].p:0;
+  var base=state.cls&&CLS[state.cls]?dayPrice(state.cls):0;
   var tot=base+(insPrice[state.ins]||0)+optTotal();
   var lb=document.querySelector('.cta .tot span');
   // ★10/08 確認・お支払い画面では「実際に引き落とされる総額（日数・クーポン込み）」を表示（1日あたりだけだとカード入力直前に総額が分からない）
