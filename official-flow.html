@@ -147,6 +147,14 @@ select.fld:focus{box-shadow:0 0 0 3px rgba(250,190,0,.35)}
 .snum{display:inline-block;background:var(--y);color:#10203f;font-size:11.5px;font-weight:900;padding:2px 11px;border-radius:999px;margin-right:8px;vertical-align:middle}
 .lockmsg{background:#0e1c38;border:1px dashed #2c3f63;color:#9fb0cf;border-radius:12px;padding:18px 16px;text-align:center;font-size:13px;font-weight:700;line-height:1.6}
 #methodSec.locked h2{opacity:.7}
+/* 2026-10-30 受け取り方法の切替（TOPへ戻らず変更）・選択中の車の解除 */
+.msw{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+.msw[hidden]{display:none}
+.msw .l{flex-basis:100%;font-size:12px;font-weight:800;color:#0a1f44}
+.msw .m{border:1.5px solid #c7d2e0;border-radius:999px;padding:8px 14px;font-size:12.5px;font-weight:800;cursor:pointer;background:#fff;color:#0a1f44;font-family:inherit}
+.msw .m.on{background:var(--y);border-color:var(--y);color:#10203f}
+.vc .vpick .ux{margin-left:6px;padding-left:6px;border-left:1px solid rgba(255,255,255,.5);font-size:10.5px;font-weight:700;white-space:nowrap}
+@media(max-width:640px){.vc.on .vpick{padding:8px 4px;font-size:12px}.vc .vpick .ux{display:block;margin:3px 0 0;padding:0;border:0}}
 /* 在庫（満車）表示 */
 .vc.soldout{opacity:.5;filter:grayscale(.7);pointer-events:auto}
 .vc.soldout .pic{position:relative}
@@ -330,6 +338,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="vgrid" id="vgrid"></div>
       <div class="hint" data-i18n="fl_car_hint">車種・色・仕様はお選びいただけません（同クラス内からランダム）。全車禁煙・ペット同乗不可。料金は暦日制（0:00〜24:00で1日）1日あたりの目安です。</div></div>
     <div class="sec locked" id="methodSec"><h2><span class="snum">STEP 2</span><span id="methodTitle">🚗 受取の詳細</span></h2>
+      <div class="msw" id="methodSw"></div>
       <div class="lockmsg" id="methodLock" data-i18n="fl_lockmsg">🔒 まず上で車両を選び「この車両に決める」を押すと、こちらをご指定いただけます。</div>
       <div class="card" id="methodCard" style="display:none"></div></div>
   </div>
@@ -581,7 +590,16 @@ if(method==='delivery'){
     '<a class="slmap" href="'+stMap+'" target="_blank" rel="noopener">'+T('store_map')+'</a></div>'+
     '<div class="hint">'+T('store_hint')+'</div>';
 }
+renderMethodSw();
 }
+// 2026-10-30 受け取り方法の切替（TOPへ戻らずに変更）。札幌はデリバリー専門のため非表示
+function methodOK(){return {sapporo:['delivery'],takamatsu:['airport','store']}[area]||['airport','delivery','store'];}
+function renderMethodSw(){var el=document.getElementById('methodSw');if(!el)return;var ok=methodOK();if(ok.length<2){el.innerHTML='';el.hidden=true;return;}el.hidden=false;
+  el.innerHTML='<span class="l">'+T('fl_msw_l')+'</span>'+ok.map(function(m){return '<button type="button" class="m'+(m===method?' on':'')+'" onclick="setMethod(\''+m+'\')">'+T('fl_msw_'+MKEY[m])+'</button>';}).join('');}
+function setMethod(m){if(m===method||methodOK().indexOf(m)<0)return;method=m;loc={del:null,col:null};colSame=true;
+  try{var u=new URL(location.href);u.searchParams.set('method',m);history.replaceState(null,'',u.toString());}catch(e){}
+  renderMethod();calc();
+  try{var _ve2=document.querySelector('#vEmpty a');if(_ve2)_ve2.href=searchUrl();}catch(e){}}
 renderMethod();
 
 // ===== 場所選択（地図）=====
@@ -661,7 +679,7 @@ function renderV(){
   document.getElementById('vgrid').innerHTML=ORDER.map(function(k){var c=CLS[k];var av=classAvail(k);return (
     '<div class="vc'+(state.cls===k?' on':'')+(av?'':' soldout')+'" data-k="'+k+'"><div class="pic">'+carImg(k)+'<span class="clschip">'+window.hdmTerm(c.l)+'</span>'+(c.az?'<span class="azukari">'+T('azukari')+'</span>':'')+(av?'<span class="check">✓</span>':'<span class="soldbadge">'+T('fl_full')+'</span>')+'</div>'+
     '<div class="bd"><div class="nm">'+window.hdmTerm(c.v)+'</div><div class="pr"><b>¥'+dayPrice(k).toLocaleString()+'</b><small>'+T('perday')+'</small></div><div class="sp">👥 '+String(c.s).replace(/名/,T('seats'))+'</div>'+
-    '<div class="vbtns">'+(av?'<button class="vpick" onclick="decideV(\''+k+'\')">'+(state.cls===k?T('fl_decided'):T('fl_decide'))+'</button>':'<div class="soldmsg">'+T('fl_nostock')+'</div>')+
+    '<div class="vbtns">'+(av?'<button class="vpick" onclick="toggleV(\''+k+'\')">'+(state.cls===k?T('fl_decided')+'<span class="ux">'+T('fl_unpick')+'</span>':T('fl_decide'))+'</button>':'<div class="soldmsg">'+T('fl_nostock')+'</div>')+
     '<button class="vdetail" onclick="openDetail(\''+k+'\')">'+T('fl_detail')+'</button></div></div></div>');
   }).join('');
   document.getElementById('vgrid').className='vgrid '+(state.cls?'hassel':'nosel');
@@ -670,6 +688,9 @@ function renderV(){
 // 車両を決定→受取(送迎/お届け/来店)をアンロックし、そこへスクロール
 function decideV(k){state.cls=k;renderV();calc();unlockMethod();var s=document.getElementById('methodSec');if(s)setTimeout(function(){s.scrollIntoView({behavior:'smooth',block:'start'});},70);}
 function pickV(k){decideV(k);} // 後方互換
+// 2026-10-30 選択中の車をもう一度押すと解除（受け取り欄も閉じる）。_preCls も消す＝空車取得後に自動で再選択されないように
+function toggleV(k){if(state.cls!==k){decideV(k);return;}_preCls='';state.cls='';renderV();calc();
+  var lk=document.getElementById('methodLock');if(lk)lk.style.display='';var mc=document.getElementById('methodCard');if(mc)mc.style.display='none';var s=document.getElementById('methodSec');if(s)s.classList.add('locked');}
 function unlockMethod(){var lk=document.getElementById('methodLock');if(lk)lk.style.display='none';var mc=document.getElementById('methodCard');if(mc)mc.style.display='';var s=document.getElementById('methodSec');if(s)s.classList.remove('locked');if(typeof delMap!=='undefined'&&delMap){setTimeout(function(){try{delMap.invalidateSize();}catch(e){}},130);}}
 // 車両クラス詳細モーダル（KEYDROPと同じ情報＝STA.equip / STA.note を使用）
 function openDetail(k){var c=CLS[k];if(!c)return;
@@ -974,6 +995,6 @@ renderV();calc();applyStep();fetchAvail();loadPriceMaster();
 // 言語切替時：動的生成部を再描画
 window.hdmOnLang=function(){try{renderMethod();}catch(e){}try{renderV();}catch(e){}try{applyStep();}catch(e){}try{if(step==='confirm'){renderConfirm();renderClause();cpRefresh();}}catch(e){}try{if(step==='done')renderDone();}catch(e){}};
 </script>
-<script src="official-i18n.js?v=10081000"></script>
+<script src="official-i18n.js?v=10301730"></script>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_flow",area:(new URLSearchParams(location.search).get("area")||"naha")});</script>
 </body></html>
