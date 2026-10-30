@@ -209,9 +209,18 @@ select.fld:focus{box-shadow:0 0 0 3px rgba(250,190,0,.35)}
 .termsagree .termsbox .loading{color:#8090ac;text-align:center;padding:20px}
 .termsagree .termslink{align-self:flex-start;color:#fff;background:var(--navy2,#0a2e80);border:1.5px solid var(--y);border-radius:9px;padding:9px 15px;font-size:13px;font-weight:900;text-decoration:none}
 .termsagree .termslink:hover{background:#123a9c}
-.termsagree .tagree{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;font-weight:800;color:#16243f;cursor:pointer;line-height:1.5}
-.termsagree .tagree input{width:22px;height:22px;flex:0 0 auto;margin-top:1px;accent-color:var(--y);cursor:pointer}
-.termsagree.need{border:1.5px solid #ff6b6b;box-shadow:0 0 0 3px rgba(255,107,107,.18)}
+.termsagree .tagree{display:flex;align-items:center;gap:12px;background:#fff8d6;border:2px solid var(--y);border-radius:10px;padding:14px;font-size:14.5px;font-weight:800;color:#16243f;cursor:pointer;line-height:1.5;animation:agreePulse 1.6s ease-in-out infinite}
+.termsagree .tagree input{width:28px;height:28px;flex:0 0 auto;margin:0;accent-color:var(--y);cursor:pointer}
+.termsagree .tagree b{display:block}
+.termsagree .tagree small{display:block;font-size:12px;font-weight:700;color:#9a6a00;margin-top:2px}
+.termsagree .tagree:has(input:checked){background:#eaf6ee;border-color:#2e8b57;animation:none}
+.termsagree .tagree:has(input:checked) input{accent-color:#2e8b57}
+.termsagree .tagree:has(input:checked) small{color:#2e8b57}
+.termsagree.need .tagree{background:#fdecea;border-color:#c0392b;animation:agreeShake .5s ease 2}
+.termsagree.need .tagree small{color:#c0392b}
+@keyframes agreePulse{0%,100%{box-shadow:0 0 0 0 rgba(250,190,0,0)}50%{box-shadow:0 0 0 6px rgba(250,190,0,.35)}}
+@keyframes agreeShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+#ctaBtn.is-wait{opacity:.45}
 #ctaBtn:disabled{opacity:.42;cursor:not-allowed;filter:grayscale(.2)}
 /* 決済方法 */
 .paymethods{display:flex;flex-direction:column;gap:10px}
@@ -392,7 +401,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="sec"><h2 data-i18n="terms_head">📄 貸渡約款</h2><div class="card termsagree" id="termsAgreeCard">
       <div class="termsnote" data-i18n="terms_read">ご予約前に貸渡約款を必ずお読みください（下記をスクロールしてご確認いただけます）。</div>
       <div class="termsbox" id="clauseBox"><div class="loading">貸渡約款を読み込み中…</div></div>
-      <label class="tagree"><input type="checkbox" id="agreeTerms" onchange="onAgree()"> <span data-i18n="terms_agree">貸渡約款に同意します（同意しないとご予約を確定できません）</span></label>
+      <label class="tagree" id="agreeBox"><input type="checkbox" id="agreeTerms" onchange="onAgree()"> <span><b data-i18n="terms_agree">貸渡約款に同意します（同意しないとご予約を確定できません）</b><small data-i18n="terms_hint">ここにチェックを入れると「お支払いに進む」が押せます</small></span></label>
     </div></div>
   </div>
 
@@ -798,12 +807,12 @@ function applyStep(){
   var _st5=document.getElementById('st5');_st5.className='step '+(cur>4?'done':(cur>=3?'on':''));
   var lbl={select:T('cta_options'),options:T('cta_customer'),customer:T('cta_confirm'),confirm:T('cta_pay'),payment:T('cta_done')};
   var btn=document.getElementById('ctaBtn');btn.textContent=lbl[step]||'';
-  // 確認画面：貸渡約款を実際に表示し、同意しないと「お支払いに進む」を押せない(KEYDROP方式)
+  // 確認画面：貸渡約款を実際に表示。未同意の間はボタンを半透明にし、押すと同意欄へ案内する(進めるのは同意後のみ＝goNext)
   if(step==='confirm'){loadClause();
     if(_pendCp&&!_cpAuto&&!couponCode){_cpAuto=true;var _ci=document.getElementById('couponInput');if(_ci){_ci.value=_pendCp;try{applyCoupon();}catch(e){}}}
-    var _ck=document.getElementById('agreeTerms');btn.disabled=!(_ck&&_ck.checked);}
-  else if(step==='payment'){btn.disabled=false;requestAnimationFrame(function(){initSquareCard();});}
-  else{btn.disabled=false;}
+    var _ck=document.getElementById('agreeTerms');btn.disabled=false;btn.classList.toggle('is-wait',!(_ck&&_ck.checked));}
+  else if(step==='payment'){btn.disabled=false;btn.classList.remove('is-wait');requestAnimationFrame(function(){initSquareCard();});}
+  else{btn.disabled=false;btn.classList.remove('is-wait');}
   document.querySelector('.cta').style.display=(step==='done')?'none':'flex';
   document.getElementById('ctaBack').style.display=(step==='select'||step==='done')?'none':'inline-block';
   if(step==='options')renderChosen();
@@ -821,11 +830,11 @@ function goNext(){
     step='options';}
   else if(step==='options'){if(!state.ins){var _is=document.querySelector('.ins');if(_is)_is.scrollIntoView({behavior:'smooth',block:'center'});var _am={ja:'補償プランをお選びください。',en:'Please choose a coverage plan.',zh:'請選擇保障方案。',ko:'보장 플랜을 선택해 주세요.'};var _lg='ja';try{_lg=localStorage.getItem('hdm_lang')||'ja';}catch(e){}alert(_am[_lg]||_am.ja);return;}step='customer';}
   else if(step==='customer'){if(!vForm(true))return;step='confirm';}
-  else if(step==='confirm'){var _ck=document.getElementById('agreeTerms');if(!_ck||!_ck.checked){var _c=document.getElementById('termsAgreeCard');if(_c){_c.classList.add('need');_c.scrollIntoView({block:'center'});}alert(T('terms_need'));return;}step='payment';}
+  else if(step==='confirm'){var _ck=document.getElementById('agreeTerms');if(!_ck||!_ck.checked){var _c=document.getElementById('termsAgreeCard');if(_c){_c.classList.remove('need');void _c.offsetWidth;_c.classList.add('need');(document.getElementById('agreeBox')||_c).scrollIntoView({behavior:'smooth',block:'center'});}return;}step='payment';}
   else if(step==='payment'){payWithCard();return;}
   applyStep();
 }
-function onAgree(){var _ck=document.getElementById('agreeTerms');var _ok=!!(_ck&&_ck.checked);if(_ok){var _c=document.getElementById('termsAgreeCard');if(_c)_c.classList.remove('need');}if(step==='confirm'){document.getElementById('ctaBtn').disabled=!_ok;}}
+function onAgree(){var _ck=document.getElementById('agreeTerms');var _ok=!!(_ck&&_ck.checked);if(_ok){var _c=document.getElementById('termsAgreeCard');if(_c)_c.classList.remove('need');}if(step==='confirm'){var _b=document.getElementById('ctaBtn');_b.disabled=false;_b.classList.toggle('is-wait',!_ok);}}
 // ===== クレジットカード決済（Square Web Payments SDK・KEYDROPと同一方式） =====
 var SUPABASE_URL='https://ckrxttbnawkclshczsia.supabase.co';
 var SUPABASE_KEY='sb_publishable_aTVhlY0YD-5BBfI03ZNnsg_MzO_vsIe';
@@ -995,6 +1004,6 @@ renderV();calc();applyStep();fetchAvail();loadPriceMaster();
 // 言語切替時：動的生成部を再描画
 window.hdmOnLang=function(){try{renderMethod();}catch(e){}try{renderV();}catch(e){}try{applyStep();}catch(e){}try{if(step==='confirm'){renderConfirm();renderClause();cpRefresh();}}catch(e){}try{if(step==='done')renderDone();}catch(e){}};
 </script>
-<script src="official-i18n.js?v=10301730"></script>
+<script src="official-i18n.js?v=10301800"></script>
 <script src="kd-track.js"></script><script>window.KDT&&KDT.init({page:"off_flow",area:(new URLSearchParams(location.search).get("area")||"naha")});</script>
 </body></html>
