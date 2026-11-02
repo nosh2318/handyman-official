@@ -89,6 +89,11 @@ var I={
  zh:{back:"← TOP",h1:'查詢您的<span class="y">預約</span>',lead:"以預約編號與登記的聯絡方式開啟會員頁",l_area:"請選擇您的門市（地區）",a_nha:"🌺 那霸機場店",a_spk:"❄️ 札幌店",a_tkm:"🍜 高松機場店",errstore:"請先選擇門市（地區）。",l_q:"預約編號・電話號碼・電子郵件（任一）",ph_q:"例：R0XXXXXX / 09012345678 / example@mail.com",hint:"請輸入預約編號、電話號碼或電子郵件其中一項。",btn:"開啟會員頁",note:"※ 如有疑問請洽客服專線 050-1724-6197（9:00〜19:00）。",busy:"確認中…",errfind:"查無預約，請確認輸入內容。",errinput:"請輸入預約編號、電話號碼或電子郵件。",errnet:"發生連線錯誤，請稍後再試。",okgo:"已確認預約，正在開啟…"},
  ko:{back:"← TOP",h1:'예약 <span class="y">확인</span>',lead:"예약번호와 등록된 연락처로 마이페이지를 엽니다",l_area:"예약 지점(지역)을 선택",a_nha:"🌺 나하공항점",a_spk:"❄️ 삿포로점",a_tkm:"🍜 다카마쓰공항점",errstore:"예약 지점(지역)을 선택해 주세요.",l_q:"예약번호・전화번호・이메일 (하나만)",ph_q:"예：R0XXXXXX / 09012345678 / example@mail.com",hint:"예약번호, 전화번호, 이메일 중 하나를 입력해 주세요.",btn:"마이페이지 열기",note:"※ 문의: 고객센터 050-1724-6197 (9:00~19:00).",busy:"확인 중…",errfind:"예약을 찾을 수 없습니다. 입력 내용을 확인해 주세요.",errinput:"예약번호, 전화번호 또는 이메일을 입력해 주세요.",errnet:"통신 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",okgo:"예약이 확인되었습니다. 페이지를 엽니다…"}
 };
+/* PICK_1102 複数一致の一覧の文言 */
+I.ja.pick="ご予約が複数見つかりました。確認するご予約を選んでください。";I.ja.dep="ご出発";I.ja.cxl="キャンセル済み";
+I.en.pick="We found more than one booking. Please choose the one to view.";I.en.dep="Departure";I.en.cxl="Cancelled";
+I.zh.pick="找到多筆預約，請選擇要查看的預約。";I.zh.dep="出發";I.zh.cxl="已取消";
+I.ko.pick="예약이 여러 건 있습니다. 확인할 예약을 선택해 주세요.";I.ko.dep="출발";I.ko.cxl="취소됨";
 var LANG="ja";
 function t(k){return (I[LANG]||I.ja)[k];}
 function render(lang){
@@ -131,6 +136,17 @@ async function submit(){
   try{
     var r=await fetch(EF,{method:"POST",headers:{"Content-Type":"application/json",apikey:ANON,Authorization:"Bearer "+ANON},body:JSON.stringify({store:STORE,q:q})});
     var j=await r.json();
+    /* PICK_1102 電話・メールで複数一致したら一覧から選ぶ */
+    if(j&&j.ok&&j.items&&j.items.length>1){
+      var esc=function(x){return String(x==null?"":x).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});};
+      var h='<div style="margin-bottom:10px">'+esc(t("pick"))+'</div>'+j.items.map(function(it){
+        var ok=/^https:\/\//.test(it.url||"");
+        return ok?'<a href="'+esc(it.url)+'" style="display:block;margin:8px 0;padding:12px 14px;border:1px solid #cdd6e5;border-radius:11px;background:#fff;color:#0a1f44;text-decoration:none;font-weight:700">'+
+          esc(it.id)+'<span style="display:block;font-weight:500;font-size:12px;color:#5b6b8a;margin-top:3px">'+esc(t("dep"))+'：'+esc(it.date||"—")+(it.cancelled?'　'+esc(t("cxl")):'')+'</span></a>':'';
+      }).join("");
+      showMsg("ok",h);
+      BUSY=false; go.disabled=false; go.textContent=org; return;
+    }
     if(j&&j.ok&&j.url){showMsg("ok",t("okgo"));location.href=j.url;return;}
     showMsg("err",t("errfind"));
   }catch(e){showMsg("err",t("errnet"));}
