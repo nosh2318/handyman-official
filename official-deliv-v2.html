@@ -217,7 +217,7 @@ function reverseGeo(lat,lng,cb){
      var a='',A=d&&d.address;
      if(A){
        var pref=A.province||A.state||''; if(_noise(pref))pref='';       // 都道府県(北海道/沖縄県)。region(◯◯地方)は使わない
-       var city=A.city||A.town||A.village||A.municipality||'';           // 市町村(札幌市/那覇市)
+       var city=A.city||A.town||A.village||A.municipality||A.administrative||''; /* ★2026-11-02 沖縄県庁など市名がadministrativeにしか入らない地点で「沖縄県」だけになり那覇市内なのに対応エリア外になる不具合を修正 */           // 市町村(札幌市/那覇市)
        var ward=A.city_district||A.suburb||A.borough||'';                // 区(中央区/北区)
        var town=A.neighbourhood||A.quarter||A.hamlet||'';               // 町名(北8条西4 等)
        var road=A.road||'', hn=A.house_number||'';
