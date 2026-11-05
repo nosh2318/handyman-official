@@ -429,7 +429,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   <!-- CTA -->
-  <div class="cta"><button id="ctaBack" onclick="goBack()" style="display:none;background:transparent;border:2px solid var(--line);color:#cdd8ef;border-radius:10px;padding:13px 16px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit" data-i18n="cta_back">← 戻る</button><div class="tot"><span data-i18n="cta_total">合計（1日あたり）</span><b id="totPr">¥—</b></div><button id="ctaBtn" onclick="goNext()">オプション・補償へ →</button></div>
+  <div class="cta"><button id="ctaBack" onclick="goBack()" style="display:none;background:transparent;border:2px solid var(--line);color:#cdd8ef;border-radius:10px;padding:13px 16px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit" data-i18n="cta_back">← 戻る</button><div class="tot"><span data-i18n="cta_total">合計（1日あたり）</span><b id="totPr">¥—</b><small id="totFee" style="display:none;margin-top:2px;font-size:11px;color:#ffd76a;font-weight:800"></small></div><button id="ctaBtn" onclick="goNext()">オプション・補償へ →</button></div>
 </div>
 
 <!-- 車両クラス詳細モーダル -->
@@ -454,7 +454,7 @@ var couponDiscount=0,couponCode='';
 var _pendCp=(P.get('cp')||'').trim();if(!_pendCp){try{_pendCp=(sessionStorage.getItem('hdm_cp')||'').trim();}catch(e){}} // ★10/08 TOPのオファーで「クーポンを使って予約する」を押した人は自動適用  // ?cp=（広告リンク等の明示指定）のみ自動入力。通常はお客様がクーポン欄に入力して適用
 var _cpAuto=false;
 function couponStore(){return area==='sapporo'?'spk':area==='takamatsu'?'tkm':'nha';}
-function couponSubtotal(){try{var d=daysCount();return baseSum()+((insPrice[state.ins]||0)+optTotal())*d;}catch(e){return 0;}}
+function couponSubtotal(){try{var d=daysCount();return baseSum()+((insPrice[state.ins]||0)+optTotal())*d+delivTotal();}catch(e){return 0;}}
 function cpMsg(color,txt){var m=document.getElementById('couponMsg');if(m){m.style.color=color;m.textContent=txt;}}
 function cpRefresh(){if(couponDiscount>0)cpMsg('#0e9f50',T('cp_ok2').replace('{amt}','¥'+couponDiscount.toLocaleString()));}
 function applyCoupon(){
@@ -500,6 +500,18 @@ if(!P.get('pd')||!P.get('rd')){location.replace(searchUrl());}
 try{var _ve=document.querySelector('#vEmpty a');if(_ve)_ve.href=searchUrl();}catch(e){}
 var METHOD={delivery:{t:'🚗 デリバリー（お届け）',label:'お届け先'},airport:{t:'✈️ 無料送迎（空港/駅）',label:'送迎場所'},store:{t:'🏠 来店（送迎なし）',label:'来店店舗'}};
 var insPrice={basic:0,cdw:1100,noc:1650};
+// 2026-11-05 那覇のお届け・回収は有料（片道 DELIV_FEE 円・お届け＋回収の2回）。札幌は無料。決済側(official_book_nha)と同額・価格マスター delivery_fee で上書き可
+var DELIV_FEE=(area==='naha')?1000:0;
+function delivTotal(){return (method==='delivery'&&DELIV_FEE>0)?DELIV_FEE*2:0;}
+var DLT={
+ ja:{one:'片道{fee}',sw:'有料・片道{fee}',h:'お届け・回収は有料です',d:'お届け{fee}＋回収{fee}＝合計{tot}（税込）をご予約時のお支払いに含めます。那覇市・豊見城市内に限ります。那覇空港・基地などは条例等によりお届けできません。無料で受け取りたい方は「無料送迎（空港/駅）」または「来店」をお選びください。',cf:'お届け・回収料金',cfd:'お届け{fee}＋回収{fee}',bar:'＋お届け・回収 {tot}（有料）'},
+ en:{one:'{fee} each way',sw:'paid, {fee} each way',h:'Delivery & collection are a paid service',d:'Delivery {fee} + collection {fee} = {tot} in total (tax incl.), added to your payment at booking. Available within Naha City and Tomigusuku City only. We cannot deliver to Naha Airport, bases and similar areas. For free pickup, choose the free shuttle (airport/station) or in-store pickup.',cf:'Delivery & collection fee',cfd:'delivery {fee} + collection {fee}',bar:'+ delivery & collection {tot} (paid)'},
+ zh:{one:'單程{fee}',sw:'付費・單程{fee}',h:'送車・收車為付費服務',d:'送車{fee}＋收車{fee}＝合計{tot}（含稅），於預約付款時一併支付。僅限那霸市・豐見城市內。那霸機場・基地等處依條例無法送車。如需免費取車，請選擇「免費接送（機場/車站）」或「到店」。',cf:'送車・收車費用',cfd:'送車{fee}＋收車{fee}',bar:'＋送車・收車 {tot}（付費）'},
+ ko:{one:'편도 {fee}',sw:'유료·편도 {fee}',h:'배달·회수는 유료입니다',d:'배달 {fee} + 회수 {fee} = 합계 {tot}(세금 포함)를 예약 시 결제에 포함합니다. 나하시·도미구스쿠시 내에 한합니다. 나하공항·기지 등은 조례 등으로 배달할 수 없습니다. 무료로 받으시려면 「무료 셔틀(공항/역)」 또는 「방문」을 선택해 주세요.',cf:'배달·회수 요금',cfd:'배달 {fee} + 회수 {fee}',bar:'+ 배달·회수 {tot}(유료)'}};
+function DL(k){var L='ja';try{L=(window.hdmLang?hdmLang():localStorage.getItem('hdm_lang'))||'ja';}catch(e){}var t=(DLT[L]||DLT.ja)[k]||DLT.ja[k];return t.replace(/\{fee\}/g,'¥'+DELIV_FEE.toLocaleString()).replace(/\{tot\}/g,'¥'+(DELIV_FEE*2).toLocaleString());}
+function delivFeeHtml(wrap){if(!(DELIV_FEE>0))return wrap?'<div id="delivFeeNote"></div>':'';
+  var h='<b style="display:block;font-size:14px;margin-bottom:4px">💴 '+DL('h')+'（'+DL('one')+'）</b><span style="font-size:12.5px;line-height:1.7">'+DL('d')+'</span>';
+  return wrap?'<div id="delivFeeNote" style="margin:0 0 12px;padding:12px 14px;border:2px solid #d9a400;background:#fff8e1;border-radius:8px;color:#3b2f00">'+h+'</div>':h;}
 var step=P.get('step')||'select';
 var _preCls=(selCls&&CLS[selCls])?selCls:''; // ★10/08 TOPの「この車で予約」から来た車。空車ならそのまま決定して受け取り方法へ進める
 var state={cls:selCls&&CLS[selCls]?selCls:'',ins:P.get('ins')||'',avail:{},availLoaded:false};
@@ -574,8 +586,9 @@ document.getElementById('st2t').textContent=T('st_recv_'+MKEY[method]);
 var mc=document.getElementById('methodCard');
 if(method==='delivery'){
   // お届け/回収 場所の指定は検証済みの新UX(official-deliv-v2)を埋め込み。選択結果はpostMessageで受信。
+  var _fn=document.getElementById('delivFeeNote');if(_fn){_fn.innerHTML=delivFeeHtml();}
   if(!document.getElementById('delivFrame')){
-    mc.innerHTML='<iframe id="delivFrame" src="official-deliv-v2.html?embed=1&area='+area+'&cb='+Date.now()+'" style="width:100%;border:0;height:660px;display:block" title="'+T('iframe_deliv')+'" scrolling="no"></iframe>';
+    mc.innerHTML=delivFeeHtml(true)+'<iframe id="delivFrame" src="official-deliv-v2.html?embed=1&area='+area+'&cb='+Date.now()+'" style="width:100%;border:0;height:660px;display:block" title="'+T('iframe_deliv')+'" scrolling="no"></iframe>';
   }
 }else if(method==='airport'){
   // 高松＝送迎場所は高松空港のみ（行き帰り）。その他店舗＝那覇空港/赤嶺駅
@@ -604,7 +617,7 @@ renderMethodSw();
 // 2026-10-30 受け取り方法の切替（TOPへ戻らずに変更）。札幌はデリバリー専門のため非表示
 function methodOK(){return {sapporo:['delivery'],takamatsu:['airport','store']}[area]||['airport','delivery','store'];}
 function renderMethodSw(){var el=document.getElementById('methodSw');if(!el)return;var ok=methodOK();if(ok.length<2){el.innerHTML='';el.hidden=true;return;}el.hidden=false;
-  el.innerHTML='<span class="l">'+T('fl_msw_l')+'</span>'+ok.map(function(m){return '<button type="button" class="m'+(m===method?' on':'')+'" onclick="setMethod(\''+m+'\')">'+T('fl_msw_'+MKEY[m])+'</button>';}).join('');}
+  el.innerHTML='<span class="l">'+T('fl_msw_l')+'</span>'+ok.map(function(m){return '<button type="button" class="m'+(m===method?' on':'')+'" onclick="setMethod(\''+m+'\')">'+T('fl_msw_'+MKEY[m])+((m==='delivery'&&DELIV_FEE>0)?'<small style="margin-left:4px;font-weight:700">（'+DL('sw')+'）</small>':'')+'</button>';}).join('');}
 function setMethod(m){if(m===method||methodOK().indexOf(m)<0)return;method=m;loc={del:null,col:null};colSame=true;
   try{var u=new URL(location.href);u.searchParams.set('method',m);history.replaceState(null,'',u.toString());}catch(e){}
   renderMethod();calc();
@@ -754,6 +767,8 @@ function loadPriceMaster(){
      Object.keys(CLS).forEach(function(c){if(m.price[c]){var pc=m.price[c];var a=(pc.a!=null&&pc.a!==''?+pc.a:null),b=(pc.b!=null&&pc.b!==''?+pc.b:null),bs=(pc.base!=null&&pc.base!==''?+pc.base:null);var disp=(bs!=null?bs:(a!=null?a:b));if((a||0)>0||(bs||0)>0||(b||0)>0){CLS[c].p=disp;CLS[c]._a=a;CLS[c]._b=b;CLS[c]._base=bs;}}});
      if(m.insurance){if(m.insurance.cdw!=null)insPrice.cdw=+m.insurance.cdw;if(m.insurance.noc!=null)insPrice.noc=+m.insurance.noc;}
      if(m.seat){if(m.seat.child!=null)CHILD_P=+m.seat.child;if(m.seat.junior!=null)JR_P=+m.seat.junior;}
+     if(area==='naha'&&m.delivery_fee!=null&&m.delivery_fee!==''&&!isNaN(+m.delivery_fee))DELIV_FEE=+m.delivery_fee;
+     try{renderMethod();}catch(e){}
      window._HIGH={};(m.high_dates||[]).forEach(function(x){window._HIGH[x]=1;});
      window._LOW={};(m.low_dates||[]).forEach(function(x){window._LOW[x]=1;});
      window._MONTHS=m.months||{};
@@ -786,7 +801,8 @@ function calc(){
   var tot=base+(insPrice[state.ins]||0)+optTotal();
   var lb=document.querySelector('.cta .tot span');
   // ★10/08 確認・お支払い画面では「実際に引き落とされる総額（日数・クーポン込み）」を表示（1日あたりだけだとカード入力直前に総額が分からない）
-  if(base&&(step==='confirm'||step==='payment')){var d=daysCount(),sub=0;try{sub=baseSum()+((insPrice[state.ins]||0)+optTotal())*d;}catch(e){sub=tot*d;}var cd=(couponDiscount>0)?Math.min(couponDiscount,sub):0;
+  var tf=document.getElementById('totFee');if(tf){var _df=delivTotal();tf.style.display=(_df>0&&base&&step!=='confirm'&&step!=='payment')?'block':'none';tf.textContent=_df>0?DL('bar'):'';}
+  if(base&&(step==='confirm'||step==='payment')){var d=daysCount(),sub=0;try{sub=baseSum()+((insPrice[state.ins]||0)+optTotal())*d+delivTotal();}catch(e){sub=tot*d+delivTotal();}var cd=(couponDiscount>0)?Math.min(couponDiscount,sub):0;
     var L=(window.hdmLang?hdmLang():'ja');if(lb)lb.textContent=({ja:'お支払い総額（'+d+'日間・税込）',en:'Total to pay ('+d+' days, tax incl.)',zh:'應付總額（'+d+'天・含稅）',ko:'결제 총액（'+d+'일・세금 포함）'}[L]||('お支払い総額（'+d+'日間・税込）'));
     document.getElementById('totPr').textContent='¥'+(sub-cd).toLocaleString();return;}
   if(lb)lb.textContent=T('cta_total');
@@ -904,7 +920,7 @@ async function payWithCard(){
     // ★GTM/GA4 コンバージョン計測（予約完了）＋拡張コンバージョン用のユーザーデータ
     try{
       var _dys=(typeof dys!=='undefined'&&dys)?dys:1;
-      var _tot=(typeof data.total==='number')?data.total:(function(){try{return baseSum()+((insPrice[state.ins]||0)+optTotal())*_dys;}catch(e){return null;}})();
+      var _tot=(typeof data.total==='number')?data.total:(function(){try{return baseSum()+((insPrice[state.ins]||0)+optTotal())*_dys+delivTotal();}catch(e){return null;}})();
       window.dataLayer=window.dataLayer||[];
       window.dataLayer.push({ecommerce:null});
       window.dataLayer.push({event:'purchase',store_location:SHOP,store:area,store_name:SHOP,
@@ -949,7 +965,7 @@ function renderConfirm(){
   var c=CLS[state.cls]||{l:'',v:'',p:0};var dys=daysCount();
   var optLines=[];if(optQ.child>0)optLines.push(T('opt_child')+T('cf_x')+optQ.child);if(optQ.junior>0)optLines.push(T('opt_junior')+T('cf_x')+optQ.junior);
   var insName={basic:T('ins_basic'),cdw:T('ins_cdw'),noc:T('ins_noc')}[state.ins];
-  var baseSumT=baseSum();var _subtotal=baseSumT+((insPrice[state.ins]||0)+optTotal())*dys;var _cdisc=(couponDiscount>0)?Math.min(couponDiscount,_subtotal):0;var total=_subtotal-_cdisc;
+  var baseSumT=baseSum();var _subtotal=baseSumT+((insPrice[state.ins]||0)+optTotal())*dys+delivTotal();var _cdisc=(couponDiscount>0)?Math.min(couponDiscount,_subtotal):0;var total=_subtotal-_cdisc;
   var nm=(document.getElementById('fName')||{}).value||'';var kn=(document.getElementById('fKana')||{}).value||'';
   var ph=(document.getElementById('fPhone')||{}).value||'';var em=(document.getElementById('fEmail')||{}).value||'';
   var drv=document.getElementById('fDriverDiff').checked?((document.getElementById('dName')||{}).value||''):'';
@@ -978,6 +994,7 @@ function renderConfirm(){
       var s=row(T('cf_base'),'¥'+baseT.toLocaleString()+' <small style="color:#8090ac">（'+(_mixB?(dys+T('cf_days')):('¥'+c.p.toLocaleString()+' × '+dys+T('cf_days')))+'）</small>');
       if(optT>0)s+=row(T('cf_optfee'),'¥'+optT.toLocaleString()+' <small style="color:#8090ac">（'+seatBits.join('・')+' × '+dys+T('cf_days')+'）</small>');
       s+=row(T('cf_insfee'),(insT>0?('¥'+insT.toLocaleString()):'¥0')+' <small style="color:#8090ac">（'+insName+(insT>0?(' ¥'+(insPrice[state.ins]||0).toLocaleString()+' × '+dys+T('cf_days')):'')+'）</small>');
+      if(delivTotal()>0)s+=row(DL('cf'),'¥'+delivTotal().toLocaleString()+' <small style="color:#8090ac">（'+DL('cfd')+'）</small>');
       if(_cdisc>0)s+=row(T('cf_coupon'),'<span style="color:#0e9f50;font-weight:800">−¥'+_cdisc.toLocaleString()+'</span>　'+couponCode);
       s+=row(T('cf_total'),'<b style="font-size:17px">¥'+total.toLocaleString()+'</b>');
       return s;
@@ -996,7 +1013,7 @@ function renderDone(){
     ?['🚐 高松空港で<b>無料送迎</b>対応','🕘 営業時間 9:00〜19:00','🛡 免責補償・NOCも選べて安心','✨ ナビ・ETC標準装備']
     :(area==='sapporo')
     ?['🚗 <b>デリバリー無料</b>でお届け／回収','❄️ 全車<b>4WD・スタッドレス</b>標準','🅿️ コインパーキング受取もOK','🕘 営業時間 9:00〜19:00','🛡 免責補償・NOCも選べて安心']
-    :['🚗 <b>デリバリー無料</b>でお届け／回収','✈️ 那覇空港・赤嶺駅は<b>無料送迎</b>対応','🅿️ コインパーキング受取もOK','🕘 営業時間 9:00〜19:00','🛡 免責補償・NOCも選べて安心'];
+    :['🚗 <b>デリバリー（有料・片道¥'+DELIV_FEE.toLocaleString()+'）</b>でお届け／回収','✈️ 那覇空港・赤嶺駅は<b>無料送迎</b>対応','🅿️ コインパーキング受取もOK','🕘 営業時間 9:00〜19:00','🛡 免責補償・NOCも選べて安心'];
   var one=ADS.map(function(a){return '<span>'+a+'</span>';}).join('');
   el.innerHTML=one+one; // 2連結でシームレスループ
 })();
