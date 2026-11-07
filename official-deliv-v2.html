@@ -49,6 +49,7 @@ header .b{font-weight:900;font-size:15px}header .step{margin-left:auto;backgroun
 .geobtn{position:absolute;right:12px;top:12px;z-index:500;background:#fff;border:1px solid #cbd5e6;border-radius:10px;width:42px;height:42px;font-size:19px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 /* 選択サマリー */
 .selcard{margin-top:14px;background:#f4f9f4;border:1.5px solid #b9e0b9;border-radius:12px;padding:13px 14px;display:flex;gap:11px;align-items:flex-start}
+.pinwarn{margin-top:6px;font-size:12px;font-weight:700;color:#b26b00;line-height:1.5}
 .selcard.empty{background:#fbfcfe;border-color:#e2e8f2}
 .selcard .pin{font-size:20px;flex:0 0 auto}
 .selcard .lb{font-size:11px;font-weight:800;color:#3f8a3f}
@@ -156,7 +157,7 @@ var _EMBED=(_P.get('embed')==='1');
 var AREACFG={naha:{center:[26.2124,127.6809],areas:['那覇市','豊見城市'],airport:[26.1958,127.6459],label:'那覇市・豊見城市',bbox:'127.08,25.61,128.28,26.81'},sapporo:{center:[43.0621,141.3544],areas:['札幌市'],airport:null,label:'札幌市',bbox:'140.75,42.46,141.95,43.66'}};
 var CENTER=AREACFG[_AREA].center, AREAS=AREACFG[_AREA].areas, AIRPORT=AREACFG[_AREA].airport, AREALABEL=AREACFG[_AREA].label, BBOX=AREACFG[_AREA].bbox;
 var touched={map:false,map2:false};
-var loc={del:'',col:''},locName={del:'',col:''},_ll={del:null,col:null},_lastCommit={},same=true,maps={},moveTimer={},suppress={map:0,map2:0};
+var keepName={1:'',2:''},loc={del:'',col:''},locName={del:'',col:''},_ll={del:null,col:null},_lastCommit={},same=true,maps={},moveTimer={},suppress={map:0,map2:0};
 function dist(a,b,c,d){var R=6371,dLat=(c-a)*Math.PI/180,dLng=(d-b)*Math.PI/180,x=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dLng/2)*Math.sin(dLng/2);return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));}
 var KD_NAHA_NOGO_POLYS=[
         /* 航空自衛隊那覇基地 */ [[26.19928,127.65782],[26.19724,127.66001],[26.19508,127.65886],[26.19104,127.65896],[26.18663,127.65601],[26.18127,127.65507],[26.17912,127.65044],[26.18174,127.64879],[26.18297,127.64996],[26.18312,127.64886],[26.20223,127.64813],[26.20264,127.65345],[26.20056,127.65373],[26.20046,127.65548],[26.19928,127.65782]],
@@ -186,7 +187,7 @@ function makeMap(id,which){
     if(!touched[id]){return;}
     clearTimeout(moveTimer[id]);moveTimer[id]=setTimeout(function(){var c=m.getCenter();var kk=which===2?'col':'del';
       if(_lastCommit[id]&&locName[kk]&&dist(c.lat,c.lng,_lastCommit[id][0],_lastCommit[id][1])<0.06){return;} // 選択直後の微小settleでは施設名を保持
-      reverseGeo(c.lat,c.lng,function(ad,comps){apply(which,'',ad,c.lat,c.lng,comps);});},650);});
+      reverseGeo(c.lat,c.lng,function(ad,comps){apply(which,keepName[which]||'',ad,c.lat,c.lng,comps);});},650);});
   setTimeout(function(){m.invalidateSize();},250);
   return m;
 }
@@ -210,17 +211,24 @@ function gtidy(a){return (a||'').replace(/^日本、?/,'').replace(/〒?\d{3}-?\
 // ★2026-09-06 住所オブジェクト(addressdetails)から組立＝「北海道地方」(region)「石狩振興局」(subprovince)等の行政ノイズを除去。
 // 旧版はdisplay_nameを丸ごと逆順連結し「北海道地方北海道石狩振興局…」が頭に固定されて「住所が変わらない」ように見えるバグだった。
 function _noise(s){return !s||/(地方|振興局|総合振興局)$/.test(s);}
+// ★2026-11-08 札幌の条丁目がNominatimでは administrative にだけ入り「北海道札幌市中央区9」と途中で切れる不具合を修正。
+// 町名・丁目は国土地理院の逆ジオ(lv01Nm＝南六条西六丁目 等・キー不要・OSMより正確)を優先し、無ければNominatimの町名系キーで補う。
+function gsiTown(lat,lng){return fetch('https://mreversegeocoder.gsi.go.jp/reverse-geocoder/LonLatToAddress?lat='+lat+'&lon='+lng)
+  .then(function(r){return r.json();}).then(function(d){return (d&&d.results&&d.results.lv01Nm&&d.results.lv01Nm!=='－')?d.results.lv01Nm:'';}).catch(function(){return '';});}
 function reverseGeo(lat,lng,cb){
+  var _gt=gsiTown(lat,lng);
   fetch('https://nominatim.openstreetmap.org/reverse?format=json&addressdetails=1&lat='+lat+'&lon='+lng+'&accept-language=ja&zoom=18',{headers:{'Accept':'application/json'}})
    .then(function(r){return r.json();})
-   .then(function(d){
+   .then(function(d){return _gt.then(function(gt){return [d,gt];});})
+   .then(function(dg){var d=dg[0],gt=dg[1];
      var a='',A=d&&d.address;
      if(A){
        var pref=A.province||A.state||''; if(_noise(pref))pref='';       // 都道府県(北海道/沖縄県)。region(◯◯地方)は使わない
        var city=A.city||A.town||A.village||A.municipality||A.administrative||''; /* ★2026-11-02 沖縄県庁など市名がadministrativeにしか入らない地点で「沖縄県」だけになり那覇市内なのに対応エリア外になる不具合を修正 */           // 市町村(札幌市/那覇市)
        var ward=A.city_district||A.suburb||A.borough||'';                // 区(中央区/北区)
-       var town=A.neighbourhood||A.quarter||A.hamlet||'';               // 町名(北8条西4 等)
-       var road=A.road||'', hn=A.house_number||'';
+       if(!A.city&&!A.town&&!A.village&&!A.municipality)A.administrative=''; // administrativeを市名に使った地点では町名に二重に使わない
+       var town=gt||A.neighbourhood||A.quarter||A.administrative||A.hamlet||''; // 町名・丁目(南六条西六丁目 等)＝GSI優先
+       var road=gt?'':(A.road||''), hn=gt?'':(A.house_number||'');      // GSIで丁目まで取れたら、OSMの断片的な番地(「9」等)は付けない
        var raw=[pref,city,ward,town,road,hn],out=[];
        for(var i=0;i<raw.length;i++){var p=raw[i];if(p&&!_noise(p)&&out.indexOf(p)<0)out.push(p);} // ノイズ除去＋重複除去
        a=out.join('');
@@ -239,8 +247,9 @@ function apply(which,name,addr,lat,lng,comps){var k=which===2?'col':'del';var sc
   loc[k]=addr||name||'';locName[k]=name||'';if(lat!=null)_ll[k]=[lat,lng];sc.className='selcard';
   document.getElementById(vid).textContent=name||addr||'';
   document.getElementById(aid).textContent=(name&&addr&&addr!==name)?('📮 '+addr):'';
+  if(keepName[which]&&name===keepName[which]){var w=document.createElement('div');w.className='pinwarn';w.textContent=PT('pin_warn');document.getElementById(aid).appendChild(w);}
   renderCta();}
-function commit(which,name,addr,lat,lng,comps){var mid=which===2?'map2':'map';if(lat!=null&&maps[mid]){suppress[mid]=Date.now()+1800;_lastCommit[mid]=[lat,lng];maps[mid].setView([lat,lng],16,{animate:false});}apply(which,name,addr,lat,lng,comps);}
+function commit(which,name,addr,lat,lng,comps){keepName[which]='';var mid=which===2?'map2':'map';if(lat!=null&&maps[mid]){suppress[mid]=Date.now()+1800;_lastCommit[mid]=[lat,lng];maps[mid].setView([lat,lng],16,{animate:false});}apply(which,name,addr,lat,lng,comps);}
 
 function renderCta(){var ok=!!loc.del&&(same||!!loc.col);var btn=document.getElementById('nextBtn');if(btn)btn.disabled=!ok;var PT=window.hdmPT||function(x){return x;};
   var s=document.getElementById('ctaSum');
@@ -250,7 +259,16 @@ function esc(s){return (s||'').replace(/[<>&]/g,'');}
 
 /* 検索サジェスト＝キー不要・Nominatim(日本語)優先→Photon(英語)→GSI フォールバック・エリア中心にバイアス。日本語の施設/駅/住所候補を出す */
 function _dedupPreds(a){var seen={},o=[];(a||[]).forEach(function(it){if(!it||!it.main)return;var k=((+it.lat||0).toFixed(3))+','+((+it.lng||0).toFixed(3));if(!seen[k]){seen[k]=1;o.push(it);}});return o;} // 座標(約110m)で重複除去＝同一地点の日本語(先)/英語(後)重複を除き日本語を優先
-function searchChain(q,cb){var res={n:undefined,p:undefined},fired=false;
+// ★2026-11-08 地図データ(OSM)に無い施設名を検索すると、Photonのあいまい検索が名前の一部だけ似た別の建物を1件目に返し
+// (例:「KOKO HOTEL 札幌すすきの」→ホテル・アンドルームス札幌すすきの)、確定時にその場所へピンが立っていた。
+// 入力の語がすべて名前に含まれる候補だけを「一致」とみなし、一致が無いときは別の建物へ飛ばさない。
+function _nz(s){s=String(s||'');try{s=s.normalize('NFKC');}catch(e){}return s.toLowerCase().replace(/[\s・･〈〉<>()（）「」『』\-ー－‐,，、。.]/g,'');}
+function _isAddrQ(q){return /\d|[一二三四五六七八九十]+(条|丁目|番|号)|条|丁目|番地|[市区町村]$/.test(q);} // 住所っぽい入力は表記ゆれ(6/六)が多いので判定しない
+function isMatch(q,it){if(!it)return false;if(_isAddrQ(q))return true;var hay=_nz((it.main||'')+' '+(it.sub||'')+' '+(it.addr||''));
+  var tk=String(q).split(/[\s　]+/).map(_nz).filter(Boolean);if(!tk.length)return true;
+  for(var i=0;i<tk.length;i++){if(hay.indexOf(tk[i])<0)return false;}return true;}
+function _sortByMatch(q,items){var a=[],b=[];(items||[]).forEach(function(it){(isMatch(q,it)?a:b).push(it);});return a.concat(b);}
+function searchChain(q,cb){var _cb=cb;cb=function(items){_cb(_sortByMatch(q,items));};var res={n:undefined,p:undefined},fired=false;
   function _fin(){if(fired)return;
     // 日本語(Nominatim)に結果があれば即表示／Nominatim空なら Photon 到着で表示／両方揃えば表示（体感を速く）
     if(res.n!==undefined&&(res.n.length||res.p!==undefined)){fired=true;cb(_dedupPreds(res.n.concat(res.p||[])));return;}
@@ -299,19 +317,19 @@ function submitSearch(which){var inp=document.getElementById(which===2?'q2':'q')
   document.getElementById(which===2?'sugg2':'sugg').classList.remove('on');
   if(!q)return;
   var items=lastPreds[which];
-  if(items&&items.length){pickItem(items[0],which);return;}
-  searchChain(q,function(it){if(it&&it[0]){pickItem(it[0],which);}else{directCommit(which);}});
+  if(items&&items.length&&isMatch(q,items[0])){pickItem(items[0],which);return;}
+  searchChain(q,function(it){if(it&&it[0]&&isMatch(q,it[0])){pickItem(it[0],which);}else{directCommit(which);}});
 }
 // ダイレクト入力確定＝入力地名をまず検索(ジオコーディング)し、ヒットすればその座標へピン移動＝違和感なし。表示名は入力文字を優先、住所は座標の日本語逆ジオ。
 // 見つからない住所/建物名のときだけ「地図のピン(中心)位置」にお届け(従来フォールバック)。
 function directCommit(which){var inp=document.getElementById(which===2?'q2':'q');var q=(inp.value||'').trim();if(!q)return;
   document.getElementById(which===2?'sugg2':'sugg').classList.remove('on');
   var mid=which===2?'map2':'map';
-  function pinPos(){var c=maps[mid]&&maps[mid].getCenter();if(!c)return;reverseGeo(c.lat,c.lng,function(jp){var extra=(jp&&jp.indexOf(q)<0&&!/^-?\d+\.\d+/.test(jp))?(' / '+jp):'';commit(which,q,q+extra,c.lat,c.lng,null);});}
+  function pinPos(){var c=maps[mid]&&maps[mid].getCenter();if(!c)return;keepName[which]=q;reverseGeo(c.lat,c.lng,function(jp){apply(which,q,jp,c.lat,c.lng,null);});} // 見つからない名前＝ピン位置。入力名は保持し、地図を動かしても名前は残す
   function useHit(it){reverseGeo(it.lat,it.lng,function(jp){commit(which,q,jp||it.addr||q,it.lat,it.lng,null);});} // 座標→ピン移動、表示名は入力文字(q)を維持
   var pre=lastPreds[which];
-  if(pre&&pre.length&&pre[0].lat!=null){useHit(pre[0]);return;}
-  searchChain(q,function(items){if(items&&items[0]&&items[0].lat!=null){useHit(items[0]);}else{pinPos();}});
+  if(pre&&pre.length&&pre[0].lat!=null&&isMatch(q,pre[0])){useHit(pre[0]);return;}
+  searchChain(q,function(items){if(items&&items[0]&&items[0].lat!=null&&isMatch(q,items[0])){useHit(items[0]);}else{pinPos();}});
 }
 function clearQ(which){document.getElementById(which===2?'q2':'q').value='';document.getElementById(which===2?'sugg2':'sugg').classList.remove('on');document.getElementById(which===2?'clr2':'clr').style.display='none';}
 function toggleSame(){same=!same;document.getElementById('sameSw').classList.toggle('off',!same);document.getElementById('retbody').classList.toggle('on',!same);
@@ -369,6 +387,7 @@ window.addEventListener('DOMContentLoaded',function(){
       sum_col_pick:"を選んでください",
       err_airport:"🚫 禁止エリア（空港・基地敷地）はお届け／回収の対象外です。<br>空港でのお受け取りは「無料送迎（空港/駅）」をご利用ください。",
       err_area:"🚫 対応エリア外です。<br>お届け・回収は{area}のみ承ります。",
+      pin_warn:"⚠ 地図上で見つからなかったため、ピンの位置にお届けします。地図を動かしてピンを建物に合わせてください。",
       no_result:"該当する候補が見つかりません。地図を動かしてピンで指定できます。"
     },
     en:{
@@ -398,6 +417,7 @@ window.addEventListener('DOMContentLoaded',function(){
       sum_col_pick:" — please choose",
       err_airport:"🚫 Restricted area (airport / base premises) cannot be used for delivery or collection.<br>For airport pickup, please use \"Free shuttle (airport/station)\".",
       err_area:"🚫 Outside the service area.<br>Delivery/collection is available in {area} only.",
+      pin_warn:"⚠ We couldn't find this place on the map, so we'll deliver to the pin. Please drag the map to put the pin on the building.",
       no_result:"No matching results. You can set the location by dragging the map and placing the pin."
     },
     zh:{
@@ -427,6 +447,7 @@ window.addEventListener('DOMContentLoaded',function(){
       sum_col_pick:"請選擇",
       err_airport:"🚫 禁止區域（機場、基地用地）無法送車／收車。<br>如需於機場取車，請利用「免費接送（機場／車站）」。",
       err_area:"🚫 超出服務區域。<br>送車／收車僅限{area}。",
+      pin_warn:"⚠ 地圖上找不到此地點，將送至圖釘位置。請移動地圖，將圖釘對準建築物。",
       no_result:"找不到符合的候選項目。可移動地圖以圖釘指定位置。"
     },
     ko:{
@@ -456,6 +477,7 @@ window.addEventListener('DOMContentLoaded',function(){
       sum_col_pick:"을(를) 선택해 주세요",
       err_airport:"🚫 금지 구역(공항·기지 부지)은 배달／회수 대상이 아닙니다.<br>공항에서의 수령은 「무료 셔틀(공항/역)」을 이용해 주세요.",
       err_area:"🚫 대응 지역 밖입니다.<br>배달·회수는 {area}만 가능합니다.",
+      pin_warn:"⚠ 지도에서 찾지 못해 핀 위치로 배달합니다. 지도를 움직여 핀을 건물에 맞춰 주세요.",
       no_result:"해당하는 후보를 찾을 수 없습니다. 지도를 움직여 핀으로 지정할 수 있습니다."
     }
   };
