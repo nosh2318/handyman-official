@@ -83,3 +83,8 @@ header #hdmlang-slot+.back{margin-left:8px}
 @media(max-width:400px){header .back{padding:7px 9px;font-size:12px}}
 header .back,header .hdmlang-btn{white-space:nowrap}
 @media(max-width:420px){header{gap:6px;padding:10px 12px}header a.logo img{height:20px}header .back{padding:6px 9px;font-size:11.5px}header .hdmlang-btn{padding:6px 10px;font-size:11.5px}}
+/* ★11/9 スマホ幅で「トップへ戻る」が画面の外に出ていた（320〜430px・全言語）→ ロゴを縮められるように、狭い画面では言語ボタンを🌐だけに */
+header a.logo{flex:0 1 auto;min-width:0}
+header a.logo img{max-width:100%;object-fit:contain;object-position:left center}
+header #hdmlang-slot,header .back{flex:0 0 auto}
+@media(max-width:480px){header{gap:6px;padding:10px 12px}header a.logo img{height:20px}header .hdmlang-cur{display:none}header .hdmlang-btn{padding:6px 9px;font-size:11.5px;gap:3px}header .back{padding:6px 9px;font-size:11.5px}}
