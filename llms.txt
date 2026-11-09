@@ -50,7 +50,7 @@
 - 所在地: 香川県高松市香川町川東上1373-4
 - 営業時間: 9:00-19:00（年中無休）
 - 電話: 050-1724-6197
-- 詳細: https://rent-handyman.com/takamatsu-rentacar.html ／ 送迎案内: https://rent-handyman.com/official-tkm-airport.html ／ よくある質問: https://rent-handyman.com/official-tkm-faq.html
+- 詳細: https://rent-handyman.com/takamatsu-rentacar.html ／ 送迎案内: https://rent-handyman.com/official-tkm-airport.html ／ よくある質問: https://rent-handyman.com/official-faq.html#tkm
 
 
 ## 代車のお届けサービス（札幌・那覇）
@@ -82,7 +82,7 @@
 - 予約の流れ: https://rent-handyman.com/official-flow.html
 - 補償・保険プラン: https://rent-handyman.com/official-insurance.html
 - 高松空港アクセス: https://rent-handyman.com/official-tkm-airport.html
-- よくある質問（高松）: https://rent-handyman.com/official-tkm-faq.html
+- よくある質問（高松）: https://rent-handyman.com/official-faq.html#tkm
 - 予約確認（マイページ）: https://rent-handyman.com/official-mypage-find.html
 - お問い合わせ: https://rent-handyman.com/official-contact.html
 - 代車のお届けサービス（事故/車検/修理の代車）: https://rent-handyman.com/daisha.html

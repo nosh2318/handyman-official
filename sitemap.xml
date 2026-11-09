@@ -17,11 +17,6 @@
   <url><loc>https://rent-handyman.com/official-access.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://rent-handyman.com/official-vehicles.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://rent-handyman.com/official-tkm-airport.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://rent-handyman.com/official-tkm-faq.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://rent-handyman.com/official-nha-faq.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://rent-handyman.com/official-nha-guide.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://rent-handyman.com/official-spk-faq.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://rent-handyman.com/official-spk-guide.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://rent-handyman.com/official-insurance.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://rent-handyman.com/official-contact.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://rent-handyman.com/company/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
@@ -34,4 +29,6 @@
   <url><loc>https://rent-handyman.com/okinawa-family-minivan.html</loc><lastmod>2026-10-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://rent-handyman.com/takamatsu-udon-drive.html</loc><lastmod>2026-10-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://rent-handyman.com/takamatsu-shodoshima-naoshima.html</loc><lastmod>2026-10-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://rent-handyman.com/official-guide.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://rent-handyman.com/official-faq.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
