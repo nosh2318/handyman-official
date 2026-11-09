@@ -75,3 +75,11 @@ details.q .a p+p{margin-top:6px}
 .mp{display:inline-block;background:#e8eefb;color:var(--navy);font-weight:900;border-radius:6px;padding:0 6px;font-size:12.5px}
 .top3{background:#fff;border:2px solid var(--y);border-radius:16px;padding:14px;margin-bottom:8px}
 .top3 .t{font-size:14px;font-weight:900;color:var(--ink);margin-bottom:6px}
+/* 言語ごとのブロック（official-i18n.js が html の lang を切り替える） */
+.L{display:none}
+html[lang=ja] .L-ja,html[lang=en] .L-en,html[lang=zh] .L-zh,html[lang=ko] .L-ko{display:block}
+header #hdmlang-slot{margin-left:auto}
+header #hdmlang-slot+.back{margin-left:8px}
+@media(max-width:400px){header .back{padding:7px 9px;font-size:12px}}
+header .back,header .hdmlang-btn{white-space:nowrap}
+@media(max-width:420px){header{gap:6px;padding:10px 12px}header a.logo img{height:20px}header .back{padding:6px 9px;font-size:11.5px}header .hdmlang-btn{padding:6px 10px;font-size:11.5px}}
