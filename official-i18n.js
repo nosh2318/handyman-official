@@ -345,7 +345,7 @@
   };
   var SHORT={ja:'日本語',en:'EN',zh:'繁中',ko:'한국어'};
   var NAMES={ja:'日本語',en:'English',zh:'繁體中文',ko:'한국어'};
-  function detect(){try{var q=(location.search.match(/[?&]lang=(ja|en|zh|ko)\b/)||[])[1];if(q){localStorage.setItem('hdm_lang',q);return q;}}catch(e){}try{var s=localStorage.getItem('hdm_lang');if(s&&DICT[s])return s;var n=(navigator.language||'ja').toLowerCase();if(n.indexOf('ko')===0)return 'ko';if(n.indexOf('zh')===0)return 'zh';if(n.indexOf('en')===0)return 'en';}catch(e){}return 'ja';}
+  function detect(){try{var s=localStorage.getItem('hdm_lang');if(s&&DICT[s])return s;var n=(navigator.language||'ja').toLowerCase();if(n.indexOf('ko')===0)return 'ko';if(n.indexOf('zh')===0)return 'zh';if(n.indexOf('en')===0)return 'en';}catch(e){}return 'ja';}
   var LANG=detect();
   window.hdmLang=function(){return LANG;};
   window.hdmT=function(k){var d=DICT[LANG]||DICT.ja;return (d[k]!=null?d[k]:(DICT.ja[k]!=null?DICT.ja[k]:k));};
