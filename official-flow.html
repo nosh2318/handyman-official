@@ -910,6 +910,7 @@ async function payWithCard(){
       del_place:(loc&&loc.del&&loc.del.label)||'',col_place:(loc&&loc.col&&loc.col.label)||(loc&&loc.del&&loc.del.label)||'',
       del_lat:(loc&&loc.del)?loc.del.lat:null,del_lng:(loc&&loc.del)?loc.del.lng:null,
       col_lat:(loc&&loc.col)?loc.col.lat:((loc&&loc.del)?loc.del.lat:null),col_lng:(loc&&loc.col)?loc.col.lng:((loc&&loc.del)?loc.del.lng:null)};
+    /* 2026-11-14 送迎の乗り場・到着便も送る */try{if(method==='airport'){var _mc=document.getElementById('methodCard'),_ss=_mc?_mc.querySelectorAll('select'):[],_fi=_mc?_mc.querySelector('input:not([readonly])'):null;payload.flight=_fi?String(_fi.value||'').replace(/\s+/g,'').toUpperCase().slice(0,12):'';payload.air_go=_ss[0]?_ss[0].value:'';payload.air_rt=_ss[1]?_ss[1].value:'';if(area==='naha'){if(/赤嶺/.test(payload.air_go)&&!payload.del_place)payload.del_place='赤嶺駅 南口（無料送迎）';if(/赤嶺/.test(payload.air_rt)&&!payload.col_place)payload.col_place='赤嶺駅（無料送迎）';}}}catch(_e){}
     if(area==='naha'&&method==='delivery'){var _ng=function(o){if(!o)return false;if(nahaNoGoText((o.label||'')+' '+(o.addr||'')))return true;if(o.lat!=null&&inNahaNoGo(o.lat,o.lng))return true;return false;};if(_ng(loc.del)||(!colSame&&_ng(loc.col))){payErr('nogo','');alert(T('al_nogo'));reEnable();return;}}
     var _payUrl=(area==='takamatsu')?(BT_PAY_URL+'/functions/v1/official-pay-tkm'):(SUPABASE_URL+'/functions/v1/official-pay');
     var _payKey=(area==='takamatsu')?BT_ANON:SUPABASE_KEY;
@@ -917,6 +918,7 @@ async function payWithCard(){
     var data=await res.json().catch(function(){return {};});
     if(!res.ok||!data.ok){payErr('server_'+res.status,data&&data.error);if(errEl){errEl.style.display='block';errEl.textContent=(data&&data.error)||T('pc_pay_fail');}reEnable();return;}
     state._resId=data.reservationId;
+    /* 2026-11-14 到着便をマイページへ */try{var _tk=String(data.mypage||'').match(/[?&]t=([^&#]+)/);if(payload.flight&&_tk&&area==='naha'){fetch(SUPABASE_URL+'/functions/v1/mypage-info',{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({store:'nha',token:decodeURIComponent(_tk[1]),action:'set',flight_in:payload.flight})}).catch(function(){});}}catch(_e){}
     // ★GTM/GA4 コンバージョン計測（予約完了）＋拡張コンバージョン用のユーザーデータ
     try{
       var _dys=(typeof dys!=='undefined'&&dys)?dys:1;
