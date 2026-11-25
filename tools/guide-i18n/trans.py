@@ -2,6 +2,9 @@
 # キー＝日本語の原文（ja/*.html の文字の塊）、値＝[英語, 繁體中文, 한국어]。
 # マイページの画面の言葉は、マイページの辞書（Wallet / Ask / Booking & changes など）にそろえる。
 T = {
+"💬 LINEで問い合わせる（那覇空港店）": ["💬 Ask on LINE (Naha Airport)","💬 透過 LINE 諮詢（那霸機場店）","💬 LINE으로 문의(나하공항점)"],
+"💬 LINEで問い合わせる（札幌店）": ["💬 Ask on LINE (Sapporo)","💬 透過 LINE 諮詢（札幌店）","💬 LINE으로 문의(삿포로점)"],
+"💬 LINEでのお問い合わせ（高松空港店）は準備中です": ["💬 LINE inquiries (Takamatsu Airport): coming soon","💬 LINE 諮詢（高松機場店）準備中","💬 LINE 문의(다카마쓰공항점)는 준비 중입니다"],
 "HANDYMAN RENTCAR": ["HANDYMAN RENTCAR","HANDYMAN RENTCAR","HANDYMAN RENTCAR"],
 "← トップへ戻る": ["← Back to top","← 返回首頁","← 처음으로"],
 "ご利用案内": ["How it works","使用指南","이용 안내"],
@@ -20,7 +23,7 @@ T = {
 "お知らせは": ["Updates arrive by ","通知會透過","알림은 "],
 "LINE（ご登録の方）か": ["LINE (if you added us) or ","LINE（已加好友者）或","LINE(등록하신 분) 또는 "],
 "メールで届きます。押すとマイページが開きます。": ["email. Tap it to open My Page.","電子郵件送達。點一下即可打開「我的頁面」。","메일로 도착합니다. 누르면 마이페이지가 열립니다."],
-"LINEの登録はなくても大丈夫です。変更・登録はマイページだけで受け付けます。": ["You don't need LINE. Changes and registration are accepted only on My Page.","不加LINE也沒關係。變更與登錄只在「我的頁面」受理。","LINE 등록은 없어도 괜찮습니다. 변경・등록은 마이페이지에서만 받습니다."],
+"LINEの登録はなくても大丈夫です。変更・登録はマイページだけで受け付けます。LINEで受け取りたい方は、マイページの「LINEで通知を受け取る」から登録できます。": ["You don't need LINE. Changes and registration are accepted only on My Page. To get updates on LINE, register from \u201cGet notifications on LINE\u201d on your My Page.","不加LINE也沒關係。變更與登錄只在「我的頁面」受理。想用 LINE 接收的話，可在「我的頁面」的「用 LINE 接收通知」登錄。","LINE 등록은 없어도 괜찮습니다. 변경・등록은 마이페이지에서만 받습니다. LINE으로 받고 싶으신 분은 마이페이지의 「LINE으로 알림 받기」에서 등록할 수 있습니다."],
 "🔑 マイページを開く（予約確認）": ["🔑 Open My Page (My Booking)","🔑 打開「我的頁面」（預約查詢）","🔑 마이페이지 열기(예약 확인)"],
 "ご予約": ["Book","預約","예약"],
 "公式サイト・各予約サイト": ["Our website or a booking site","官網或各訂車網站","공식 사이트・각 예약 사이트"],
@@ -164,7 +167,7 @@ T = {
 "から、予約番号・電話番号・メールのどれか1つで開けます。送り元は reserve@rent-handyman.com です（迷惑メールもご確認ください）。": [" with your booking number, phone number or email. The sender is reserve@rent-handyman.com (check your spam folder too).","以預約編號・電話號碼・電子郵件任一項打開。寄件者為 reserve@rent-handyman.com（也請檢查垃圾郵件）。","에서 예약번호・전화번호・메일 중 하나로 열 수 있습니다. 보낸 곳은 reserve@rent-handyman.com입니다(스팸함도 확인해 주세요)."],
 "ホーム画面に保存すると、返却まですぐ開けます。": ["Save it to your home screen to open it quickly until you return the car.","加入主畫面後，還車前都能快速打開。","홈 화면에 저장하면 반납 때까지 바로 열 수 있습니다."],
 "LINEの登録は必要ですか？": ["Do I need LINE?","需要加LINE嗎？","LINE 등록이 필요한가요?"],
-"必要ありません。LINEにご登録の方にはLINEで、それ以外の方にはメールでお知らせが届きます。": ["No. If you added us on LINE, updates come by LINE; otherwise by email.","不需要。已加LINE的人會收到LINE通知，其他人會收到郵件通知。","필요 없습니다. LINE 등록하신 분은 LINE으로, 그 외에는 메일로 알림이 갑니다."],
+"必要ありません。LINEにご登録の方にはLINEで、それ以外の方にはメールでお知らせが届きます。LINEで受け取りたい方は、マイページの「LINEで通知を受け取る」を押すだけで登録できます。": ["No. If you added us on LINE, updates come by LINE; otherwise by email. To get updates on LINE, just tap \u201cGet notifications on LINE\u201d on your My Page.","不需要。已加LINE的人會收到LINE通知，其他人會收到郵件通知。想用 LINE 接收的話，只要在「我的頁面」按「用 LINE 接收通知」即可登錄。","필요 없습니다. LINE 등록하신 분은 LINE으로, 그 외에는 메일로 알림이 갑니다. LINE으로 받고 싶으신 분은 마이페이지에서 「LINE으로 알림 받기」를 누르기만 하면 됩니다."],
 "時間・場所の変更や免許証の登録は": ["Time and place changes and license registration are accepted only on ","時間・地點變更與駕照登錄只在","시간・장소 변경과 면허증 등록은 "],
 "だけで受け付けています。": [".","受理。","에서만 받습니다."],
 "送った依頼はちゃんと届いていますか？": ["Did my request go through?","送出的申請有收到嗎？","보낸 요청이 잘 도착했나요?"],
